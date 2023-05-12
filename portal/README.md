@@ -12,7 +12,7 @@ How I set up this Vite project
 follow the prompts then make sure eslint is installed (should be by default)  
 `pnpm install eslint --save-dev`  
 quick note on `--save-dev`: Use save dev so you can use the packages while developing the project, but if
-you don't want them bundled and built when you deploy the project.
+you don't want them bundled and built when you deploy the project.  
 `pnpm install --save-dev --save-exact prettier eslint-config-prettier`  
 Then create an eslint config by following the prompt from:  
 `pnpm create @eslint/config`  
