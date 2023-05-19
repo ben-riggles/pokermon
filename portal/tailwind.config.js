@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        "atariTOS" : ["AtariST"]
+        "pkmn" : ["PKMN"]
       }
     },
   },

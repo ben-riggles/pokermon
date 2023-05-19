@@ -2,101 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer{
+@layer {
   @font-face {
-    font-family: "AtariST";
-    src: url('./font/atariTOS.ttf')
+    font-family: 'PKMN';
+    src: url('./font/pokemon.ttf');
   }
 }
 
 /* ----------------------
    Boilerplate CSS styles
    ---------------------- */
-html {
-  box-sizing: border-box;
-}
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-} /* guarantees boxsizing is border-box on all elements */
-html,
-body {
-  min-height: 100%;
-}
-body {
-  font-size: 1rem;
-  text-rendering: optimizeLegibility;
-} /* sets the base font size for the document; turns on kerning pairs and ligatures */
-body,
-ul,
-ol,
-dl {
-  margin: 0;
-}
-article,
-aside,
-audio,
-footer,
-header,
-nav,
-section,
-video {
-  display: block;
-} /* ensures that older browsers will display HTML5 elements correctly */
+@layer base {
+  html {
+    @apply font-pkmn;
+    box-sizing: border-box;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  } /* guarantees boxsizing is border-box on all elements */
+  html,
+  body {
+    min-height: 100%;
+  }
+  body {
+    font-size: 1rem;
+    text-rendering: optimizeLegibility;
+  } /* sets the base font size for the document; turns on kerning pairs and ligatures */
+  body,
+  ul,
+  ol,
+  dl {
+    margin: 0;
+  }
+  article,
+  aside,
+  audio,
+  footer,
+  header,
+  nav,
+  section,
+  video {
+    display: block;
+  } /* ensures that older browsers will display HTML5 elements correctly */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
 
-p {
-  -ms-word-break: break-all;
-  word-break: break-all;
-  word-break: break-word;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-} /* sets hyphenation by default on paragraphs */
+  p {
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  } /* sets hyphenation by default on paragraphs */
 
-textarea {
-  resize: vertical;
-} /* changes textarea resizing from "both" (UA default) to vertical only */
+  textarea {
+    resize: vertical;
+  } /* changes textarea resizing from "both" (UA default) to vertical only */
 
-table {
-  border-collapse: collapse;
-}
-td {
-  padding: 0.5rem;
-} /* causes tables to actually look like tables */
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    padding: 0.5rem;
+  } /* causes tables to actually look like tables */
 
-img {
-  display: block;
-  border: none;
-  max-width: 100%;
-}
-/* removes outlines from linked images (for older browsers and IE), sets up images for responsive design layout */
+  img {
+    display: block;
+    border: none;
+    max-width: 100%;
+  }
+  /* removes outlines from linked images (for older browsers and IE), sets up images for responsive design layout */
 
-input[type='submit']::-moz-focus-inner,
-input[type='button']::-moz-focus-inner {
-  border: 0px;
-}
-/* removes the inner border effect from focused buttons for form elements in Firefox */
+  input[type='submit']::-moz-focus-inner,
+  input[type='button']::-moz-focus-inner {
+    border: 0px;
+  }
+  /* removes the inner border effect from focused buttons for form elements in Firefox */
 
-input[type='search'] {
-  -webkit-appearance: textfield;
-  appearance: textfield;
-}
-input[type='submit'] {
-  -webkit-appearance: none;
-  appearance: none;
+  input[type='search'] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+  }
+  input[type='submit'] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
 /* ---------------------- 
    End Boilerplate
