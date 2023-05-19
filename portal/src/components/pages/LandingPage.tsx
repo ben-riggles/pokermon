@@ -14,7 +14,7 @@ export default function LandingPage() {
       </span>
       {chipClicked && (
         <WindowCard isOpen={setChipClicked}>
-          <span>
+          <span className='font-atariTOS'>
             Welcome to PokerMon! Where we try to catch all the dollars.
           </span>
         </WindowCard>

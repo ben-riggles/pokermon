@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer{
+  @font-face {
+    font-family: "AtariST";
+    src: url('./font/atariTOS.ttf')
+  }
+}
+
 /* ----------------------
    Boilerplate CSS styles
    ---------------------- */
