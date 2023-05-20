@@ -3,8 +3,6 @@ from app.models import BaseModel
 
 
 class Session(BaseModel):
-    data = db.relationship('SessionData', backref='session')
-
     date = db.Column(db.Date)
     other_game = db.Column(db.String(100))
 

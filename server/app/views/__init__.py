@@ -2,9 +2,7 @@ from importlib import import_module
 from pathlib import Path
 
 def namespaces():
-    print('start')
     for f in Path(__file__).parent.glob('*.py'):
-        print(f)
         if '__init__.py' in str(f):
             continue
         module = import_module(f'app.views.{f.stem}')

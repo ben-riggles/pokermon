@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_restx import Namespace, Resource
 
 from app.managers import PlayerManager
@@ -10,4 +11,5 @@ class PlayerList(Resource):
     @api.doc('list players')
     def get(self):
         players = PlayerManager.query()
+        #return jsonify(players)
         return [x.serialize() for x in players]
