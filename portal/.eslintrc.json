@@ -17,8 +17,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "react/jsx-no-target-blank": "off",
-    "semi": "error"
+    "react/jsx-no-target-blank": "off"
   },
   "settings": {
     "react": {
