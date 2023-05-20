@@ -1,13 +1,15 @@
 type Props = {
   color?: string;
+  height?: string;
+  width?: string;
 };
 
-export default function PokerChip({ color }: Props) {
+export default function PokerChip({ color, height, width }: Props) {
   return (
     <svg
       fill={color}
-      height='200px'
-      width='200px'
+      height={height}
+      width={width}
       version='1.1'
       id='Capa_1'
       xmlns='http://www.w3.org/2000/svg'

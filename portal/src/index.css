@@ -15,6 +15,7 @@
 @layer base {
   html {
     @apply font-pkmn;
+    @apply tracking-wider;
     box-sizing: border-box;
   }
   *,

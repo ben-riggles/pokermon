@@ -5,12 +5,12 @@ import WindowCard from '../ui/WindowWrapper';
 export default function LandingPage() {
   const [chipClicked, setChipClicked] = useState(false);
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center h-screen'>
       <span
-        className='cursor-pointer'
+        className='cursor-pointer '
         onClick={() => setChipClicked(!chipClicked)}
       >
-        <PokerChip />
+        <PokerChip height='200px' width='200px' />
       </span>
       {chipClicked && (
         <WindowCard isOpen={setChipClicked}>
