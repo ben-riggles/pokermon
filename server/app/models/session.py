@@ -10,3 +10,6 @@ class Session(BaseModel):
 
     def __repr__(self):
         return f'Session ({self.date})'
+    
+    def serialize(self) -> str:
+        return f'{{id: {self.id}, date: {self.date}}}'

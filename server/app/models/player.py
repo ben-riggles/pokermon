@@ -9,3 +9,6 @@ class Player(BaseModel):
 
     def __repr__(self):
         return f'Player ({self.first_name} {self.last_name})'
+    
+    def serialize(self) -> str:
+        return f'{{id: {self.id}, first_name: {self.first_name}, last_name: {self.last_name}}}'

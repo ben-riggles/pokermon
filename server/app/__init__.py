@@ -1,6 +1,7 @@
 import unittest
 import click
 from flask import Flask
+from flask_restx import Api
 
 from config import DevelopmentConfig
 from app.common.imports import import_data
@@ -9,12 +10,13 @@ import app.views as views
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
+api = Api(app)
 
 # Initialize Flask extensions here
 db.init_app(app)
 
-# Register blueprints here
-app.register_blueprint(views.players_bp, url_prefix='/players')
+for ns in views.namespaces():
+    api.add_namespace(ns)
 
 
 @app.cli.command('test')
