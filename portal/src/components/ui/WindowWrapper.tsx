@@ -1,9 +1,9 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import PokerChip from './icons/PokerChip';
-import { TbPokerChip } from 'react-icons/tb';
+// import { TbPokerChip } from 'react-icons/tb';
 
 type Props = {
-  isOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen?: Dispatch<SetStateAction<boolean>>;
   children: ReactNode;
 };
 
@@ -19,7 +19,7 @@ export default function WindowCard({ isOpen, children }: Props) {
             <PokerChip height='15px' width='15px' />
           </div>
         </div>
-        <div onClick={() => isOpen(false)}>
+        <div>
           <div className='ml-3 mr-3 border-2 border-black'>
             <div className='p-2'>{children}</div>
           </div>
