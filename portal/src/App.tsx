@@ -1,8 +1,8 @@
 import './App.css';
-import Test from './components/pages/Test';
+import LandingPage from '@/components/pages/LandingPage';
 
 function App() {
-  return <Test />;
+  return <LandingPage />;
 }
 
 export default App;

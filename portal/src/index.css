@@ -102,6 +102,12 @@
     appearance: none;
   }
 }
+
+div.no-select {
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit browsers */
+  user-select: none;
+}
 /* ---------------------- 
    End Boilerplate
    ---------------------- */

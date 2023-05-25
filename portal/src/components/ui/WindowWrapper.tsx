@@ -1,18 +1,37 @@
 import { ReactNode } from 'react';
-import PokerChip from 'src/icons/PokerChip';
+import PokerChip from '@/components/ui/icons/PokerChip';
+import Spade from './icons/Spade';
+import Heart from './icons/Heart';
+import Diamond from './icons/Diamond';
+import Club from './icons/Club';
 
 type Props = {
   children: ReactNode;
 };
 
-export default function WindowCard({ children }: Props) {
+export default function WindowWrapper({ children }: Props) {
+  return (
+    <div className='box'>
+      <div id='upper_left'>
+        <Spade />
+      </div>
+      <div id='upper_right'>
+        <Heart />
+      </div>
+      <div id='lower_left'>
+        <Diamond />
+      </div>
+      <div id='lower_right'>
+        <Club />
+      </div>
+      {children}
+    </div>
+  );
+
   return (
     <div>
       <section className='flex flex-col m-5 border-2 border-black w-80'>
         <div className='flex justify-between'>
-          <div id='corner-up-left' className='mr-5'>
-            <PokerChip height='15px' width='15px' />
-          </div>
           <div id='corner-up-right'>
             <PokerChip height='15px' width='15px' />
           </div>

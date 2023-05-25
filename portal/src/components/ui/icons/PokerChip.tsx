@@ -4,7 +4,11 @@ type Props = {
   width?: string;
 };
 
-export default function PokerChip({ color, height, width }: Props) {
+export default function PokerChip({
+  color,
+  height = '12px',
+  width = '12px',
+}: Props) {
   return (
     <svg
       fill={color}
