@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import PokerChip from '@/components/ui/icons/PokerChip';
 import Spade from './icons/Spade';
 import Heart from './icons/Heart';
 import Diamond from './icons/Diamond';
@@ -12,44 +11,19 @@ type Props = {
 export default function WindowWrapper({ children }: Props) {
   return (
     <div className='box'>
-      <div id='upper_left'>
+      <div className='absolute top-0 left-0'>
         <Spade />
       </div>
-      <div id='upper_right'>
+      <div className='absolute top-0 right-0'>
         <Heart />
       </div>
-      <div id='lower_left'>
+      <div className='absolute bottom-0 left-0'>
         <Diamond />
       </div>
-      <div id='lower_right'>
+      <div className='absolute bottom-0 right-0'>
         <Club />
       </div>
       {children}
-    </div>
-  );
-
-  return (
-    <div>
-      <section className='flex flex-col m-5 border-2 border-black w-80'>
-        <div className='flex justify-between'>
-          <div id='corner-up-right'>
-            <PokerChip height='15px' width='15px' />
-          </div>
-        </div>
-        <div>
-          <div className='ml-3 mr-3 border-2 border-black'>
-            <div className='p-2'>{children}</div>
-          </div>
-        </div>
-        <div className='flex justify-between'>
-          <div id='corner-down-left'>
-            <PokerChip height='15px' width='15px' />
-          </div>
-          <div id='corner-down-right'>
-            <PokerChip height='15px' width='15px' />
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
