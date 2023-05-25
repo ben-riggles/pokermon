@@ -1,27 +1,15 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import WindowWrapper from './WindowWrapper';
 
-type OptionsArr = {
-  isOpen: Dispatch<SetStateAction<boolean>>;
+type Props = {
   options: string[];
 };
 
-export default function Menu({ options, isOpen }: OptionsArr) {
-  const select = useRef<any>(null);
+export default function Menu({ options }: Props) {
   const [cursorLoc, setCursor] = useState(0);
-  //for future navigation
-  // const [ selected, setSelected ] = useState(false)
 
-  function arrowHandler(event: any) {
-    //clean up conditional later
+  function arrowHandler(event: KeyboardEvent) {
     if (event.key === 'ArrowUp' && cursorLoc > 0) {
       setCursor((cursorLoc) => cursorLoc - 1);
       console.log(cursorLoc);
@@ -32,6 +20,8 @@ export default function Menu({ options, isOpen }: OptionsArr) {
     }
     console.log(event.key);
   }
+
+  // Is it better to use seperate useEffects here?
   useEffect(() => {
     window.addEventListener('keydown', arrowHandler);
     return () => {
@@ -40,11 +30,11 @@ export default function Menu({ options, isOpen }: OptionsArr) {
   });
   return (
     <>
-      <WindowWrapper isOpen={isOpen}>
+      <WindowWrapper>
         <ul>
-          {options.map((option: string, i): ReactNode => {
+          {options.map((option: string, i) => {
             return (
-              <li ref={select} id={'select' + i.toString()} key={option + i}>
+              <li id={'select' + i.toString()} key={option + i}>
                 <div className='flex p-1 m-1'>
                   {cursorLoc === i ? <FaPlay /> : null}
                   {option}

@@ -1,13 +1,11 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
-import PokerChip from './icons/PokerChip';
-// import { TbPokerChip } from 'react-icons/tb';
+import { ReactNode } from 'react';
+import PokerChip from 'src/icons/PokerChip';
 
 type Props = {
-  isOpen?: Dispatch<SetStateAction<boolean>>;
   children: ReactNode;
 };
 
-export default function WindowCard({ isOpen, children }: Props) {
+export default function WindowCard({ children }: Props) {
   return (
     <div>
       <section className='flex flex-col m-5 border-2 border-black w-80'>
