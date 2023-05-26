@@ -16,7 +16,7 @@ export default function LandingPage() {
           className='pb-4 cursor-pointer slow-spin'
           onClick={() => setChipClicked(!chipClicked)}
         >
-          <PokerChip height='200px' width='200px' />
+          <PokerChip height='50px' width='50px' />
         </span>
 
         {chipClicked && <Menu options={optionsList} />}
