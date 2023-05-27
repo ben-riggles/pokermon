@@ -6,12 +6,11 @@
 
 .slow-spin {
   animation: 10s linear rotate;
-  animation-iteration-count: 2;
 }
 
 .box {
   border-radius: 2px;
-  width: 360px;
+  width: 160px;
   padding: 8px;
   margin: auto;
   position: relative;

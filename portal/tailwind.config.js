@@ -18,6 +18,9 @@ export default {
         'pkmn-indigo': '#91A2D8',
         'pkmn-violet': '#81709A',
       },
+      screens: {
+        xs: '480px',
+      },
     },
   },
   plugins: [],
