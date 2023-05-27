@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import WindowWrapper from '@/components/ui/WindowWrapper';
-import useScreenStore from '@/stores/gameStore';
-import { SCREEN } from '@/types/gameConsole';
+import useScreenStore from '@/stores/screenStore';
+import { Screen } from '@/types/gameConsole';
+
+const menuItems: { label: string; screen: Screen }[] = [
+  { label: 'Players', screen: 'Players' },
+  { label: 'Tournaments', screen: 'Tournaments' },
+  { label: 'CashGames', screen: 'CashGames' },
+  { label: 'Graphs', screen: 'Graphs' },
+  { label: 'Exit', screen: 'Welcome' },
+];
 
 export default function MenuScreen() {
   const [cursorLoc, setCursor] = useState(0);
-  const { updateIndex } = useScreenStore();
+  const { updateScreen } = useScreenStore();
 
   function arrowHandler(event: KeyboardEvent) {
     if ((event.key === 'ArrowUp' || event.key === 'k') && cursorLoc > 0) {
@@ -16,11 +24,7 @@ export default function MenuScreen() {
       setCursor((cursorLoc) => cursorLoc + 1);
     }
     if (event.key === 'Enter') {
-      if (cursorLoc === 4) {
-        updateIndex(SCREEN.Welcome);
-        return;
-      }
-      updateIndex(cursorLoc + 2);
+      updateScreen(menuItems[cursorLoc].screen);
     }
   }
 
@@ -34,44 +38,16 @@ export default function MenuScreen() {
   return (
     <WindowWrapper>
       <ul>
-        <li id={'select'}>
-          <div className='flex pt-1 items-center text-xs'>
-            {cursorLoc === 0 ? <FaPlay className='mr-2' /> : null}
-            <span onClick={() => updateIndex(SCREEN.Players)}>Players</span>
-          </div>
-        </li>
-
-        <li id={'select'}>
-          <div className='flex pt-1 items-center text-xs'>
-            {cursorLoc === 1 ? <FaPlay className='mr-2' /> : null}
-            <span onClick={() => updateIndex(SCREEN.Tournaments)}>
-              Tournaments
-            </span>
-          </div>
-        </li>
-
-        <li id={'select'}>
-          <div className='flex pt-1 items-center text-xs'>
-            {cursorLoc === 2 ? <FaPlay className='mr-2' /> : null}
-            <span onClick={() => updateIndex(SCREEN.CashGames)}>
-              Cash Games
-            </span>
-          </div>
-        </li>
-
-        <li id={'select'}>
-          <div className='flex pt-1 items-center text-xs'>
-            {cursorLoc === 3 ? <FaPlay className='mr-2' /> : null}
-            <span onClick={() => updateIndex(SCREEN.Graphs)}>Graphs</span>
-          </div>
-        </li>
-
-        <li id={'select'}>
-          <div className='flex pt-1 items-center text-xs'>
-            {cursorLoc === 4 ? <FaPlay className='mr-2' /> : null}
-            <span onClick={() => updateIndex(SCREEN.Welcome)}>Exit</span>
-          </div>
-        </li>
+        {menuItems.map((item, i) => (
+          <li key={item.label} tabIndex={-1} id={'select'}>
+            <div className='flex pt-1 items-center text-xs'>
+              {cursorLoc === i ? <FaPlay className='mr-2' /> : null}
+              <span onClick={() => updateScreen(item.screen)}>
+                {item.label}
+              </span>
+            </div>
+          </li>
+        ))}
       </ul>
     </WindowWrapper>
   );

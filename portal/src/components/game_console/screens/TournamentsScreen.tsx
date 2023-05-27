@@ -1,12 +1,13 @@
-import useScreenStore from '@/stores/gameStore';
-import { SCREEN } from '@/types/gameConsole';
+import usePreviousScreen from '@/hooks/usePreviousScreen';
+import useScreenStore from '@/stores/screenStore';
 import { useEffect } from 'react';
 
 export default function TournamentsScreen() {
-  const { updateIndex } = useScreenStore();
+  usePreviousScreen('Menu');
+  const { updateScreen } = useScreenStore();
   function arrowHandler(event: KeyboardEvent) {
     if (event.key === 'Backspace') {
-      updateIndex(SCREEN.Menu);
+      updateScreen('Menu');
     }
   }
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function TournamentsScreen() {
   return (
     <div>
       <div>Tournaments</div>
-      <div className='cursor-pointer' onClick={() => updateIndex(SCREEN.Menu)}>
+      <div className='cursor-pointer' onClick={() => updateScreen('Menu')}>
         Back
       </div>
     </div>

@@ -1,22 +1,6 @@
-import WelcomeScreen from './screens/WelcomeScreen';
-import MenuScreen from './screens/MenuScreen';
-import useGameStore from '@/stores/gameStore';
-import PlayersScreen from './screens/PlayersScreen';
-import TournamentsScreen from './screens/TournamentsScreen';
-import CashGamesScreen from './screens/CashGamesScreen';
-import GraphsScreen from './screens/GraphsScreen';
-
-const screens = [
-  <WelcomeScreen />,
-  <MenuScreen />,
-  <PlayersScreen />,
-  <TournamentsScreen />,
-  <CashGamesScreen />,
-  <GraphsScreen />,
-];
+import GameScreen from './GameScreen';
 
 export default function GameConsole() {
-  const { screenIndex } = useGameStore();
   return (
     <>
       <div className='flex justify-center min-h-screen bg-gray-50 py-6 sm:py-12'>
@@ -26,7 +10,7 @@ export default function GameConsole() {
               id='screen'
               className='absolute center-flex overflow-auto inset-x-10 top-6 h-[180px] w-[180px] z-20 bg-slate-300'
             >
-              {screens[screenIndex]}
+              <GameScreen />
             </div>
             <div className='absolute left-3 top-12 h-[10px] w-[10px] z-20 bg-red-500 rounded-full'></div>
             <div className='text-white font-sans text-[0.5rem] absolute top-14 p-1'>

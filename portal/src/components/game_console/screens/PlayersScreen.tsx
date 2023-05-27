@@ -1,25 +1,14 @@
-import useScreenStore from '@/stores/gameStore';
-import { SCREEN } from '@/types/gameConsole';
-import { useEffect } from 'react';
+import usePreviousScreen from '@/hooks/usePreviousScreen';
+import useScreenStore from '@/stores/screenStore';
 
 export default function PlayersScreen() {
-  const { updateIndex } = useScreenStore();
-  function arrowHandler(event: KeyboardEvent) {
-    if (event.key === 'Backspace') {
-      updateIndex(SCREEN.Menu);
-    }
-  }
-  useEffect(() => {
-    window.addEventListener('keydown', arrowHandler);
-    return () => {
-      window.removeEventListener('keydown', arrowHandler);
-    };
-  });
+  usePreviousScreen('Menu');
+  const { updateScreen } = useScreenStore();
 
   return (
     <div>
       <div>Players</div>
-      <div className='cursor-pointer' onClick={() => updateIndex(SCREEN.Menu)}>
+      <div className='cursor-pointer' onClick={() => updateScreen('Menu')}>
         Back
       </div>
     </div>

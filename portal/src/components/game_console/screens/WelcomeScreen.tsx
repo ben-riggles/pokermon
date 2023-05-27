@@ -1,8 +1,8 @@
 import PokerChip from '@/components/ui/icons/PokerChip';
-import useScreenStore from '@/stores/gameStore';
+import useScreenStore from '@/stores/screenStore';
 
 export default function WelcomeScreen() {
-  const { updateIndex } = useScreenStore();
+  const { updateScreen } = useScreenStore();
 
   return (
     <div className='h-full w-full'>
@@ -11,7 +11,7 @@ export default function WelcomeScreen() {
           Welcome to Pokermon!
         </div>
         <span className='center-flex cursor-pointer slow-spin'>
-          <span onClick={() => updateIndex(1)}>
+          <span onClick={() => updateScreen('Menu')}>
             <PokerChip height='50px' width='50px' />
           </span>
         </span>
