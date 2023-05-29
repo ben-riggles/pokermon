@@ -6,7 +6,7 @@ from flask_restx import Api
 from config import DevelopmentConfig
 from app.common.imports import import_data
 from app.extensions import db
-import app.views as views
+import app.routes as routes
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
@@ -15,7 +15,7 @@ api = Api(app)
 # Initialize Flask extensions here
 db.init_app(app)
 
-for ns in views.namespaces():
+for ns in routes.namespaces():
     api.add_namespace(ns)
 
 
