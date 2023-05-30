@@ -5,10 +5,11 @@ from sqlalchemy.exc import NoResultFound
 from app.managers import SessionManager
 from app.models.db import Session
 from app.models.query import SessionQuery
-from app.models.view import SessionView
+from app.models.view import SessionView, SessionDetailView
 
 api = Namespace('sessions', 'Sessions Description')
 session_view = SessionView.model(api)
+session_detail_view = SessionDetailView.model(api)
 
 
 @api.route('/')
@@ -51,3 +52,24 @@ class SessionRoutes(Resource):
         except NoResultFound:
             abort(404)
         return SessionView(session).serialize()
+    
+
+@api.route('/details')
+class SessionDetailListRoutes(Resource):
+    @api.expect(SessionQuery.parser)
+    @api.marshal_list_with(session_detail_view)
+    def get(self):
+        query = SessionQuery.parse()
+        players = SessionManager.query(query)
+        return [SessionDetailView(p, query=query).serialize() for p in players]
+
+
+@api.route('/<int:id>/details')
+class SessionDetailRoutes(Resource):
+    @api.marshal_with(session_detail_view)
+    def get(self, id):
+        try:
+            player = SessionManager.read(id)
+        except NoResultFound:
+            abort(404)
+        return SessionDetailView(player).serialize()

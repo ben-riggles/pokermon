@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 import pandas as pd
 
 from app.extensions import db
@@ -67,8 +68,8 @@ def import_data(csv: str):
                 tournament_net = cash_to_float(row['tournament_net']),
                 tournament_placement = row['tournament_place'],
                 other_net = cash_to_float(row['other_net']),
-                six_nine=row['69_wins'],
-                quads = row['quads']
+                six_nine=row['69_wins'] if not math.isnan(row['69_wins']) else 0,
+                quads = row['quads'] if not math.isnan(row['quads']) else 0,
             ))
 
     db.session.add_all(PLAYER_MAP.values())

@@ -5,10 +5,11 @@ from sqlalchemy.exc import NoResultFound
 from app.managers import PlayerManager
 from app.models.db import Player
 from app.models.query import PlayerQuery
-from app.models.view import PlayerView
+from app.models.view import PlayerView, PlayerDetailView
 
 api = Namespace('players', 'Players Description')
 player_view = PlayerView.model(api)
+player_detail_view = PlayerDetailView.model(api)
 
 
 @api.route('/')
@@ -53,11 +54,22 @@ class PlayerRoutes(Resource):
         return PlayerView(player).serialize()
     
 
-@api.route('/stats')
-class PlayerStatsListRoutes(Resource):
-    pass
+@api.route('/details')
+class PlayerDetailListRoutes(Resource):
+    @api.expect(PlayerQuery.parser)
+    @api.marshal_list_with(player_detail_view)
+    def get(self):
+        query = PlayerQuery.parse()
+        players = PlayerManager.query(query)
+        return [PlayerDetailView(p, query=query).serialize() for p in players]
 
 
-@api.route('/stats/<int:id>')
-class PlayerStatsRoutes(Resource):
-    pass
+@api.route('/<int:id>/details')
+class PlayerDetailRoutes(Resource):
+    @api.marshal_with(player_detail_view)
+    def get(self, id):
+        try:
+            player = PlayerManager.read(id)
+        except NoResultFound:
+            abort(404)
+        return PlayerDetailView(player).serialize()

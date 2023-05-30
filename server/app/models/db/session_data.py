@@ -13,8 +13,8 @@ class SessionData(DBModel):
     tournament_net = db.Column(db.Numeric(scale=2))
     tournament_placement = db.Column(db.Integer)
     other_net = db.Column(db.Numeric(scale=2))
-    six_nine = db.Column(db.Numeric)
-    quads = db.Column(db.Numeric)
+    six_nine = db.Column(db.Numeric, nullable=False, default=0)
+    quads = db.Column(db.Numeric, nullable=False, default=0)
 
     def __repr__(self):
         return f'SessionData ({self.player_id}, {self.session_id})'
