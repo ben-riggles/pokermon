@@ -1,3 +1,5 @@
+#!/bin/sh
+
 cd portal
 
 pnpm eslint --fix . && pnpm pretty-quick --staged
