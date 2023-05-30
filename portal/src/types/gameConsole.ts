@@ -4,4 +4,5 @@ export type Screen =
   | 'Players'
   | 'Tournaments'
   | 'CashGames'
-  | 'Graphs';
+  | 'Graphs'
+  | 'SinglePlayer';

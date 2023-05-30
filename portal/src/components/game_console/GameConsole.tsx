@@ -8,7 +8,7 @@ export default function GameConsole() {
           <div className='absolute inset-x-5 rounded top-4 h-[240px] w-[260px] bg-slate-500 z-10'>
             <div
               id='screen'
-              className='absolute center-flex overflow-auto inset-x-10 top-6 h-[180px] w-[180px] z-20 bg-slate-300'
+              className='hide-scrollbar absolute overflow-auto inset-x-10 top-6 h-[180px] w-[180px] z-20 bg-slate-300'
             >
               <GameScreen />
             </div>

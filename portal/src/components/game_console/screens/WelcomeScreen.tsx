@@ -1,8 +1,10 @@
 import PokerChip from '@/components/ui/icons/PokerChip';
+import useNextScreen from '@/hooks/useNextScreen';
 import useScreenStore from '@/stores/screenStore';
 
 export default function WelcomeScreen() {
   const { updateScreen } = useScreenStore();
+  useNextScreen('Menu');
 
   return (
     <div className='h-full w-full'>

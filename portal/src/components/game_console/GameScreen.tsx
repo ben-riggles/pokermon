@@ -5,6 +5,7 @@ import PlayersScreen from './screens/PlayersScreen';
 import TournamentsScreen from './screens/TournamentsScreen';
 import CashGamesScreen from './screens/CashGamesScreen';
 import GraphsScreen from './screens/GraphsScreen';
+import SinglePlayerScreen from './screens/SinglePlayerScreen';
 
 export default function GameScreen() {
   const { screen } = useGameStore();
@@ -22,6 +23,8 @@ export default function GameScreen() {
       return <CashGamesScreen />;
     case 'Graphs':
       return <GraphsScreen />;
+    case 'SinglePlayer':
+      return <SinglePlayerScreen />;
     default:
       return null;
   }

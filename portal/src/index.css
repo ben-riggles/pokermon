@@ -84,8 +84,7 @@
     display: block;
     border: none;
     max-width: 100%;
-  }
-  /* removes outlines from linked images (for older browsers and IE), sets up images for responsive design layout */
+  } /* removes outlines from linked images (for older browsers and IE), sets up images for responsive design layout */
 
   input[type='submit']::-moz-focus-inner,
   input[type='button']::-moz-focus-inner {
