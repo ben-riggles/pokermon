@@ -1,9 +1,12 @@
+import { fetchPlayer } from '@/api/fetchPlayer';
 import usePreviousScreen from '@/hooks/usePreviousScreen';
 import useScreenStore from '@/stores/screenStore';
 
 export default function SinglePlayerScreen() {
   const { player, updateScreen } = useScreenStore();
   usePreviousScreen('Players');
+  fetchPlayer();
+
   return (
     <div className='flex flex-col text-xs p-2'>
       <div className='flex items-end h-8 mt-4 pb-4'>
