@@ -1,4 +1,4 @@
-export const BackKeys = ['Backspace', 'ArrowLeft', 'h'];
-export const ForwardKeys = ['Enter', 'ArrowRight', 'l'];
-export const DownKeys = ['ArrowDown', 'j'];
-export const UpKeys = ['ArrowUp', 'k'];
+export const BackKeys = ['Backspace'];
+export const ForwardKeys = ['Enter', 'Tab'];
+export const DownKeys = ['ArrowDown', 'ArrowRight', 'j', 'l'];
+export const UpKeys = ['ArrowUp', 'ArrowLeft', 'k', 'h'];

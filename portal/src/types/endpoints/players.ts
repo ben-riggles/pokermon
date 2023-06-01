@@ -20,6 +20,7 @@ export type DetailsRes = {
   other_net: number;
   six_nine: number;
   quads: number;
+  sprite: string;
   sessions: Sessions[];
 };
 

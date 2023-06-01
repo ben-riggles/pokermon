@@ -5,13 +5,17 @@ export default function SinglePlayerScreen() {
   const { player, updateScreen } = useScreenStore();
   usePreviousScreen('Players');
 
+  const sprite = player.sprite || 'snorlax';
+
   return (
     <div className='flex flex-col text-xs p-2'>
       <div className='flex items-end h-8 mt-4 pb-4'>
         <div className='flex h-12'>
-          <img src='https://img.pokemondb.net/sprites/sword-shield/normal/jolteon.png' />
+          <img
+            src={`https://img.pokemondb.net/sprites/sword-shield/normal/${sprite}.png`}
+          />
         </div>
-        <span>
+        <span className='text-lg'>
           {player.first_name} {player.last_name}
         </span>
       </div>
@@ -29,7 +33,10 @@ export default function SinglePlayerScreen() {
       <div>${player.other_net}</div>
       <div>Total Net</div>
       <div>${player.total_net}</div>
-      <div className='cursor-pointer' onClick={() => updateScreen('Players')}>
+      <div
+        className='cursor-pointer text-lg pt-4'
+        onClick={() => updateScreen('Players')}
+      >
         Back
       </div>
     </div>

@@ -41,21 +41,25 @@ export default function PlayersScreen() {
   });
 
   return (
-    <div className='h-full pt-2 w-full'>
+    <div className='flex flex-wrap py-4 gap-4 w-full'>
       {players.map((player, i) => (
         <div
           onClick={() => {
             updatePlayer(players[players.indexOf(player)]);
             updateScreen('SinglePlayer');
           }}
-          className='flex items-end h-8 text-xs'
+          className='flex items-end h-8 text-xs w-32'
           key={player.id}
         >
           <div className='flex h-full items-center'>
             {cursorLoc === i ? <FaPlay /> : null}
           </div>
-          <div className='flex h-12'>
-            <img src='https://img.pokemondb.net/sprites/sword-shield/normal/flareon.png' />
+          <div className='flex h-12 min-w-[48px]'>
+            <img
+              src={`https://img.pokemondb.net/sprites/sword-shield/normal/${
+                player.sprite || 'snorlax'
+              }.png`}
+            />
           </div>
           <span>
             {player.first_name} {player.last_name}
