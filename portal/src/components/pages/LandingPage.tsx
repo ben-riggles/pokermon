@@ -1,26 +1,9 @@
-import { useState } from 'react';
-import Menu from '@/components/ui/Menu';
-import PokerChip from '@/components/ui/icons/PokerChip';
-import useClickedOutside from '@/hooks/useClickedOutside';
+import GameConsole from '../game_console/GameConsole';
 
 export default function LandingPage() {
-  const [chipClicked, setChipClicked] = useState(false);
-  const optionsList = ['Players', 'Tournaments', 'Cash Games', 'Graphs'];
-  const { ref } = useClickedOutside(setChipClicked);
-
   return (
-    <div className='no-select h-screen'>
-      <div className='p-4 text-xl center-flex'>Welcome to Pokermon!</div>
-      <div className='center-flex flex-col' ref={ref}>
-        <span
-          className='pb-4 cursor-pointer slow-spin'
-          onClick={() => setChipClicked(!chipClicked)}
-        >
-          <PokerChip height='200px' width='200px' />
-        </span>
-
-        {chipClicked && <Menu options={optionsList} />}
-      </div>
-    </div>
+    <main className='h-screen w-full bg-black'>
+      <GameConsole />
+    </main>
   );
 }

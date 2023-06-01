@@ -31,7 +31,7 @@ export default function Menu({ options }: Props) {
         {options.map((option: string, i) => {
           return (
             <li id={'select' + i.toString()} key={option + i}>
-              <div className='flex items-center p-1 m-1'>
+              <div className='flex pt-1 items-center text-xs'>
                 {cursorLoc === i ? <FaPlay className='mr-2' /> : null}
                 {option}
               </div>
