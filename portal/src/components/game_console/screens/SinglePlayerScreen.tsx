@@ -4,7 +4,7 @@ import useScreenStore from '@/stores/screenStore';
 export default function SinglePlayerScreen() {
   const { player, updateScreen } = useScreenStore();
   usePreviousScreen('Players');
-  console.log(player);
+
   return (
     <div className='flex flex-col text-xs p-2'>
       <div className='flex items-end h-8 mt-4 pb-4'>

@@ -15,7 +15,6 @@ export default function PlayersScreen() {
   useEffect(() => {
     async function getPlayerDetails() {
       const res = await playersApi.getAllPlayerDetails();
-      console.log(res.data);
       setPlayers(res.data);
     }
     getPlayerDetails();
