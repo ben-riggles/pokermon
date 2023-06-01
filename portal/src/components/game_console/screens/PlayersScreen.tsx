@@ -6,7 +6,7 @@ import { FaPlay } from 'react-icons/fa';
 
 const players = [
   {
-    id: 1,
+    id: 0,
     name: 'Ben Riggatoni',
     age: 31,
     tourneyPlacements: 2,
@@ -17,7 +17,7 @@ const players = [
     sprite: 'https://img.pokemondb.net/sprites/sword-shield/normal/jolteon.png',
   },
   {
-    id: 2,
+    id: 1,
     name: 'Joe Schmo',
     age: 23,
     tourneyPlacements: 5,
@@ -70,7 +70,10 @@ export default function PlayersScreen() {
     <div className='h-full pt-2 w-full'>
       {players.map((player, i) => (
         <div
-          onClick={() => updateScreen('SinglePlayer')}
+          onClick={() => {
+            updatePlayer(players[players.indexOf(player)]);
+            updateScreen('SinglePlayer');
+          }}
           className='flex items-end h-8 text-xs'
           key={player.id}
         >
