@@ -18,6 +18,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "off",
+    "no-console": "error",
     "react/jsx-key": "off"
   },
   "settings": {

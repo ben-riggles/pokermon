@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { Screen } from '@/types/gameConsole';
 import { AnyObj } from '@/types/generics';
-import { Player } from '@/types/players';
+import { DetailsRes } from '@/types/endpoints/players';
 
 type ScreenState = {
   screen: Screen;
-  player: Player | AnyObj;
+  player: DetailsRes | AnyObj;
   updateScreen: (screen: Screen) => void;
-  updatePlayer: (player: Player) => void;
+  updatePlayer: (player: DetailsRes) => void;
 };
 
 const useScreenStore = create<ScreenState>()((set) => ({
