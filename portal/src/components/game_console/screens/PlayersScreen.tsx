@@ -44,7 +44,10 @@ export default function PlayersScreen() {
     <div className='h-full pt-2 w-full'>
       {players.map((player, i) => (
         <div
-          onClick={() => updateScreen('SinglePlayer')}
+          onClick={() => {
+            updatePlayer(players[players.indexOf(player)]);
+            updateScreen('SinglePlayer');
+          }}
           className='flex items-end h-8 text-xs'
           key={player.id}
         >
