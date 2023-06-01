@@ -34,5 +34,5 @@
     - The ```--debug``` is optional but recommended when developing
 
 ### Visual API
-* Once the api is up and running, it can be viewed at localhost:5000
+* Once the api is up and running, it can be viewed at ```localhost:5000```
 * You can use swagger to manually call endpoints, or to view the expected inputs/outputs

@@ -1,6 +1,7 @@
 import unittest
 import click
 from flask import Flask
+from flask_cors import CORS
 from flask_restx import Api
 
 from config import DevelopmentConfig
@@ -11,6 +12,7 @@ import app.routes as routes
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 api = Api(app)
+CORS(app)
 
 # Initialize Flask extensions here
 db.init_app(app)
