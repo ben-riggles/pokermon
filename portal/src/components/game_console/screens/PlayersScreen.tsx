@@ -1,50 +1,25 @@
+import { playersApi } from '@/api/allEndpoints';
 import usePreviousScreen from '@/hooks/usePreviousScreen';
 import useScreenStore from '@/stores/screenStore';
+import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 
-const players = [
-  {
-    id: 1,
-    name: 'Ben Riggatoni',
-    age: 31,
-    tourneyPlacements: 2,
-    sixNine: 6,
-    quads: 0,
-    straightFlush: 0,
-    biggestCash: '$69',
-    sprite: 'https://img.pokemondb.net/sprites/sword-shield/normal/jolteon.png',
-  },
-  {
-    id: 2,
-    name: 'Joe Schmo',
-    age: 23,
-    tourneyPlacements: 5,
-    sixNine: 9,
-    quads: 1,
-    straightFlush: 0,
-    biggestCash: '$121',
-    sprite: 'https://img.pokemondb.net/sprites/sword-shield/normal/flareon.png',
-  },
-  {
-    id: 2,
-    name: 'Billy Mayes',
-    age: 44,
-    tourneyPlacements: 1,
-    sixNine: 11,
-    quads: 51,
-    straightFlush: 72,
-    biggestCash: '$2145',
-    sprite:
-      'https://img.pokemondb.net/sprites/sword-shield/normal/vaporeon.png',
-  },
-];
-
 export default function PlayersScreen() {
   const [cursorLoc, setCursor] = useState(0);
+  const [players, setPlayers] = useState<DetailsRes[]>([]);
   usePreviousScreen('Menu');
   const { updateScreen, updatePlayer } = useScreenStore();
+
+  useEffect(() => {
+    async function getPlayerDetails() {
+      const res = await playersApi.getAllPlayerDetails();
+      console.log(res.data);
+      setPlayers(res.data);
+    }
+    getPlayerDetails();
+  }, []);
 
   function arrowHandler(event: KeyboardEvent) {
     if (UpKeys.includes(event.key) && cursorLoc > 0) {
@@ -78,9 +53,11 @@ export default function PlayersScreen() {
             {cursorLoc === i ? <FaPlay /> : null}
           </div>
           <div className='flex h-12'>
-            <img src={player.sprite} />
+            <img src='https://img.pokemondb.net/sprites/sword-shield/normal/flareon.png' />
           </div>
-          <span>{player.name} </span>
+          <span>
+            {player.first_name} {player.last_name}
+          </span>
         </div>
       ))}
     </div>
