@@ -15,6 +15,7 @@ class SessionData(DBModel):
     other_net = db.Column(db.Numeric(scale=2))
     six_nine = db.Column(db.Numeric, nullable=False, default=0)
     quads = db.Column(db.Numeric, nullable=False, default=0)
+    straight_flush = db.Column(db.Numeric, nullable=False, default=0)
 
     def __repr__(self):
         return f'SessionData ({self.player_id}, {self.session_id})'
