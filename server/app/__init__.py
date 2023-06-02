@@ -39,6 +39,4 @@ def init_db(csv):
     db.drop_all()
 
     upgrade()
-    #db.create_all()
-
     import_data(csv)
