@@ -17,6 +17,7 @@ class SessionDataView(ViewModel):
     other_net: Decimal
     six_nine: int
     quads: int
+    straight_flush: int
 
     def __init__(self, session_data: SessionData):
         self.id = session_data.id
@@ -28,6 +29,8 @@ class SessionDataView(ViewModel):
         self.other_net = session_data.other_net
         self.six_nine = session_data.six_nine
         self.quads = session_data.quads
+        self.straight_flush = session_data.straight_flush
+
 
 @dataclass
 class SessionDataPlayerSummary(ViewModel):
@@ -41,6 +44,7 @@ class SessionDataPlayerSummary(ViewModel):
     other_net: Decimal
     six_nine: int
     quads: int
+    straight_flush: int
 
     def __init__(self, session_data: SessionData):
         self.session_id = session_data.session_id
@@ -53,6 +57,8 @@ class SessionDataPlayerSummary(ViewModel):
         self.other_net = session_data.other_net
         self.six_nine = session_data.six_nine
         self.quads = session_data.quads
+        self.straight_flush = session_data.straight_flush
+
 
 @dataclass
 class SessionDataSessionSummary(ViewModel):
@@ -60,6 +66,7 @@ class SessionDataSessionSummary(ViewModel):
     first_name: str
     last_name: str
     full_name: str
+    sprite: str
 
     cash_net: Decimal
     tournament_net: Decimal
@@ -67,12 +74,14 @@ class SessionDataSessionSummary(ViewModel):
     other_net: Decimal
     six_nine: int
     quads: int
+    straight_flush: int
 
     def __init__(self, session_data: SessionData):
         self.player_id = session_data.player_id
         self.first_name = session_data.player.first_name
         self.last_name = session_data.player.last_name
         self.full_name = f'{self.first_name} {self.last_name}'
+        self.sprite = session_data.player.sprite
 
         self.cash_net = session_data.cash_net
         self.tournament_net = session_data.tournament_net
@@ -80,3 +89,4 @@ class SessionDataSessionSummary(ViewModel):
         self.other_net = session_data.other_net
         self.six_nine = session_data.six_nine
         self.quads = session_data.quads
+        self.straight_flush = session_data.straight_flush

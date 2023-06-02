@@ -31,7 +31,8 @@ class DBModel(db.Model):
         if type(self) != type(other):
            raise TypeError('Update must receive a matching model type')
         for col in self.__class__.columns:
-            setattr(self, col, getattr(other, col))
+            if (new_value := getattr(other, col)) is not None:
+                setattr(self, col, new_value)
         db.session.merge(self)
         db.session.commit()
         return self
