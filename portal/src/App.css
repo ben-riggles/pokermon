@@ -17,18 +17,6 @@
   animation: 10s linear rotate infinite;
 }
 
-.box {
-  border-radius: 2px;
-  width: 160px;
-  padding: 8px;
-  margin: auto;
-  position: relative;
-  background: white;
-  border: 2px solid white;
-  box-shadow: 0 2px 0 2px black, inset 0 2px 0 2px black, 0 0 0 2px black,
-    inset 0 0 0 2px black;
-}
-
 @keyframes rotate {
   0% {
     transform: rotate(0);

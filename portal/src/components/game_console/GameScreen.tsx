@@ -6,25 +6,54 @@ import TournamentsScreen from './screens/TournamentsScreen';
 import CashGamesScreen from './screens/CashGamesScreen';
 import GraphsScreen from './screens/GraphsScreen';
 import SinglePlayerScreen from './screens/SinglePlayerScreen';
+import WindowWrapper from '@/components/ui/WindowWrapper';
 
 export default function GameScreen() {
   const { screen } = useGameStore();
 
   switch (screen) {
     case 'Welcome':
-      return <WelcomeScreen />;
+      return (
+        <WindowWrapper>
+          <WelcomeScreen />
+        </WindowWrapper>
+      );
     case 'Menu':
-      return <MenuScreen />;
+      return (
+        <WindowWrapper>
+          <MenuScreen />
+        </WindowWrapper>
+      );
     case 'Players':
-      return <PlayersScreen />;
+      return (
+        <WindowWrapper>
+          <PlayersScreen />
+        </WindowWrapper>
+      );
     case 'Tournaments':
-      return <TournamentsScreen />;
+      return (
+        <WindowWrapper>
+          <TournamentsScreen />
+        </WindowWrapper>
+      );
     case 'CashGames':
-      return <CashGamesScreen />;
+      return (
+        <WindowWrapper>
+          <CashGamesScreen />
+        </WindowWrapper>
+      );
     case 'Graphs':
-      return <GraphsScreen />;
+      return (
+        <WindowWrapper>
+          <GraphsScreen />
+        </WindowWrapper>
+      );
     case 'SinglePlayer':
-      return <SinglePlayerScreen />;
+      return (
+        <WindowWrapper>
+          <SinglePlayerScreen />
+        </WindowWrapper>
+      );
     default:
       return null;
   }

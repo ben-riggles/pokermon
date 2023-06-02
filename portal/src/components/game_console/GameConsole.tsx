@@ -1,4 +1,5 @@
 import GameScreen from './GameScreen';
+import oaksLab from '../../assests/oaks_lab.png';
 
 export default function GameConsole() {
   return (
@@ -15,9 +16,15 @@ export default function GameConsole() {
           id='outer-screen'
           className='flex flex-col rounded justify-center items-center h-[90%] w-screen mx-5 md:mx-20 bg-slate-500 z-10'
         >
+          {/*higher res image needed*/}
           <div
             id='screen'
-            className='hide-scrollbar justify-center items-center overflow-auto h-[90%] w-[90%] bg-slate-300'
+            className='hide-scrollbar justify-center items-center overflow-auto h-[90%] w-[90%]'
+            style={{
+              background: `url(${oaksLab})`,
+              backgroundRepeat: `no-repeat`,
+              backgroundSize: `cover`,
+            }}
           >
             <GameScreen />
           </div>
