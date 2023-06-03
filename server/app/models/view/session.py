@@ -24,8 +24,6 @@ class SessionDetailView(ViewModel):
     date: datetime
     other_game: str
 
-    players: list = field(metadata={'nested_type': 'SessionDataSessionSummary'})
-
     def __init__(self, session: Session, query: SessionQuery = None):
         self.id = session.id
         self.date = session.date
@@ -39,5 +37,3 @@ class SessionDetailView(ViewModel):
 
         self.num_players = len(data)
         self.num_tournament_players = len([x for x in data if x.tournament_placement is not None])
-        
-        self.players = [ViewModel.get('SessionDataSessionSummary')(x) for x in data]

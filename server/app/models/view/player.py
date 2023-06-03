@@ -23,7 +23,7 @@ class PlayerView(ViewModel):
 
 @dataclass
 class PlayerDetailView(PlayerView):
-    sprite: str
+    full_name: str
     total_net: Decimal
     cash_net: Decimal
     tournament_net: Decimal
@@ -31,8 +31,6 @@ class PlayerDetailView(PlayerView):
     six_nine: int
     quads: int
     straight_flush: int
-
-    sessions: list = field(metadata={'nested_type': 'SessionDataPlayerSummary'})
 
     def __init__(self, player: Player, query: PlayerQuery = None):
         super().__init__(player)
@@ -51,5 +49,3 @@ class PlayerDetailView(PlayerView):
         self.quads = sum(x.quads for x in data)
         self.straight_flush = sum(x.straight_flush for x in data)
         self.total_net = sum([self.cash_net, self.tournament_net, self.other_net])
-
-        self.sessions = [ViewModel.get('SessionDataPlayerSummary')(x) for x in data]
