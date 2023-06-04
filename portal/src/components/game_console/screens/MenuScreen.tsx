@@ -40,20 +40,18 @@ export default function MenuScreen() {
 
   return (
     <div className='flex h-full w-full items-center'>
-      <WindowWrapper>
-        <ul>
-          {menuItems.map((item, i) => (
-            <li key={item.label} tabIndex={-1} id={'select'}>
-              <div className='flex pt-1 items-center text-xs'>
-                {cursorLoc === i ? <FaPlay className='mr-2' /> : null}
-                <span onClick={() => updateScreen(item.screen)}>
-                  {item.label}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </WindowWrapper>
+      <ul>
+        {menuItems.map((item, i) => (
+          <li key={item.label} tabIndex={-1} id={'select'}>
+            <div className='flex pt-1 items-center text-xs'>
+              {cursorLoc === i ? <FaPlay className='mr-2' /> : null}
+              <span onClick={() => updateScreen(item.screen)}>
+                {item.label}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
