@@ -1,13 +1,9 @@
 import GameScreen from './GameScreen';
 // import oaksLab from '../../assests/oaks_lab.png';
 import Canvas from '../ui/Canvas';
+import { useEffect } from 'react';
 
 export default function GameConsole() {
-  function draw(ctx: CanvasRenderingContext2D) {
-    ctx.canvas.width = 1280;
-    ctx.canvas.height = 720;
-  }
-
   return (
     <>
       <div className='flex h-screen justify-center items-center w-full bg-purple-800'>
@@ -27,10 +23,15 @@ export default function GameConsole() {
           {/*higher res image needed*/}
           <div
             id='screen'
-            className='hide-scrollbar justify-center items-center overflow-auto h-[90%] w-[90%]'
+            className='hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
           >
-            <GameScreen />
-            <Canvas className='bg-blue-500' draw={draw} />
+            <Canvas />
+            {/*
+            <div className='overflow-scroll w-[1280px] h-[720px]'>
+              <div className='w-[60px] h-[50px] bg-white left-[196px]'></div>
+              <img className='object-none' src={pokermonMap} />
+            </div>
+            */}
           </div>
           <div className='text-lg mt-2 text-slate-100 font-sans'>
             POKERBOI <span className='text-red-500'>C</span>

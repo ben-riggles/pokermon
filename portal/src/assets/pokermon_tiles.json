@@ -1,0 +1,15 @@
+{
+  "columns": 8,
+  "image": "../../Downloads/16x16 PokemonStyle.png",
+  "imageheight": 2784,
+  "imagewidth": 128,
+  "margin": 0,
+  "name": "16x16 PokemonStyle",
+  "spacing": 0,
+  "tilecount": 1392,
+  "tiledversion": "1.9.2",
+  "tileheight": 16,
+  "tilewidth": 16,
+  "type": "tileset",
+  "version": "1.9"
+}

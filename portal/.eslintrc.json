@@ -19,7 +19,8 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "off",
     "no-console": "error",
-    "react/jsx-key": "off"
+    "react/jsx-key": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   },
   "settings": {
     "react": {
