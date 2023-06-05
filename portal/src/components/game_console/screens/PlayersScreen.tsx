@@ -56,7 +56,7 @@ export default function PlayersScreen() {
           </div>
           <div className='flex h-12 min-w-[48px]'>
             <img
-              src={`https://img.pokemondb.net/sprites/sword-shield/normal/${
+              src={`https://img.pokemondb.net/sprites/black-white/normal/${
                 player.sprite || 'snorlax'
               }.png`}
             />

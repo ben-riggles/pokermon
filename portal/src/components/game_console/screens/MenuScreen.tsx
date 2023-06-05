@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FaPlay } from 'react-icons/fa';
-import WindowWrapper from '@/components/ui/WindowWrapper';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';

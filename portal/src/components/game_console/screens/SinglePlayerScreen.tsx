@@ -12,7 +12,7 @@ export default function SinglePlayerScreen() {
       <div className='flex items-end h-8 mt-4 pb-4'>
         <div className='flex h-12'>
           <img
-            src={`https://img.pokemondb.net/sprites/sword-shield/normal/${sprite}.png`}
+            src={`https://img.pokemondb.net/sprites/black-white/normal/${sprite}.png`}
           />
         </div>
         <span className='text-lg'>
