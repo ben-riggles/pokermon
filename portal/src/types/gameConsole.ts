@@ -2,7 +2,7 @@ export type Screen =
   | 'Welcome'
   | 'Menu'
   | 'Bedroom'
-  | 'Tournaments'
+  | 'Laboratory'
   | 'CashGames'
   | 'PokerCenter'
   | 'SinglePlayer';

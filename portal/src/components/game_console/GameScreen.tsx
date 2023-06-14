@@ -2,11 +2,11 @@ import useGameStore from '@/stores/screenStore';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MenuScreen from './screens/MenuScreen';
 import PlayersScreen from './screens/PlayersScreen';
-import TournamentsScreen from './screens/TournamentsScreen';
 import CashGamesScreen from './screens/CashGamesScreen';
 import SinglePlayerScreen from './screens/SinglePlayerScreen';
 import WindowWrapper from '@/components/ui/WindowWrapper';
 import PokerCenterScreen from './screens/PokerCenterScreen';
+import LaboratoryScreen from './screens/LaboratoryScreen';
 
 export default function GameScreen() {
   const { screen } = useGameStore();
@@ -30,10 +30,10 @@ export default function GameScreen() {
           <PlayersScreen />
         </WindowWrapper>
       );
-    case 'Tournaments':
+    case 'Laboratory':
       return (
         <WindowWrapper>
-          <TournamentsScreen />
+          <LaboratoryScreen />
         </WindowWrapper>
       );
     case 'CashGames':

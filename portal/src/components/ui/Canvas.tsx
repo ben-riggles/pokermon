@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import pokermonMap from '@/assets/pokermon_map.png';
 import pokerCenter from '@/assets/poker_center.png';
 import home from '@/assets/bedroom.png';
+import laboratory from '@/assets/laboratory.png';
 import { Zone } from '@/types/canvas';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
@@ -23,7 +24,7 @@ const zoneArray: Zone[] = [
     h: 90,
   },
   {
-    screen: 'Tournaments',
+    screen: 'Laboratory',
     x: 200,
     y: 180,
     w: 100,
@@ -69,6 +70,16 @@ function draw(ctx: CanvasRenderingContext2D, screen?: Screen) {
   }
   if (screen === 'Bedroom') {
     img.src = home;
+    ctx.canvas.width = 1024;
+    ctx.canvas.height = 640;
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      ctx.fill();
+    };
+    return;
+  }
+  if (screen === 'Laboratory') {
+    img.src = laboratory;
     ctx.canvas.width = 1024;
     ctx.canvas.height = 640;
     img.onload = () => {
