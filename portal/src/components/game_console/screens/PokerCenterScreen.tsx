@@ -1,12 +1,12 @@
 import usePreviousScreen from '@/hooks/usePreviousScreen';
 import useScreenStore from '@/stores/screenStore';
 
-export default function GraphsScreen() {
+export default function PokerCenterScreen() {
   const { updateScreen } = useScreenStore();
   usePreviousScreen('Menu');
   return (
     <div>
-      <div>Graphs</div>
+      <div>Poker Center</div>
       <div className='cursor-pointer' onClick={() => updateScreen('Menu')}>
         Back
       </div>

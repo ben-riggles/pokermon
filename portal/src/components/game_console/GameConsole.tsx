@@ -17,11 +17,11 @@ export default function GameConsole() {
         */}
         <div
           id='outer-screen'
-          className='flex flex-col rounded justify-center items-center w-full h-[90%] bg-slate-500'
+          className='flex flex-col rounded justify-center items-center max-w-[1024px] w-[98%] h-[90%] bg-slate-500'
         >
           <div
             id='screen'
-            className='hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
+            className='relative hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
           >
             <GameScreen />
             <Canvas />

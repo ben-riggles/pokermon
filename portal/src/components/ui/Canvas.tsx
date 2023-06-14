@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import pokermonMap from '@/assets/pokermon_map.png';
+import pokerCenter from '@/assets/poker_center.png';
+import home from '@/assets/bedroom.png';
 import { Zone } from '@/types/canvas';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
@@ -14,7 +16,7 @@ const inBox = (x: number, y: number, box: Zone): boolean => {
 
 const zoneArray: Zone[] = [
   {
-    screen: 'Players',
+    screen: 'Bedroom',
     x: 50,
     y: 360,
     w: 60,
@@ -35,7 +37,7 @@ const zoneArray: Zone[] = [
     h: 70,
   },
   {
-    screen: 'Graphs',
+    screen: 'PokerCenter',
     x: 650,
     y: 120,
     w: 90,
@@ -50,11 +52,31 @@ const zoneArray: Zone[] = [
   },
 ];
 
-function draw(ctx: CanvasRenderingContext2D) {
-  ctx.canvas.width = 1280;
-  ctx.canvas.height = 720;
+function draw(ctx: CanvasRenderingContext2D, screen?: Screen) {
   const img = new Image();
   img.src = pokermonMap;
+  ctx.canvas.width = 1280;
+  ctx.canvas.height = 720;
+  if (screen === 'PokerCenter') {
+    img.src = pokerCenter;
+    ctx.canvas.width = 1024;
+    ctx.canvas.height = 640;
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      ctx.fill();
+    };
+    return;
+  }
+  if (screen === 'Bedroom') {
+    img.src = home;
+    ctx.canvas.width = 1024;
+    ctx.canvas.height = 640;
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      ctx.fill();
+    };
+    return;
+  }
   img.onload = () => {
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = `rgba(255, 0,0,0.4)`;
@@ -88,7 +110,7 @@ export default function Canvas({ ...props }) {
     document.addEventListener('click', (e) => {
       const screen = onMouseClick(e, canvasRef.current!);
       updateScreen(screen);
-      draw(canvasRef.current!.getContext('2d')!);
+      draw(canvasRef.current!.getContext('2d')!, screen);
     });
   }, []);
 

@@ -10,13 +10,14 @@
   - Note: I'm using Python 3.10.1. Theoretically newer versions should be fine
 - In a command line, navigate to `.../poker_stats/server`
 - Create a virtual environment: `python -m venv .venv`
+- On Mac you might need to specify `python3 -m venv .venv`
   - Alternatively, if using VSCode:
     - Press F1 to bring up commands
     - Search "Python: Create Environment". Select `Venv`
     - Select your python interpreter
 - Enter the virtual environment:
   - (Windows) `.\.venv\Scripts\activate.bat`
-  - (Linux) `source ./.venv/bin/activate`
+  - (Linux / Mac) `source ./.venv/bin/activate`
   - If installed using VSCode, you should be able to press Ctrl+Shift+`
   - Note: Powershell doesn't get along with this. If using VSCode, change the default terminal.
 - Install the needed packages: `pip install -r requirements.txt`

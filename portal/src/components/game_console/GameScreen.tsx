@@ -4,9 +4,9 @@ import MenuScreen from './screens/MenuScreen';
 import PlayersScreen from './screens/PlayersScreen';
 import TournamentsScreen from './screens/TournamentsScreen';
 import CashGamesScreen from './screens/CashGamesScreen';
-import GraphsScreen from './screens/GraphsScreen';
 import SinglePlayerScreen from './screens/SinglePlayerScreen';
 import WindowWrapper from '@/components/ui/WindowWrapper';
+import PokerCenterScreen from './screens/PokerCenterScreen';
 
 export default function GameScreen() {
   const { screen } = useGameStore();
@@ -24,7 +24,7 @@ export default function GameScreen() {
           <MenuScreen />
         </WindowWrapper>
       );
-    case 'Players':
+    case 'Bedroom':
       return (
         <WindowWrapper>
           <PlayersScreen />
@@ -42,10 +42,10 @@ export default function GameScreen() {
           <CashGamesScreen />
         </WindowWrapper>
       );
-    case 'Graphs':
+    case 'PokerCenter':
       return (
         <WindowWrapper>
-          <GraphsScreen />
+          <PokerCenterScreen />
         </WindowWrapper>
       );
     case 'SinglePlayer':

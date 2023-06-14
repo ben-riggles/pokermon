@@ -42,6 +42,7 @@ export default function PlayersScreen() {
 
   return (
     <div className='flex flex-wrap py-4 gap-4 w-full'>
+      <div>Cozy Shack</div>
       {players.map((player, i) => (
         <div
           onClick={() => {
@@ -66,6 +67,9 @@ export default function PlayersScreen() {
           </span>
         </div>
       ))}
+      <div className='cursor-pointer' onClick={() => updateScreen('Menu')}>
+        Back
+      </div>
     </div>
   );
 }
