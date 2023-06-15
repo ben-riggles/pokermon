@@ -6,54 +6,18 @@ import laboratory from '@/assets/laboratory.png';
 import { Zone } from '@/types/canvas';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
+import { Zones } from './zones';
 
 const mouseClick = {
   x: 0,
   y: 0,
 };
+
 const inBox = (x: number, y: number, box: Zone): boolean => {
   return x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h;
 };
 
-const zoneArray: Zone[] = [
-  {
-    screen: 'Bedroom',
-    x: 50,
-    y: 360,
-    w: 60,
-    h: 90,
-  },
-  {
-    screen: 'Laboratory',
-    x: 200,
-    y: 180,
-    w: 100,
-    h: 70,
-  },
-  {
-    screen: 'CashGames',
-    x: 520,
-    y: 20,
-    w: 60,
-    h: 70,
-  },
-  {
-    screen: 'PokerCenter',
-    x: 650,
-    y: 120,
-    w: 90,
-    h: 80,
-  },
-  {
-    screen: 'Menu',
-    x: 1162,
-    y: 28,
-    w: 94,
-    h: 70,
-  },
-];
-
-function draw(ctx: CanvasRenderingContext2D, screen?: Screen) {
+function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
   const img = new Image();
   img.src = pokermonMap;
   ctx.canvas.width = 1280;
@@ -91,7 +55,7 @@ function draw(ctx: CanvasRenderingContext2D, screen?: Screen) {
   img.onload = () => {
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = `rgba(255, 0,0,0.4)`;
-    zoneArray.forEach(({ x, y, w, h }) => {
+    Zones[screen].forEach(({ x, y, w, h }) => {
       ctx.fillRect(x, y, w, h);
     });
     ctx.fillStyle = `rgba(0,0,255,1)`;
@@ -101,37 +65,74 @@ function draw(ctx: CanvasRenderingContext2D, screen?: Screen) {
   };
 }
 
-function onMouseClick(e: MouseEvent, canvas: HTMLCanvasElement): Screen {
+function onMouseClick(
+  e: MouseEvent,
+  canvas: HTMLCanvasElement,
+  screen: Screen
+): Screen {
   const rect = canvas.getBoundingClientRect();
   mouseClick.x = e.clientX - rect.left;
   mouseClick.y = e.clientY - rect.top;
 
-  const hit = zoneArray.find((box) => inBox(mouseClick.x, mouseClick.y, box));
+  const hit = Zones[screen].find((box) =>
+    inBox(mouseClick.x, mouseClick.y, box)
+  );
   if (hit) {
     return hit.screen;
   }
+
+  // TODO: Figure out if you want to always go back to welcome screen when you click somewhere
   return 'Welcome';
 }
 
 export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { updateScreen } = useScreenStore();
+  const { updateScreen, screen } = useScreenStore();
 
   useEffect(() => {
-    document.addEventListener('click', (e) => {
-      const screen = onMouseClick(e, canvasRef.current!);
-      updateScreen(screen);
-      draw(canvasRef.current!.getContext('2d')!, screen);
-    });
-  }, []);
+    function handleClick(e: MouseEvent) {
+      const newScreen = onMouseClick(e, canvasRef.current!, screen);
+      updateScreen(newScreen);
+
+      if (newScreen !== screen) {
+        const ctx = canvasRef.current!.getContext('2d')!;
+        draw(ctx, newScreen);
+      }
+    }
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [screen]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas === null) return;
     const context = canvas.getContext('2d');
     if (context) {
-      draw(context);
+      draw(context, screen);
     }
+
+    function handleCanvasCursor(e: MouseEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      if (Zones[screen].some((zone) => inBox(mouseX, mouseY, zone))) {
+        canvas!.style.cursor = 'pointer';
+      } else {
+        canvas!.style.cursor = 'default';
+      }
+    }
+
+    function handleExitCanvasCursor() {
+      canvas!.style.cursor = 'default';
+    }
+
+    canvas.addEventListener('mousemove', handleCanvasCursor);
+    canvas.addEventListener('mouseout', handleExitCanvasCursor);
+
+    return () => {
+      canvas.removeEventListener('mousemove', handleCanvasCursor);
+      canvas.removeEventListener('mouseout', handleExitCanvasCursor);
+    };
   }, []);
 
   return <canvas ref={canvasRef} {...props} />;
