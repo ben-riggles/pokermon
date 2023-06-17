@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
-import pokermonMap from '@/assets/pokermon_map.png';
+import pokermonMap from '@/assets/pokermon_outside.png';
 import pokerCenter from '@/assets/poker_center.png';
-import home from '@/assets/bedroom.png';
+import cozyShack from '@/assets/bedroom.png';
 import laboratory from '@/assets/laboratory.png';
+import pokerMart from '@/assets/poker_mart.png';
 import { Zone } from '@/types/canvas';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
@@ -33,7 +34,20 @@ function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
     return;
   }
   if (screen === 'Bedroom') {
-    img.src = home;
+    img.src = cozyShack;
+    ctx.canvas.width = 1024;
+    ctx.canvas.height = 640;
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      ctx.fill();
+      Zones[screen].forEach(({ x, y, w, h }) => {
+        ctx.fillRect(x, y, w, h);
+      });
+    };
+    return;
+  }
+  if (screen === 'Laboratory') {
+    img.src = laboratory;
     ctx.canvas.width = 1024;
     ctx.canvas.height = 640;
     img.onload = () => {
@@ -42,8 +56,8 @@ function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
     };
     return;
   }
-  if (screen === 'Laboratory') {
-    img.src = laboratory;
+  if (screen === 'PokerMart') {
+    img.src = pokerMart;
     ctx.canvas.width = 1024;
     ctx.canvas.height = 640;
     img.onload = () => {
@@ -74,12 +88,16 @@ function onMouseClick(
   mouseClick.x = e.clientX - rect.left;
   mouseClick.y = e.clientY - rect.top;
 
-  const hit = Zones[screen].find((box) =>
+  const hitScreen = Zones[screen].find((box) =>
     inBox(mouseClick.x, mouseClick.y, box)
   );
-  if (hit) {
-    return hit.screen;
+  if (hitScreen) {
+    return hitScreen.screen;
   }
+
+  const hitInfo = Zones[screen].find((box) =>
+    inBox(mouseClick.x, mouseClick.y, box)
+  );
 
   // TODO: Figure out if you want to always go back to welcome screen when you click somewhere
   return 'Welcome';
@@ -87,12 +105,13 @@ function onMouseClick(
 
 export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { updateScreen, screen } = useScreenStore();
+  const { updateScreen, screen, info, updateInfo } = useScreenStore();
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const newScreen = onMouseClick(e, canvasRef.current!, screen);
       updateScreen(newScreen);
+      updateInfo(info);
 
       if (newScreen !== screen) {
         const ctx = canvasRef.current!.getContext('2d')!;

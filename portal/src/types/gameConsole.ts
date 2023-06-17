@@ -1,8 +1,9 @@
 export type Screen =
   | 'Welcome'
-  | 'Menu'
+  | 'Dojo'
   | 'Bedroom'
   | 'Laboratory'
-  | 'CashGames'
+  | 'PokerMart'
   | 'PokerCenter'
-  | 'SinglePlayer';
+  | 'SinglePlayer'
+  | 'Computer';
