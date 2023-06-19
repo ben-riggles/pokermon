@@ -56,7 +56,9 @@ const welcomeZones: ClickableRegion[] = [
     box: { x: 1162, y: 28, w: 94, h: 70 },
   },
 ];
+
 const dojoZones: ClickableRegion[] = [];
+
 const bedroomZones: ClickableRegion[] = [
   {
     type: 'INFO',
@@ -64,10 +66,12 @@ const bedroomZones: ClickableRegion[] = [
     box: { x: 510, y: 5, w: 100, h: 55 },
   },
 ];
+
 const laboratoryZones: ClickableRegion[] = [];
+
 const pokerMartZones: ClickableRegion[] = [];
+
 const pokerCenterZones: ClickableRegion[] = [];
-const singlePlayerZones: ClickableRegion[] = [];
 
 export const RegionsByScreen = {
   Welcome: welcomeZones,
@@ -76,5 +80,4 @@ export const RegionsByScreen = {
   Laboratory: laboratoryZones,
   PokerMart: pokerMartZones,
   PokerCenter: pokerCenterZones,
-  SinglePlayer: singlePlayerZones,
-};
+} as const;
