@@ -5,14 +5,17 @@ import { FaPlay } from 'react-icons/fa';
 interface MenuListProps {
   withCursor?: boolean;
   layout?: 'default' | 'grid';
+  itemGap?: string;
 }
 
 export default function MenuList({
   withCursor = true,
   layout = 'default',
+  itemGap,
   children,
 }: PropsWithChildren<MenuListProps>) {
   const [cursorPosition, setCursorPosition] = useState(0);
+  const gap = itemGap ? `mt-${itemGap}` : '';
   const columns = window.innerWidth > 768 ? '4' : '2';
   const containerClasses =
     layout === 'default' ? '' : `grid grid-cols-${columns} gap-y-4`;
@@ -46,11 +49,14 @@ export default function MenuList({
       {Children.map(children, (child, index) => (
         <li tabIndex={-1}>
           <div
-            className='flex items-center'
+            className={`flex items-center ${index > 0 ? gap : ''}`}
             onMouseEnter={() => handleMouseEnter(index)}
           >
             {withCursor && cursorPosition === index && (
-              <FaPlay className='mr-2' />
+              <FaPlay className='mr-1' />
+            )}
+            {withCursor && cursorPosition !== index && (
+              <span style={{ width: 16 }} className='mr-1'></span>
             )}
             {child}
           </div>

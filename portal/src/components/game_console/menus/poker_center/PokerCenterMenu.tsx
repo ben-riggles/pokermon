@@ -1,5 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuLink from '../../lib/MenuLink';
+import MenuPage from '../../lib/MenuPage';
 
 export default function PokerCenterMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -9,10 +9,5 @@ export default function PokerCenterMenu() {
     updateMenu('Welcome');
   }
 
-  return (
-    <div>
-      <div>Poker Center</div>
-      <MenuLink onClick={handleBack}>Back</MenuLink>
-    </div>
-  );
+  return <MenuPage title='Poker Center' onBack={handleBack}></MenuPage>;
 }

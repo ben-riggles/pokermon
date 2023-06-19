@@ -1,10 +1,10 @@
 import { useState, useEffect, Fragment } from 'react';
-import { FaPlay } from 'react-icons/fa';
 import useScreenStore from '@/stores/screenStore';
 import { Menu } from '@/types/gameConsole';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
+import MenuPage from '../../lib/MenuPage';
 
 const menuItems: { label: string; menu: Menu }[] = [
   { label: 'Players', menu: 'All Players' },
@@ -40,9 +40,7 @@ export default function LaboratoryMenu() {
   }
 
   return (
-    <div>
-      <div>Laboratory</div>
-
+    <MenuPage title='Laboratory' onBack={handleBack}>
       <MenuList>
         {menuItems.map((item) => (
           <Fragment key={item.label}>
@@ -53,6 +51,6 @@ export default function LaboratoryMenu() {
         ))}
       </MenuList>
       <MenuLink onClick={handleBack}>Back</MenuLink>
-    </div>
+    </MenuPage>
   );
 }

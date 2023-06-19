@@ -5,6 +5,7 @@ import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
+import MenuPage from '../../lib/MenuPage';
 
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
@@ -45,8 +46,7 @@ export default function PlayersMenu() {
   }
 
   return (
-    <div>
-      <div>Players</div>
+    <MenuPage title='Players' onBack={handleBack}>
       <div className='py-4'>
         <MenuList layout='grid'>
           {players.map((player) => (
@@ -72,7 +72,6 @@ export default function PlayersMenu() {
           ))}
         </MenuList>
       </div>
-      <MenuLink onClick={handleBack}>Back</MenuLink>
-    </div>
+    </MenuPage>
   );
 }
