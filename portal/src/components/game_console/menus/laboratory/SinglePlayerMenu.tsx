@@ -2,10 +2,13 @@ import usePreviousMenu from '@/hooks/usePreviousMenu';
 import useScreenStore from '@/stores/screenStore';
 import MenuPage from '../../lib/MenuPage';
 import MenuList from '../../lib/MenuList';
-import MenuProgressBar from '../../lib/MenuProgressBar';
 
-const Currency = (value: number) =>
-  value > 0 ? <>{`$${value}`}</> : <>{`-$${Math.abs(value)}`}</>;
+const currency = (value: number) =>
+  value > 0 ? (
+    <>{`$${value.toFixed(2)}`}</>
+  ) : (
+    <>{`-$${Math.abs(value).toFixed(2)}`}</>
+  );
 
 export default function SinglePlayerMenu() {
   const { player, updateMenu } = useScreenStore();
@@ -30,8 +33,43 @@ export default function SinglePlayerMenu() {
       onBack={() => updateMenu('All Players')}
     >
       <div className='text-sm py-2'>
-        <MenuList withCursor={false} itemGap='1'>
-          <MenuProgressBar
+        <MenuList withCursor={false} layout='grid'>
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{player.six_nine}</div>
+            <div>Sixty Nines</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{player.quads}</div>
+            <div>Quads</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{player.sessions.length}</div>
+            <div>Total Sessions</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{currency(player.cash_net)}</div>
+            <div>Cash Net</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{currency(player.tournament_net)}</div>
+            <div>Tourney Net</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{currency(player.other_net)}</div>
+            <div>Misc Net</div>
+          </div>
+
+          <div className='text-center w-full pixel-border p-4'>
+            <div className='text-xl'>{currency(player.total_net)}</div>
+            <div>Total Net</div>
+          </div>
+
+          {/* <MenuProgressBar
             title='Sixty Nines'
             current={player.six_nine}
             max={100}
@@ -69,7 +107,7 @@ export default function SinglePlayerMenu() {
             min={-250}
             max={250}
             valueRenderer={Currency}
-          />
+          /> */}
         </MenuList>
       </div>
     </MenuPage>
