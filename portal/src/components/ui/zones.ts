@@ -1,60 +1,88 @@
 import { Screen } from '@/types/gameConsole';
 
-type Zone = {
-  screen: Screen;
+export type Box = {
   x: number;
   y: number;
   w: number;
   h: number;
 };
 
-const welcomeZones: Zone[] = [
+export type ScreenRegion = {
+  type: 'SCREEN';
+  screen: Screen;
+};
+
+export type InfoRegion = {
+  type: 'INFO';
+  menuName: string;
+};
+
+export type RegionMetadata = ScreenRegion | InfoRegion;
+
+export type ClickableRegion = {
+  box: Box;
+} & RegionMetadata;
+
+const welcomeZones: ClickableRegion[] = [
   {
+    type: 'SCREEN',
     screen: 'Bedroom',
-    x: 46,
-    y: 360,
-    w: 68,
-    h: 90,
+    box: {
+      x: 46,
+      y: 360,
+      w: 68,
+      h: 90,
+    },
   },
   {
+    type: 'SCREEN',
     screen: 'Laboratory',
-    x: 200,
-    y: 180,
-    w: 96,
-    h: 70,
+    box: {
+      x: 200,
+      y: 180,
+      w: 96,
+      h: 70,
+    },
   },
   {
+    type: 'SCREEN',
     screen: 'PokerCenter',
-    x: 700,
-    y: 78,
-    w: 90,
-    h: 80,
+    box: {
+      x: 700,
+      y: 78,
+      w: 90,
+      h: 80,
+    },
   },
   {
+    type: 'SCREEN',
     screen: 'PokerMart',
-    x: 765,
-    y: 310,
-    w: 150,
-    h: 100,
+    box: {
+      x: 765,
+      y: 310,
+      w: 150,
+      h: 100,
+    },
   },
   {
+    type: 'SCREEN',
     screen: 'Dojo',
-    x: 1162,
-    y: 28,
-    w: 94,
-    h: 70,
+    box: {
+      x: 1162,
+      y: 28,
+      w: 94,
+      h: 70,
+    },
   },
 ];
+const dojoZones: ClickableRegion[] = [];
+const bedroomZones: ClickableRegion[] = [];
+const laboratoryZones: ClickableRegion[] = [];
+const pokerMartZones: ClickableRegion[] = [];
+const pokerCenterZones: ClickableRegion[] = [];
+const singlePlayerZones: ClickableRegion[] = [];
 
-const dojoZones: Zone[] = [];
-const bedroomZones: Zone[] = [];
-
-const laboratoryZones: Zone[] = [];
-const pokerMartZones: Zone[] = [];
-const pokerCenterZones: Zone[] = [];
-const singlePlayerZones: Zone[] = [];
-
-export const Zones = {
+export const RegionsByScreen = {
   Welcome: welcomeZones,
   Dojo: dojoZones,
   Bedroom: bedroomZones,
