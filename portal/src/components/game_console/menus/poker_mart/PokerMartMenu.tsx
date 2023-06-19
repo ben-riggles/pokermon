@@ -1,5 +1,6 @@
-import usePreviousScreen from '@/hooks/usePreviousScreen';
 import useScreenStore from '@/stores/screenStore';
+import MenuLink from '../../lib/MenuLink';
+import MenuPage from '../../lib/MenuPage';
 
 export default function PokerMartMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -9,12 +10,5 @@ export default function PokerMartMenu() {
     updateMenu('Welcome');
   }
 
-  return (
-    <div>
-      <div>Poker Mart</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
-    </div>
-  );
+  return <MenuPage title='Poker Mart' onBack={handleBack}></MenuPage>;
 }

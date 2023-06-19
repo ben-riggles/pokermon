@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { FaPlay } from 'react-icons/fa';
+import { useState, useEffect, Fragment } from 'react';
 import useScreenStore from '@/stores/screenStore';
 import { Menu } from '@/types/gameConsole';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
-// import usePreviousScreen from '@/hooks/usePreviousScreen';
+import MenuLink from '../../lib/MenuLink';
+import MenuList from '../../lib/MenuList';
+import MenuPage from '../../lib/MenuPage';
 
 const menuItems: { label: string; menu: Menu }[] = [
   { label: 'Players', menu: 'All Players' },
@@ -18,7 +19,7 @@ export default function LaboratoryMenu() {
     if (UpKeys.includes(event.key) && cursorLoc > 0) {
       setCursor((cursorLoc) => cursorLoc - 1);
     }
-    if (DownKeys.includes(event.key) && cursorLoc < 4) {
+    if (DownKeys.includes(event.key) && cursorLoc < 1) {
       setCursor((cursorLoc) => cursorLoc + 1);
     }
     if (ForwardKeys.includes(event.key)) {
@@ -39,21 +40,17 @@ export default function LaboratoryMenu() {
   }
 
   return (
-    <div className='flex flex-col h-full w-full items-center'>
-      <div>Laboratory</div>
-      <ul>
-        {menuItems.map((item, i) => (
-          <li key={item.label} tabIndex={-1} id={'select'}>
-            <div className='flex pt-1 items-center text-xs'>
-              {cursorLoc === i ? <FaPlay className='mr-2' /> : null}
-              <span onClick={() => updateMenu(item.menu)}>{item.label}</span>
-            </div>
-          </li>
+    <MenuPage title='Laboratory' onBack={handleBack}>
+      <MenuList>
+        {menuItems.map((item) => (
+          <Fragment key={item.label}>
+            <MenuLink onClick={() => updateMenu(item.menu)}>
+              {item.label}
+            </MenuLink>
+          </Fragment>
         ))}
-      </ul>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
-    </div>
+      </MenuList>
+      <MenuLink onClick={handleBack}>Back</MenuLink>
+    </MenuPage>
   );
 }

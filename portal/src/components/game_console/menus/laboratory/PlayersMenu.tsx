@@ -3,7 +3,9 @@ import useScreenStore from '@/stores/screenStore';
 import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
+import MenuLink from '../../lib/MenuLink';
+import MenuList from '../../lib/MenuList';
+import MenuPage from '../../lib/MenuPage';
 
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
@@ -44,35 +46,32 @@ export default function PlayersMenu() {
   }
 
   return (
-    <div className='flex flex-wrap py-4 gap-4 w-full'>
-      <div>Players</div>
-      {players.map((player, i) => (
-        <div
-          onClick={() => {
-            updatePlayer(players[players.indexOf(player)]);
-            updateMenu('Single Player');
-          }}
-          className='flex items-end h-8 text-xs w-32'
-          key={player.id}
-        >
-          <div className='flex h-full items-center'>
-            {cursorLoc === i ? <FaPlay /> : null}
-          </div>
-          <div className='flex h-12 min-w-[48px]'>
-            <img
-              src={`https://img.pokemondb.net/sprites/black-white/normal/${
-                player.sprite || 'snorlax'
-              }.png`}
-            />
-          </div>
-          <span>
-            {player.first_name} {player.last_name}
-          </span>
-        </div>
-      ))}
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
+    <MenuPage title='Players' onBack={handleBack}>
+      <div className='py-4'>
+        <MenuList layout='grid'>
+          {players.map((player) => (
+            <MenuLink
+              onClick={() => {
+                updatePlayer(players[players.indexOf(player)]);
+                updateMenu('Single Player');
+              }}
+              key={player.id}
+            >
+              <div className='flex h-8 w-32 items-center'>
+                <img
+                  className='h-12 min-w-[48px]'
+                  src={`https://img.pokemondb.net/sprites/black-white/normal/${
+                    player.sprite || 'snorlax'
+                  }.png`}
+                />
+                <span className='text-xs text-left'>
+                  {player.first_name} {player.last_name}
+                </span>
+              </div>
+            </MenuLink>
+          ))}
+        </MenuList>
       </div>
-    </div>
+    </MenuPage>
   );
 }

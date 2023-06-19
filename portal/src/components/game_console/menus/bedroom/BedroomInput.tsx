@@ -1,4 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
+import MenuPage from '../../lib/MenuPage';
 
 export default function BedroomInput() {
   const { updateMenu } = useScreenStore();
@@ -7,12 +8,5 @@ export default function BedroomInput() {
     updateMenu('Bedroom Menu');
   }
 
-  return (
-    <div>
-      <div>Input Your Info</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
-    </div>
-  );
+  return <MenuPage title='Input Your Info' onBack={handleBack}></MenuPage>;
 }

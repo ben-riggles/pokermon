@@ -1,4 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
+import MenuPage from '../../lib/MenuPage';
 
 export default function PokerCenterMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -8,12 +9,5 @@ export default function PokerCenterMenu() {
     updateMenu('Welcome');
   }
 
-  return (
-    <div>
-      <div>Poker Center</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
-    </div>
-  );
+  return <MenuPage title='Poker Center' onBack={handleBack}></MenuPage>;
 }

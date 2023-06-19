@@ -1,4 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
+import MenuPage from '../../lib/MenuPage';
 
 export default function DojoMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -8,12 +9,5 @@ export default function DojoMenu() {
     updateMenu('Welcome');
   }
 
-  return (
-    <div>
-      <div>Dojo</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
-    </div>
-  );
+  return <MenuPage title='Dojo' onBack={handleBack}></MenuPage>;
 }
