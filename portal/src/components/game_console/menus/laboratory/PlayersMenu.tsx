@@ -3,7 +3,6 @@ import useScreenStore from '@/stores/screenStore';
 import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
 

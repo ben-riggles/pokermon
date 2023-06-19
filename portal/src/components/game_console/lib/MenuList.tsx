@@ -5,16 +5,15 @@ import { FaPlay } from 'react-icons/fa';
 interface MenuListProps {
   withCursor?: boolean;
   layout?: 'default' | 'grid';
-  columns?: number;
 }
 
 export default function MenuList({
   withCursor = true,
   layout = 'default',
-  columns = 4,
   children,
 }: PropsWithChildren<MenuListProps>) {
   const [cursorPosition, setCursorPosition] = useState(0);
+  const columns = window.innerWidth > 768 ? '4' : '2';
   const containerClasses =
     layout === 'default' ? '' : `grid grid-cols-${columns} gap-y-4`;
 
