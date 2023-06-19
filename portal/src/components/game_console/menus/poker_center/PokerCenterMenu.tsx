@@ -1,4 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
+import MenuLink from '../../lib/MenuLink';
 
 export default function PokerCenterMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -11,9 +12,7 @@ export default function PokerCenterMenu() {
   return (
     <div>
       <div>Poker Center</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
+      <MenuLink onClick={handleBack}>Back</MenuLink>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
+import MenuLink from '../../lib/MenuLink';
 
 export default function BedroomMenu() {
   const { updateScreen, updateMenu } = useScreenStore();
@@ -11,9 +12,7 @@ export default function BedroomMenu() {
   return (
     <div>
       <div>Bedroom</div>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
+      <MenuLink onClick={handleBack}>Back</MenuLink>
     </div>
   );
 }

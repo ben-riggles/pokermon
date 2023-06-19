@@ -3,6 +3,7 @@ import { FaPlay } from 'react-icons/fa';
 import useScreenStore from '@/stores/screenStore';
 import { Menu } from '@/types/gameConsole';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
+import MenuLink from '../../lib/MenuLink';
 // import usePreviousScreen from '@/hooks/usePreviousScreen';
 
 const menuItems: { label: string; menu: Menu }[] = [
@@ -51,9 +52,7 @@ export default function LaboratoryMenu() {
           </li>
         ))}
       </ul>
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
+      <MenuLink onClick={handleBack}>Back</MenuLink>
     </div>
   );
 }

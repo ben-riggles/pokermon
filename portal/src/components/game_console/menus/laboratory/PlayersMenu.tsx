@@ -4,6 +4,7 @@ import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
+import MenuLink from '../../lib/MenuLink';
 
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
@@ -70,9 +71,7 @@ export default function PlayersMenu() {
           </span>
         </div>
       ))}
-      <div className='cursor-pointer' onClick={handleBack}>
-        Back
-      </div>
+      <MenuLink onClick={handleBack}>Back</MenuLink>
     </div>
   );
 }
