@@ -51,25 +51,25 @@ export default function PlayersMenu() {
       <div className='py-4'>
         <MenuList layout='grid'>
           {players.map((player) => (
-            <div
+            <MenuLink
               onClick={() => {
                 updatePlayer(players[players.indexOf(player)]);
                 updateMenu('Single Player');
               }}
-              className='flex items-end h-8 text-xs w-32'
               key={player.id}
             >
-              <div className='flex h-12 min-w-[48px]'>
+              <div className='flex h-8 w-32 items-center'>
                 <img
+                  className='h-12 min-w-[48px]'
                   src={`https://img.pokemondb.net/sprites/black-white/normal/${
                     player.sprite || 'snorlax'
                   }.png`}
                 />
+                <span className='text-xs text-left'>
+                  {player.first_name} {player.last_name}
+                </span>
               </div>
-              <span>
-                {player.first_name} {player.last_name}
-              </span>
-            </div>
+            </MenuLink>
           ))}
         </MenuList>
       </div>

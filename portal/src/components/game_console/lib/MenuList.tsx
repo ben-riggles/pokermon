@@ -45,7 +45,7 @@ export default function MenuList({
   return (
     <ul className={containerClasses}>
       {Children.map(children, (child, index) => (
-        <li tabIndex={-1} id={'select'}>
+        <li tabIndex={-1}>
           <div
             className='flex items-center'
             onMouseEnter={() => handleMouseEnter(index)}
