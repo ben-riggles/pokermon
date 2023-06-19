@@ -95,23 +95,18 @@ function onMouseClick(
     return hitScreen.screen;
   }
 
-  const hitInfo = Zones[screen].find((box) =>
-    inBox(mouseClick.x, mouseClick.y, box)
-  );
-
   // TODO: Figure out if you want to always go back to welcome screen when you click somewhere
   return 'Welcome';
 }
 
 export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { updateScreen, screen, info, updateInfo } = useScreenStore();
+  const { updateScreen, screen } = useScreenStore();
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const newScreen = onMouseClick(e, canvasRef.current!, screen);
       updateScreen(newScreen);
-      updateInfo(info);
 
       if (newScreen !== screen) {
         const ctx = canvasRef.current!.getContext('2d')!;

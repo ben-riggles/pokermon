@@ -5,5 +5,4 @@ export type Screen =
   | 'Laboratory'
   | 'PokerMart'
   | 'PokerCenter'
-  | 'SinglePlayer'
-  | 'Computer';
+  | 'SinglePlayer';

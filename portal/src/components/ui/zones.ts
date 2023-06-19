@@ -47,15 +47,7 @@ const welcomeZones: Zone[] = [
 ];
 
 const dojoZones: Zone[] = [];
-const bedroomZones: Zone[] = [
-  {
-    screen: 'Computer',
-    x: 46,
-    y: 360,
-    w: 68,
-    h: 90,
-  },
-];
+const bedroomZones: Zone[] = [];
 
 const laboratoryZones: Zone[] = [];
 const pokerMartZones: Zone[] = [];
