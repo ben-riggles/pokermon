@@ -1,13 +1,13 @@
-import { Screen } from '@/types/gameConsole';
+import { Menu } from '@/types/gameConsole';
 import useGameStore from '@/stores/screenStore';
 import { useEffect } from 'react';
 import { BackKeys } from '@/types/keys';
 
-export default function usePreviousScreen(screen: Screen) {
-  const { updateScreen } = useGameStore();
+export default function usePreviousMenu(menu: Menu) {
+  const { updateMenu } = useGameStore();
   function arrowHandler(event: KeyboardEvent) {
     if (BackKeys.includes(event.key)) {
-      updateScreen(screen);
+      updateMenu(menu);
     }
   }
   useEffect(() => {

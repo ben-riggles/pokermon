@@ -4,21 +4,24 @@ import pokerCenter from '@/assets/poker_center.png';
 import cozyShack from '@/assets/bedroom.png';
 import laboratory from '@/assets/laboratory.png';
 import pokerMart from '@/assets/poker_mart.png';
-import { Zone } from '@/types/canvas';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
-import { Zones } from './zones';
+import { Box, ClickableRegion, RegionsByScreen } from './zones';
 
 const mouseClick = {
   x: 0,
   y: 0,
 };
 
-const inBox = (x: number, y: number, box: Zone): boolean => {
+const inBox = (x: number, y: number, box: Box): boolean => {
   return x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h;
 };
 
-function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
+function draw(
+  ctx: CanvasRenderingContext2D,
+  screen: Screen,
+  regions: ClickableRegion[]
+) {
   const img = new Image();
   img.src = pokermonMap;
   ctx.canvas.width = 1280;
@@ -39,10 +42,12 @@ function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
     ctx.canvas.height = 640;
     img.onload = () => {
       ctx.drawImage(img, 0, 0);
-      ctx.fill();
-      Zones[screen].forEach(({ x, y, w, h }) => {
+      ctx.fillStyle = `rgba(255, 0,0,0.4)`;
+      regions.forEach((region) => {
+        const { x, y, w, h } = region.box;
         ctx.fillRect(x, y, w, h);
       });
+      ctx.fill();
     };
     return;
   }
@@ -69,7 +74,8 @@ function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
   img.onload = () => {
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = `rgba(255, 0,0,0.4)`;
-    Zones[screen].forEach(({ x, y, w, h }) => {
+    regions.forEach((region) => {
+      const { x, y, w, h } = region.box;
       ctx.fillRect(x, y, w, h);
     });
     ctx.fillStyle = `rgba(0,0,255,1)`;
@@ -79,57 +85,64 @@ function draw(ctx: CanvasRenderingContext2D, screen: Screen) {
   };
 }
 
-function onMouseClick(
+function getHitRegion(
   e: MouseEvent,
   canvas: HTMLCanvasElement,
-  screen: Screen
-): Screen {
+  regions: ClickableRegion[]
+): ClickableRegion | undefined {
   const rect = canvas.getBoundingClientRect();
   mouseClick.x = e.clientX - rect.left;
   mouseClick.y = e.clientY - rect.top;
 
-  const hitScreen = Zones[screen].find((box) =>
-    inBox(mouseClick.x, mouseClick.y, box)
+  const hit = regions.find((region) =>
+    inBox(mouseClick.x, mouseClick.y, region.box)
   );
-  if (hitScreen) {
-    return hitScreen.screen;
-  }
 
-  // TODO: Figure out if you want to always go back to welcome screen when you click somewhere
-  return 'Welcome';
+  return hit;
 }
 
 export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { updateScreen, screen } = useScreenStore();
+  const { updateScreen, updateMenu, screen } = useScreenStore();
+  const regions = RegionsByScreen[screen];
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      const newScreen = onMouseClick(e, canvasRef.current!, screen);
-      updateScreen(newScreen);
-
-      if (newScreen !== screen) {
-        const ctx = canvasRef.current!.getContext('2d')!;
-        draw(ctx, newScreen);
+      const region = getHitRegion(e, canvasRef.current!, regions);
+      if (!region) return;
+      switch (region.type) {
+        case 'SCREEN':
+          updateScreen(region.screen);
+          updateMenu(region.defaultMenu);
+          if (region.screen !== screen) {
+            const ctx = canvasRef.current!.getContext('2d')!;
+            draw(ctx, region.screen, RegionsByScreen[region.screen]);
+          }
+          break;
+        case 'INFO':
+          updateMenu(region.menu);
+          break;
+        default:
+          break;
       }
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [screen]);
+  }, [screen, regions, updateScreen, updateMenu]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas === null) return;
     const context = canvas.getContext('2d');
     if (context) {
-      draw(context, screen);
+      draw(context, screen, regions);
     }
 
     function handleCanvasCursor(e: MouseEvent) {
       const rect = canvas!.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
-      if (Zones[screen].some((zone) => inBox(mouseX, mouseY, zone))) {
+      if (regions.some((region) => inBox(mouseX, mouseY, region.box))) {
         canvas!.style.cursor = 'pointer';
       } else {
         canvas!.style.cursor = 'default';
@@ -147,7 +160,7 @@ export default function Canvas({ ...props }) {
       canvas.removeEventListener('mousemove', handleCanvasCursor);
       canvas.removeEventListener('mouseout', handleExitCanvasCursor);
     };
-  }, []);
+  }, [regions, screen]);
 
   return <canvas ref={canvasRef} {...props} />;
 }

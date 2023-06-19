@@ -3,20 +3,19 @@ import { FaPlay } from 'react-icons/fa';
 import useScreenStore from '@/stores/screenStore';
 import { Screen } from '@/types/gameConsole';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
-import usePreviousScreen from '@/hooks/usePreviousScreen';
+// import usePreviousScreen from '@/hooks/usePreviousScreen';
 
 const menuItems: { label: string; screen: Screen }[] = [
-  { label: 'Players', screen: 'Players' },
-  { label: 'Tournaments', screen: 'Tournaments' },
-  { label: 'CashGames', screen: 'CashGames' },
-  { label: 'Graphs', screen: 'Graphs' },
-  { label: 'Exit', screen: 'Welcome' },
+  // { label: 'Players', screen: 'Players' },
+  // { label: 'Tournaments', screen: 'Tournaments' },
+  // { label: 'CashGames', screen: 'CashGames' },
+  // { label: 'Graphs', screen: 'Graphs' },
+  // { label: 'Exit', screen: 'Welcome' },
 ];
 
 export default function MenuScreen() {
   const [cursorLoc, setCursor] = useState(0);
   const { updateScreen } = useScreenStore();
-  usePreviousScreen('Welcome');
 
   function arrowHandler(event: KeyboardEvent) {
     if (UpKeys.includes(event.key) && cursorLoc > 0) {

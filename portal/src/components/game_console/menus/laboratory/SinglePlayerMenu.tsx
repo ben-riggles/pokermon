@@ -1,9 +1,9 @@
-import usePreviousScreen from '@/hooks/usePreviousScreen';
+import usePreviousMenu from '@/hooks/usePreviousMenu';
 import useScreenStore from '@/stores/screenStore';
 
-export default function SinglePlayerScreen() {
-  const { player, updateScreen } = useScreenStore();
-  usePreviousScreen('Players');
+export default function SinglePlayerMenu() {
+  const { player, updateMenu } = useScreenStore();
+  usePreviousMenu('All Players');
 
   const sprite = player.sprite || 'snorlax';
 
@@ -35,7 +35,7 @@ export default function SinglePlayerScreen() {
       <div>${player.total_net}</div>
       <div
         className='cursor-pointer text-lg pt-4'
-        onClick={() => updateScreen('Players')}
+        onClick={() => updateMenu('All Players')}
       >
         Back
       </div>
