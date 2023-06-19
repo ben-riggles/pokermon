@@ -4,8 +4,7 @@ export type Screen =
   | 'Bedroom'
   | 'Laboratory'
   | 'PokerMart'
-  | 'PokerCenter'
-  | 'SinglePlayer';
+  | 'PokerCenter';
 
 export type Menu =
   | 'Welcome'

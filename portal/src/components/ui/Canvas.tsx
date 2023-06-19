@@ -1,12 +1,7 @@
 import { useEffect, useRef } from 'react';
-import pokermonMap from '@/assets/pokermon_outside.png';
-import pokerCenter from '@/assets/poker_center.png';
-import cozyShack from '@/assets/bedroom.png';
-import laboratory from '@/assets/laboratory.png';
-import pokerMart from '@/assets/poker_mart.png';
 import useScreenStore from '@/stores/screenStore';
-import { Screen } from '@/types/gameConsole';
 import { Box, ClickableRegion, RegionsByScreen } from './zones';
+import { ScreenInfo, Screens } from './screens';
 
 const mouseClick = {
   x: 0,
@@ -19,58 +14,14 @@ const inBox = (x: number, y: number, box: Box): boolean => {
 
 function draw(
   ctx: CanvasRenderingContext2D,
-  screen: Screen,
+  screenInfo: ScreenInfo,
   regions: ClickableRegion[]
 ) {
   const img = new Image();
-  img.src = pokermonMap;
-  ctx.canvas.width = 1280;
-  ctx.canvas.height = 720;
-  if (screen === 'PokerCenter') {
-    img.src = pokerCenter;
-    ctx.canvas.width = 1024;
-    ctx.canvas.height = 640;
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      ctx.fill();
-    };
-    return;
-  }
-  if (screen === 'Bedroom') {
-    img.src = cozyShack;
-    ctx.canvas.width = 1024;
-    ctx.canvas.height = 640;
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      ctx.fillStyle = `rgba(255, 0,0,0.4)`;
-      regions.forEach((region) => {
-        const { x, y, w, h } = region.box;
-        ctx.fillRect(x, y, w, h);
-      });
-      ctx.fill();
-    };
-    return;
-  }
-  if (screen === 'Laboratory') {
-    img.src = laboratory;
-    ctx.canvas.width = 1024;
-    ctx.canvas.height = 640;
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      ctx.fill();
-    };
-    return;
-  }
-  if (screen === 'PokerMart') {
-    img.src = pokerMart;
-    ctx.canvas.width = 1024;
-    ctx.canvas.height = 640;
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      ctx.fill();
-    };
-    return;
-  }
+  img.src = screenInfo.img;
+  ctx.canvas.width = screenInfo.width;
+  ctx.canvas.height = screenInfo.height;
+
   img.onload = () => {
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = `rgba(255, 0,0,0.4)`;
@@ -116,7 +67,7 @@ export default function Canvas({ ...props }) {
           updateMenu(region.defaultMenu);
           if (region.screen !== screen) {
             const ctx = canvasRef.current!.getContext('2d')!;
-            draw(ctx, region.screen, RegionsByScreen[region.screen]);
+            draw(ctx, Screens[region.screen], RegionsByScreen[region.screen]);
           }
           break;
         case 'INFO':
@@ -135,7 +86,7 @@ export default function Canvas({ ...props }) {
     if (canvas === null) return;
     const context = canvas.getContext('2d');
     if (context) {
-      draw(context, screen, regions);
+      draw(context, Screens[screen], regions);
     }
 
     function handleCanvasCursor(e: MouseEvent) {
