@@ -1,7 +1,7 @@
 import { playersApi } from '@/api/allEndpoints';
 import useScreenStore from '@/stores/screenStore';
 import { DetailsRes } from '@/types/endpoints/players';
-import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
+import { DownKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
@@ -26,10 +26,6 @@ export default function PlayersMenu() {
     }
     if (DownKeys.includes(event.key) && cursorLoc < players.length - 1) {
       setCursor((cursorLoc) => cursorLoc + 1);
-    }
-    if (ForwardKeys.includes(event.key)) {
-      updatePlayer(players[cursorLoc]);
-      updateScreen('SinglePlayer');
     }
   }
 

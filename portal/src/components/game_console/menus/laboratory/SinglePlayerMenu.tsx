@@ -2,6 +2,10 @@ import usePreviousMenu from '@/hooks/usePreviousMenu';
 import useScreenStore from '@/stores/screenStore';
 import MenuPage from '../../lib/MenuPage';
 import MenuList from '../../lib/MenuList';
+import MenuProgressBar from '../../lib/MenuProgressBar';
+
+const Currency = (value: number) =>
+  value > 0 ? <>{`$${value}`}</> : <>{`-$${Math.abs(value)}`}</>;
 
 export default function SinglePlayerMenu() {
   const { player, updateMenu } = useScreenStore();
@@ -27,34 +31,45 @@ export default function SinglePlayerMenu() {
     >
       <div className='text-sm py-2'>
         <MenuList withCursor={false} itemGap='1'>
-          <div>
-            <div>Sixty Nines</div>
-            <div>{player.six_nine}</div>
-          </div>
-          <div>
-            <div>Quads</div>
-            <div>{player.quads}</div>
-          </div>
-          <div>
-            <div>Total Sessions</div>
-            <div>{player.sessions.length}</div>
-          </div>
-          <div>
-            <div>Cash Net</div>
-            <div>${player.cash_net}</div>
-          </div>
-          <div>
-            <div>Tourney Net</div>
-            <div>${player.tournament_net}</div>
-          </div>
-          <div>
-            <div>Misc Net</div>
-            <div>${player.other_net}</div>
-          </div>
-          <div>
-            <div>Total Net</div>
-            <div>${player.total_net}</div>
-          </div>
+          <MenuProgressBar
+            title='Sixty Nines'
+            current={player.six_nine}
+            max={100}
+          />
+          <MenuProgressBar title='Quads' current={player.quads} max={100} />
+          <MenuProgressBar
+            title='Total Sessions'
+            current={player.sessions.length}
+            max={100}
+          />
+          <MenuProgressBar
+            title='Cash Net'
+            current={player.cash_net}
+            min={-250}
+            max={250}
+            valueRenderer={Currency}
+          />
+          <MenuProgressBar
+            title='Tourney Net'
+            current={player.tournament_net}
+            min={-250}
+            max={250}
+            valueRenderer={Currency}
+          />
+          <MenuProgressBar
+            title='Misc Net'
+            current={player.other_net}
+            min={-250}
+            max={250}
+            valueRenderer={Currency}
+          />
+          <MenuProgressBar
+            title='Total Net'
+            current={player.total_net}
+            min={-250}
+            max={250}
+            valueRenderer={Currency}
+          />
         </MenuList>
       </div>
     </MenuPage>
