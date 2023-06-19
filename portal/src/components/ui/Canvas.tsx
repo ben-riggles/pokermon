@@ -10,6 +10,8 @@ type ClickInfo = {
   alpha: number;
 };
 
+const imageCache: { [key: string]: CanvasImageSource } = {};
+
 const inBox = (x: number, y: number, box: Box): boolean => {
   return x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h;
 };
@@ -56,95 +58,97 @@ export default function Canvas({ ...props }) {
   const regions = RegionsByScreen[screen];
   const clickInfo = useRef<ClickInfo>();
   const requestRef = useRef<number>();
-  const imgRef = useRef<CanvasImageSource>();
+  const screenImageRef = useRef<CanvasImageSource>();
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas!.getContext('2d')!;
-    draw(ctx, Screens[screen], regions, imgRef.current!);
 
-    if (clickInfo.current) {
-      const circle = clickInfo.current;
-      if (circle.radius >= 40) {
-        clickInfo.current = undefined;
-        return;
-      }
+    if (screenImageRef.current === undefined) {
+      requestRef.current = requestAnimationFrame(animate);
+      return;
+    }
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.stroke;
-      ctx.shadowColor = 'white';
-      ctx.shadowBlur = 10;
-      ctx.lineWidth = 2;
-      ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255,255,255,${circle.alpha})`;
-      ctx.stroke();
-      ctx.restore();
+    draw(ctx, Screens[screen], regions, screenImageRef.current!);
 
-      circle.radius += 2;
-      circle.alpha -= 0.05;
+    if (clickInfo.current === undefined) {
+      return;
+    }
+
+    const circle = clickInfo.current;
+    ctx.save();
+    ctx.beginPath();
+    ctx.stroke;
+    ctx.shadowColor = 'white';
+    ctx.shadowBlur = 10;
+    ctx.lineWidth = 2;
+    ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(255,255,255,${circle.alpha})`;
+    ctx.stroke();
+    ctx.restore();
+
+    circle.radius += 2;
+    circle.alpha -= 0.05;
+    if (circle.radius > 40) {
+      clickInfo.current = undefined;
     }
 
     requestRef.current = requestAnimationFrame(animate);
   }, [regions, screen]);
 
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const region = getHitRegion(e, canvasRef.current!, regions);
-      if (!region) return;
-      switch (region.type) {
-        case 'SCREEN':
-          updateScreen(region.screen);
-          updateMenu(region.defaultMenu);
-          break;
-        case 'INFO':
-          updateMenu(region.menu);
-          break;
-        default:
-          break;
-      }
-    }
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, [screen, regions, updateScreen, updateMenu]);
-
-  useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas === null) return;
-    const context = canvas.getContext('2d');
 
-    function handleCanvasCursor(e: MouseEvent) {
-      const rect = canvas!.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      if (regions.some((region) => inBox(mouseX, mouseY, region.box))) {
-        canvas!.style.cursor = 'pointer';
-      } else {
-        canvas!.style.cursor = 'default';
-      }
-    }
+    const handleCanvasCursor = (e: MouseEvent) => {
+      const { x, y } = getCanvasEventPos(canvas, e);
+      const inRegion = regions.some((region) => inBox(x, y, region.box));
+      canvas.style.cursor = inRegion ? 'pointer' : 'default';
+    };
 
-    function handleExitCanvasCursor() {
-      canvas!.style.cursor = 'default';
-    }
+    const handleExitCanvasCursor = () => {
+      canvas.style.cursor = 'default';
+    };
 
     const handleClick = (evt: MouseEvent) => {
       const { x, y } = getCanvasEventPos(canvas, evt);
       clickInfo.current = { x, y, radius: 0, alpha: 1 };
+
+      const region = getHitRegion(evt, canvasRef.current!, regions);
+      if (region) {
+        switch (region.type) {
+          case 'SCREEN':
+            updateScreen(region.screen);
+            updateMenu(region.defaultMenu);
+            break;
+          case 'INFO':
+            updateMenu(region.menu);
+            break;
+          default:
+            break;
+        }
+      } else {
+        requestRef.current = requestAnimationFrame(animate);
+      }
     };
+
+    // Try to store from cache instead of loading up a new image if possible.
+    if (imageCache[screen]) {
+      screenImageRef.current = imageCache[screen];
+      requestRef.current = requestAnimationFrame(animate);
+    } else {
+      const img = new Image();
+      img.src = Screens[screen].img;
+      img.onload = () => {
+        imageCache[screen] = img;
+        screenImageRef.current = img;
+        requestRef.current = requestAnimationFrame(animate);
+      };
+    }
 
     canvas.addEventListener('mousemove', handleCanvasCursor);
     canvas.addEventListener('mouseout', handleExitCanvasCursor);
     canvas.addEventListener('click', handleClick);
-
-    if (context) {
-      const img = new Image();
-      img.src = Screens[screen].img;
-      img.onload = () => {
-        imgRef.current = img;
-        requestRef.current = requestAnimationFrame(animate);
-      };
-    }
 
     return () => {
       canvas.removeEventListener('mousemove', handleCanvasCursor);
@@ -152,7 +156,7 @@ export default function Canvas({ ...props }) {
       canvas.removeEventListener('click', handleClick);
       cancelAnimationFrame(requestRef.current!);
     };
-  }, [animate, regions, screen]);
+  }, [animate, regions, screen, updateMenu, updateScreen]);
 
   return <canvas ref={canvasRef} {...props} />;
 }
