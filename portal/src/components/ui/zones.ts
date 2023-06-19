@@ -9,6 +9,7 @@ export type Box = {
 
 export type ScreenRegion = {
   type: 'SCREEN';
+  defaultMenu: Menu;
   screen: Screen;
 };
 
@@ -27,26 +28,31 @@ const welcomeZones: ClickableRegion[] = [
   {
     type: 'SCREEN',
     screen: 'Bedroom',
+    defaultMenu: 'Bedroom Menu',
     box: { x: 46, y: 360, w: 68, h: 90 },
   },
   {
     type: 'SCREEN',
     screen: 'Laboratory',
+    defaultMenu: 'Laboratory Menu',
     box: { x: 200, y: 180, w: 96, h: 70 },
   },
   {
     type: 'SCREEN',
     screen: 'PokerCenter',
+    defaultMenu: 'Poker Center Menu',
     box: { x: 700, y: 78, w: 90, h: 80 },
   },
   {
     type: 'SCREEN',
     screen: 'PokerMart',
+    defaultMenu: 'Poker Mart Menu',
     box: { x: 765, y: 310, w: 150, h: 100 },
   },
   {
     type: 'SCREEN',
     screen: 'Dojo',
+    defaultMenu: 'Dojo Menu',
     box: { x: 1162, y: 28, w: 94, h: 70 },
   },
 ];
@@ -54,7 +60,7 @@ const dojoZones: ClickableRegion[] = [];
 const bedroomZones: ClickableRegion[] = [
   {
     type: 'INFO',
-    menu: 'Enter Player Info',
+    menu: 'Bedroom Input',
     box: { x: 510, y: 5, w: 100, h: 55 },
   },
 ];

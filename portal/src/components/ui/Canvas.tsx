@@ -113,6 +113,7 @@ export default function Canvas({ ...props }) {
       switch (region.type) {
         case 'SCREEN':
           updateScreen(region.screen);
+          updateMenu(region.defaultMenu);
           if (region.screen !== screen) {
             const ctx = canvasRef.current!.getContext('2d')!;
             draw(ctx, region.screen, RegionsByScreen[region.screen]);

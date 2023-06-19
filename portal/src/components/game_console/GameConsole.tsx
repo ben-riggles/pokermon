@@ -1,5 +1,4 @@
-import GameScreen from './GameScreen';
-// import oaksLab from '../../assests/oaks_lab.png';
+import GameMenu from './GameMenuSwitch';
 import Canvas from '../ui/Canvas';
 
 export default function GameConsole() {
@@ -23,7 +22,7 @@ export default function GameConsole() {
             id='screen'
             className='relative hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
           >
-            <GameScreen />
+            <GameMenu />
             <Canvas />
           </div>
           <div className='text-lg mt-2 text-slate-100 font-sans'>

@@ -1,16 +1,14 @@
 import { playersApi } from '@/api/allEndpoints';
-import usePreviousScreen from '@/hooks/usePreviousScreen';
 import useScreenStore from '@/stores/screenStore';
 import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 
-export default function PlayersScreen() {
+export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
   const [players, setPlayers] = useState<DetailsRes[]>([]);
-  usePreviousScreen('Menu');
-  const { updateScreen, updatePlayer } = useScreenStore();
+  const { updateScreen, updatePlayer, updateMenu } = useScreenStore();
 
   useEffect(() => {
     async function getPlayerDetails() {
@@ -40,14 +38,19 @@ export default function PlayersScreen() {
     };
   });
 
+  function handleBack() {
+    updateScreen('Welcome');
+    updateMenu('Welcome');
+  }
+
   return (
     <div className='flex flex-wrap py-4 gap-4 w-full'>
-      <div>Cozy Shack</div>
+      <div>Players</div>
       {players.map((player, i) => (
         <div
           onClick={() => {
             updatePlayer(players[players.indexOf(player)]);
-            updateScreen('SinglePlayer');
+            updateMenu('Single Player');
           }}
           className='flex items-end h-8 text-xs w-32'
           key={player.id}
@@ -67,7 +70,7 @@ export default function PlayersScreen() {
           </span>
         </div>
       ))}
-      <div className='cursor-pointer' onClick={() => updateScreen('Menu')}>
+      <div className='cursor-pointer' onClick={handleBack}>
         Back
       </div>
     </div>
