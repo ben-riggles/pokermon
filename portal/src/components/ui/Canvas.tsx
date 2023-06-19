@@ -32,6 +32,19 @@ function draw(
   });
 }
 
+function drawClickCircle(ctx: CanvasRenderingContext2D, circle: ClickInfo) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.stroke;
+  ctx.shadowColor = 'white';
+  ctx.shadowBlur = 10;
+  ctx.lineWidth = 2;
+  ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(255,255,255,${circle.alpha})`;
+  ctx.stroke();
+  ctx.restore();
+}
+
 function getCanvasEventPos(
   canvas: HTMLCanvasElement,
   e: MouseEvent
@@ -64,31 +77,20 @@ export default function Canvas({ ...props }) {
     const canvas = canvasRef.current;
     const ctx = canvas!.getContext('2d')!;
 
-    if (screenImageRef.current === undefined) {
-      requestRef.current = requestAnimationFrame(animate);
-      return;
-    }
-
     draw(ctx, Screens[screen], regions, screenImageRef.current!);
 
+    // Stop animating if no click animation,
+    // but, this means we need to request new frames when screen/regions change
     if (clickInfo.current === undefined) {
       return;
     }
 
     const circle = clickInfo.current;
-    ctx.save();
-    ctx.beginPath();
-    ctx.stroke;
-    ctx.shadowColor = 'white';
-    ctx.shadowBlur = 10;
-    ctx.lineWidth = 2;
-    ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255,255,255,${circle.alpha})`;
-    ctx.stroke();
-    ctx.restore();
+    drawClickCircle(ctx, circle);
 
     circle.radius += 2;
     circle.alpha -= 0.05;
+    // We clear out the graphic once circle grows large enough
     if (circle.radius > 40) {
       clickInfo.current = undefined;
     }
@@ -128,6 +130,7 @@ export default function Canvas({ ...props }) {
             break;
         }
       } else {
+        cancelAnimationFrame(requestRef.current!);
         requestRef.current = requestAnimationFrame(animate);
       }
     };
