@@ -5,6 +5,7 @@ import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import MenuLink from '../../lib/MenuLink';
+import MenuList from '../../lib/MenuList';
 
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
@@ -45,32 +46,33 @@ export default function PlayersMenu() {
   }
 
   return (
-    <div className='flex flex-wrap py-4 gap-4 w-full'>
+    <div>
       <div>Players</div>
-      {players.map((player, i) => (
-        <div
-          onClick={() => {
-            updatePlayer(players[players.indexOf(player)]);
-            updateMenu('Single Player');
-          }}
-          className='flex items-end h-8 text-xs w-32'
-          key={player.id}
-        >
-          <div className='flex h-full items-center'>
-            {cursorLoc === i ? <FaPlay /> : null}
-          </div>
-          <div className='flex h-12 min-w-[48px]'>
-            <img
-              src={`https://img.pokemondb.net/sprites/black-white/normal/${
-                player.sprite || 'snorlax'
-              }.png`}
-            />
-          </div>
-          <span>
-            {player.first_name} {player.last_name}
-          </span>
-        </div>
-      ))}
+      <div className='py-4'>
+        <MenuList layout='grid'>
+          {players.map((player) => (
+            <div
+              onClick={() => {
+                updatePlayer(players[players.indexOf(player)]);
+                updateMenu('Single Player');
+              }}
+              className='flex items-end h-8 text-xs w-32'
+              key={player.id}
+            >
+              <div className='flex h-12 min-w-[48px]'>
+                <img
+                  src={`https://img.pokemondb.net/sprites/black-white/normal/${
+                    player.sprite || 'snorlax'
+                  }.png`}
+                />
+              </div>
+              <span>
+                {player.first_name} {player.last_name}
+              </span>
+            </div>
+          ))}
+        </MenuList>
+      </div>
       <MenuLink onClick={handleBack}>Back</MenuLink>
     </div>
   );
