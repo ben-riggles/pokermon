@@ -1,7 +1,7 @@
 import { playersApi } from '@/api/allEndpoints';
 import useScreenStore from '@/stores/screenStore';
 import { DetailsRes } from '@/types/endpoints/players';
-import { DownKeys, ForwardKeys, UpKeys } from '@/types/keys';
+import { DownKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
@@ -10,7 +10,7 @@ import MenuPage from '../../lib/MenuPage';
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
   const [players, setPlayers] = useState<DetailsRes[]>([]);
-  const { updateScreen, updatePlayer, updateMenu } = useScreenStore();
+  const { updatePlayer, updateMenu } = useScreenStore();
 
   useEffect(() => {
     async function getPlayerDetails() {
@@ -27,10 +27,6 @@ export default function PlayersMenu() {
     if (DownKeys.includes(event.key) && cursorLoc < players.length - 1) {
       setCursor((cursorLoc) => cursorLoc + 1);
     }
-    if (ForwardKeys.includes(event.key)) {
-      updatePlayer(players[cursorLoc]);
-      updateScreen('SinglePlayer');
-    }
   }
 
   useEffect(() => {
@@ -41,13 +37,12 @@ export default function PlayersMenu() {
   });
 
   function handleBack() {
-    updateScreen('Welcome');
-    updateMenu('Welcome');
+    updateMenu('Laboratory Menu');
   }
 
   return (
     <MenuPage title='Players' onBack={handleBack}>
-      <div className='py-4'>
+      <div className='py-2'>
         <MenuList layout='grid'>
           {players.map((player) => (
             <MenuLink

@@ -35,3 +35,13 @@ export type Sessions = {
   six_nine: number;
   quads: number;
 };
+
+export type Leaderboard =
+  | 'six_nine'
+  | 'total_net'
+  | 'cash_net'
+  | 'tournament_net'
+  | 'other_net'
+  | 'six_nine'
+  | 'quads'
+  | 'sessions';

@@ -1,5 +1,4 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuLink from '../../lib/MenuLink';
 import MenuPage from '../../lib/MenuPage';
 
 export default function PokerMartMenu() {

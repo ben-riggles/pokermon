@@ -16,9 +16,8 @@ export default function MenuList({
 }: PropsWithChildren<MenuListProps>) {
   const [cursorPosition, setCursorPosition] = useState(0);
   const gap = itemGap ? `mt-${itemGap}` : '';
-  const columns = window.innerWidth > 768 ? '4' : '2';
-  const containerClasses =
-    layout === 'default' ? '' : `grid grid-cols-${columns} gap-y-4`;
+  const columns = window.innerWidth > 768 ? 'grid-cols-4' : 'grid-cols-2';
+  const containerClasses = layout === 'default' ? '' : `grid ${columns} gap-4`;
 
   useEffect(() => {
     function arrowHandler(event: KeyboardEvent) {
