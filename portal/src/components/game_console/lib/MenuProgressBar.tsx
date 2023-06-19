@@ -27,13 +27,12 @@ export default function MenuProgressBar({
 }: PropsWithChildren<MenuProgressBarProps>) {
   if (min > max) {
     throw new Error('MenuProgressBar given min value greater than max value');
-  } else if (min === max) {
-    throw new Error('MenuProgressBar given same min and max values');
   }
 
   // Clamp current to [min, max];
   current = Math.max(min, Math.min(current, max));
-  const percentage = (current - min) / (max - min);
+  const range = max - min;
+  const percentage = range === 0 ? 1 : (current - min) / range;
   return (
     <div>
       {title}
@@ -48,9 +47,7 @@ export default function MenuProgressBar({
         </div>
         <div className='w-3 bg-black' />
       </div>
-      <div className='ml-8 text-lg text-center'>
-        {valueRenderer(current)} / {valueRenderer(max)}
-      </div>
+      <div className='ml-8 text-lg text-center'>{valueRenderer(current)}</div>
     </div>
   );
 }

@@ -28,7 +28,7 @@
 
 .pixel-border {
   border-style: solid;
-  border-width: 2;
+  border-width: 2px;
   border-color: black;
 
   border-image-slice: 4;

@@ -10,6 +10,8 @@ import PokerCenterMenu from './menus/poker_center/PokerCenterMenu';
 import PokerMartMenu from './menus/poker_mart/PokerMartMenu';
 import DojoMenu from './menus/dojo//DojoMenu';
 import BedroomInput from './menus/bedroom/BedroomInput';
+import Leaderboards from './menus/laboratory/Leaderboards';
+import Leaderboard from './menus/laboratory/Leaderboard';
 
 function getMenu(menu: Menu): JSX.Element {
   switch (menu) {
@@ -31,6 +33,10 @@ function getMenu(menu: Menu): JSX.Element {
       return <DojoMenu />;
     case 'Bedroom Input':
       return <BedroomInput />;
+    case 'Leaderboards':
+      return <Leaderboards />;
+    case 'Leaderboard':
+      return <Leaderboard />;
     default:
       return <></>;
   }

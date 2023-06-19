@@ -15,4 +15,6 @@ export type Menu =
   | 'Poker Center Menu'
   | 'Poker Mart Menu'
   | 'Dojo Menu'
-  | 'Bedroom Input';
+  | 'Bedroom Input'
+  | 'Leaderboards'
+  | 'Leaderboard';

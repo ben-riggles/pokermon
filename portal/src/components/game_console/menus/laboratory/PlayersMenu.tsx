@@ -10,7 +10,7 @@ import MenuPage from '../../lib/MenuPage';
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
   const [players, setPlayers] = useState<DetailsRes[]>([]);
-  const { updateScreen, updatePlayer, updateMenu } = useScreenStore();
+  const { updatePlayer, updateMenu } = useScreenStore();
 
   useEffect(() => {
     async function getPlayerDetails() {
@@ -37,13 +37,12 @@ export default function PlayersMenu() {
   });
 
   function handleBack() {
-    updateScreen('Welcome');
-    updateMenu('Welcome');
+    updateMenu('Laboratory Menu');
   }
 
   return (
     <MenuPage title='Players' onBack={handleBack}>
-      <div className='py-4'>
+      <div className='py-2'>
         <MenuList layout='grid'>
           {players.map((player) => (
             <MenuLink

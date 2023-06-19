@@ -3,8 +3,8 @@ import useScreenStore from '@/stores/screenStore';
 import MenuPage from '../../lib/MenuPage';
 import MenuList from '../../lib/MenuList';
 
-const currency = (value: number) =>
-  value > 0 ? (
+export const currency = (value: number) =>
+  value >= 0 ? (
     <>{`$${value.toFixed(2)}`}</>
   ) : (
     <>{`-$${Math.abs(value).toFixed(2)}`}</>
@@ -32,7 +32,7 @@ export default function SinglePlayerMenu() {
       }
       onBack={() => updateMenu('All Players')}
     >
-      <div className='text-sm py-2'>
+      <div className='text-sm'>
         <MenuList withCursor={false} layout='grid'>
           <div className='text-center w-full pixel-border p-4'>
             <div className='text-xl'>{player.six_nine}</div>

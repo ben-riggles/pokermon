@@ -14,7 +14,7 @@ export default function MenuPage({
   return (
     <div>
       <div>{title}</div>
-      <div>{children}</div>
+      <div className='py-2'>{children}</div>
       <MenuLink onClick={onBack}>Back</MenuLink>
     </div>
   );
