@@ -1,11 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useScreenStore from '@/stores/screenStore';
 import { Box, ClickableRegion, RegionsByScreen } from './zones';
 import { ScreenInfo, Screens } from './screens';
 
-const mouseClick = {
-  x: 0,
-  y: 0,
+type ClickInfo = {
+  x: number;
+  y: number;
+  radius: number;
+  alpha: number;
 };
 
 const inBox = (x: number, y: number, box: Box): boolean => {
@@ -15,25 +17,27 @@ const inBox = (x: number, y: number, box: Box): boolean => {
 function draw(
   ctx: CanvasRenderingContext2D,
   screenInfo: ScreenInfo,
-  regions: ClickableRegion[]
+  regions: ClickableRegion[],
+  image: CanvasImageSource
 ) {
-  const img = new Image();
-  img.src = screenInfo.img;
   ctx.canvas.width = screenInfo.width;
   ctx.canvas.height = screenInfo.height;
+  ctx.drawImage(image, 0, 0);
+  ctx.fillStyle = `rgba(255, 0,0,0.4)`;
+  regions.forEach((region) => {
+    const { x, y, w, h } = region.box;
+    ctx.fillRect(x, y, w, h);
+  });
+}
 
-  img.onload = () => {
-    ctx.drawImage(img, 0, 0);
-    ctx.fillStyle = `rgba(255, 0,0,0.4)`;
-    regions.forEach((region) => {
-      const { x, y, w, h } = region.box;
-      ctx.fillRect(x, y, w, h);
-    });
-    ctx.fillStyle = `rgba(0,0,255,1)`;
-    ctx.beginPath();
-    ctx.arc(mouseClick.x, mouseClick.y, 20, 0, Math.PI * 2);
-    ctx.fill();
-  };
+function getCanvasEventPos(
+  canvas: HTMLCanvasElement,
+  e: MouseEvent
+): { x: number; y: number } {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  return { x, y };
 }
 
 function getHitRegion(
@@ -41,14 +45,8 @@ function getHitRegion(
   canvas: HTMLCanvasElement,
   regions: ClickableRegion[]
 ): ClickableRegion | undefined {
-  const rect = canvas.getBoundingClientRect();
-  mouseClick.x = e.clientX - rect.left;
-  mouseClick.y = e.clientY - rect.top;
-
-  const hit = regions.find((region) =>
-    inBox(mouseClick.x, mouseClick.y, region.box)
-  );
-
+  const { x, y } = getCanvasEventPos(canvas, e);
+  const hit = regions.find((region) => inBox(x, y, region.box));
   return hit;
 }
 
@@ -56,6 +54,39 @@ export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { updateScreen, updateMenu, screen } = useScreenStore();
   const regions = RegionsByScreen[screen];
+  const clickInfo = useRef<ClickInfo>();
+  const requestRef = useRef<number>();
+  const imgRef = useRef<CanvasImageSource>();
+
+  const animate = useCallback(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas!.getContext('2d')!;
+    draw(ctx, Screens[screen], regions, imgRef.current!);
+
+    if (clickInfo.current) {
+      const circle = clickInfo.current;
+      if (circle.radius >= 40) {
+        clickInfo.current = undefined;
+        return;
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.stroke;
+      ctx.shadowColor = 'white';
+      ctx.shadowBlur = 10;
+      ctx.lineWidth = 2;
+      ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255,255,255,${circle.alpha})`;
+      ctx.stroke();
+      ctx.restore();
+
+      circle.radius += 2;
+      circle.alpha -= 0.05;
+    }
+
+    requestRef.current = requestAnimationFrame(animate);
+  }, [regions, screen]);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -65,10 +96,6 @@ export default function Canvas({ ...props }) {
         case 'SCREEN':
           updateScreen(region.screen);
           updateMenu(region.defaultMenu);
-          if (region.screen !== screen) {
-            const ctx = canvasRef.current!.getContext('2d')!;
-            draw(ctx, Screens[region.screen], RegionsByScreen[region.screen]);
-          }
           break;
         case 'INFO':
           updateMenu(region.menu);
@@ -85,9 +112,6 @@ export default function Canvas({ ...props }) {
     const canvas = canvasRef.current;
     if (canvas === null) return;
     const context = canvas.getContext('2d');
-    if (context) {
-      draw(context, Screens[screen], regions);
-    }
 
     function handleCanvasCursor(e: MouseEvent) {
       const rect = canvas!.getBoundingClientRect();
@@ -104,14 +128,31 @@ export default function Canvas({ ...props }) {
       canvas!.style.cursor = 'default';
     }
 
+    const handleClick = (evt: MouseEvent) => {
+      const { x, y } = getCanvasEventPos(canvas, evt);
+      clickInfo.current = { x, y, radius: 0, alpha: 1 };
+    };
+
     canvas.addEventListener('mousemove', handleCanvasCursor);
     canvas.addEventListener('mouseout', handleExitCanvasCursor);
+    canvas.addEventListener('click', handleClick);
+
+    if (context) {
+      const img = new Image();
+      img.src = Screens[screen].img;
+      img.onload = () => {
+        imgRef.current = img;
+        requestRef.current = requestAnimationFrame(animate);
+      };
+    }
 
     return () => {
       canvas.removeEventListener('mousemove', handleCanvasCursor);
       canvas.removeEventListener('mouseout', handleExitCanvasCursor);
+      canvas.removeEventListener('click', handleClick);
+      cancelAnimationFrame(requestRef.current!);
     };
-  }, [regions, screen]);
+  }, [animate, regions, screen]);
 
   return <canvas ref={canvasRef} {...props} />;
 }

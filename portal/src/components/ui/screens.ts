@@ -54,4 +54,4 @@ export const Screens: { [key in Screen]: ScreenInfo } = {
   Laboratory: LaboratoryScreenInfo,
   PokerMart: PokerMartScreenInfo,
   PokerCenter: PokerCenterScreenInfo,
-};
+} as const;

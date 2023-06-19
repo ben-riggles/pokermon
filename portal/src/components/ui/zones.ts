@@ -80,4 +80,4 @@ export const RegionsByScreen = {
   Laboratory: laboratoryZones,
   PokerMart: pokerMartZones,
   PokerCenter: pokerCenterZones,
-};
+} as const;
