@@ -6,3 +6,5 @@ export type Screen =
   | 'PokerMart'
   | 'PokerCenter'
   | 'SinglePlayer';
+
+export type Menu = 'Welcome' | 'Enter Player Info';

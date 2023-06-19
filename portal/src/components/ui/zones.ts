@@ -1,4 +1,4 @@
-import { Screen } from '@/types/gameConsole';
+import { Menu, Screen } from '@/types/gameConsole';
 
 export type Box = {
   x: number;
@@ -14,7 +14,7 @@ export type ScreenRegion = {
 
 export type InfoRegion = {
   type: 'INFO';
-  menuName: string;
+  menu: Menu;
 };
 
 export type RegionMetadata = ScreenRegion | InfoRegion;
@@ -27,56 +27,37 @@ const welcomeZones: ClickableRegion[] = [
   {
     type: 'SCREEN',
     screen: 'Bedroom',
-    box: {
-      x: 46,
-      y: 360,
-      w: 68,
-      h: 90,
-    },
+    box: { x: 46, y: 360, w: 68, h: 90 },
   },
   {
     type: 'SCREEN',
     screen: 'Laboratory',
-    box: {
-      x: 200,
-      y: 180,
-      w: 96,
-      h: 70,
-    },
+    box: { x: 200, y: 180, w: 96, h: 70 },
   },
   {
     type: 'SCREEN',
     screen: 'PokerCenter',
-    box: {
-      x: 700,
-      y: 78,
-      w: 90,
-      h: 80,
-    },
+    box: { x: 700, y: 78, w: 90, h: 80 },
   },
   {
     type: 'SCREEN',
     screen: 'PokerMart',
-    box: {
-      x: 765,
-      y: 310,
-      w: 150,
-      h: 100,
-    },
+    box: { x: 765, y: 310, w: 150, h: 100 },
   },
   {
     type: 'SCREEN',
     screen: 'Dojo',
-    box: {
-      x: 1162,
-      y: 28,
-      w: 94,
-      h: 70,
-    },
+    box: { x: 1162, y: 28, w: 94, h: 70 },
   },
 ];
 const dojoZones: ClickableRegion[] = [];
-const bedroomZones: ClickableRegion[] = [];
+const bedroomZones: ClickableRegion[] = [
+  {
+    type: 'INFO',
+    menu: 'Enter Player Info',
+    box: { x: 510, y: 5, w: 100, h: 55 },
+  },
+];
 const laboratoryZones: ClickableRegion[] = [];
 const pokerMartZones: ClickableRegion[] = [];
 const pokerCenterZones: ClickableRegion[] = [];

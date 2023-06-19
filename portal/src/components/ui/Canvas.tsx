@@ -42,11 +42,12 @@ function draw(
     ctx.canvas.height = 640;
     img.onload = () => {
       ctx.drawImage(img, 0, 0);
-      ctx.fill();
+      ctx.fillStyle = `rgba(255, 0,0,0.4)`;
       regions.forEach((region) => {
         const { x, y, w, h } = region.box;
         ctx.fillRect(x, y, w, h);
       });
+      ctx.fill();
     };
     return;
   }
@@ -84,51 +85,49 @@ function draw(
   };
 }
 
-function onMouseClick(
+function getHitRegion(
   e: MouseEvent,
   canvas: HTMLCanvasElement,
   regions: ClickableRegion[]
-): Screen | null {
+): ClickableRegion | undefined {
   const rect = canvas.getBoundingClientRect();
   mouseClick.x = e.clientX - rect.left;
   mouseClick.y = e.clientY - rect.top;
 
-  const hitScreen = regions.find((region) =>
+  const hit = regions.find((region) =>
     inBox(mouseClick.x, mouseClick.y, region.box)
   );
 
-  if (hitScreen && hitScreen.type === 'SCREEN') {
-    return hitScreen.screen;
-  }
-
-  // HACK to allow going back during dev.
-  if (mouseClick.x < 25 && mouseClick.y < 25) {
-    return 'Welcome';
-  }
-
-  return null;
+  return hit;
 }
 
 export default function Canvas({ ...props }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { updateScreen, screen } = useScreenStore();
+  const { updateScreen, updateMenu, screen } = useScreenStore();
   const regions = RegionsByScreen[screen];
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      const newScreen = onMouseClick(e, canvasRef.current!, regions);
-
-      if (newScreen) {
-        updateScreen(newScreen);
-        if (newScreen !== screen) {
-          const ctx = canvasRef.current!.getContext('2d')!;
-          draw(ctx, newScreen, regions);
-        }
+      const region = getHitRegion(e, canvasRef.current!, regions);
+      if (!region) return;
+      switch (region.type) {
+        case 'SCREEN':
+          updateScreen(region.screen);
+          if (region.screen !== screen) {
+            const ctx = canvasRef.current!.getContext('2d')!;
+            draw(ctx, region.screen, RegionsByScreen[region.screen]);
+          }
+          break;
+        case 'INFO':
+          updateMenu(region.menu);
+          break;
+        default:
+          break;
       }
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [screen]);
+  }, [screen, regions, updateScreen, updateMenu]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -160,7 +159,7 @@ export default function Canvas({ ...props }) {
       canvas.removeEventListener('mousemove', handleCanvasCursor);
       canvas.removeEventListener('mouseout', handleExitCanvasCursor);
     };
-  }, []);
+  }, [regions, screen]);
 
   return <canvas ref={canvasRef} {...props} />;
 }
