@@ -7,10 +7,8 @@ Create Date: 2023-06-01 23:26:52.539446
 """
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.orm import Session
 
 from app.common.pokemon import random_pokemon
-from app.models.db import Player
 
 
 # revision identifiers, used by Alembic.

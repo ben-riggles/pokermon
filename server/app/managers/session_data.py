@@ -32,5 +32,5 @@ class SessionDataManager(DBModelManager):
         data = q.all()
 
         if as_view is not None:
-            return [cls.__convert_view(x, as_view, query) for x in data]
+            return [cls._convert_view(x, as_view, query) for x in data]
         return data

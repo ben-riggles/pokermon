@@ -4,7 +4,7 @@ from app.models.query import SessionQuery, SessionDataQuery
 from app.models.view import ViewModel, SessionView, SessionDetailView
 
 
-def convert_session_view(session: Session) -> SessionView:
+def convert_session_view(session: Session, _) -> SessionView:
     return SessionView(session)
 
 def convert_session_detail_view(session: Session, query: SessionQuery = None) -> SessionDetailView:
@@ -41,8 +41,10 @@ class SessionManager(DBModelManager):
             q = q.filter(Session.date >= query.start_date)
         if query.end_date:
             q = q.filter(Session.date <= query.end_date)
+        if query.tournament is not None:
+            q = q.filter_by(tournament = query.tournament)
         sessions = q.all()
 
         if as_view is not None:
-            return [cls.__convert_view(x, as_view, query) for x in sessions]
+            return [cls._convert_view(x, as_view, query) for x in sessions]
         return sessions

@@ -10,11 +10,13 @@ class SessionView(ViewModel):
     id: int
     date: datetime
     other_game: str
+    tournament: bool
 
     def __init__(self, session: Session):
         self.id = session.id
         self.date = session.date
         self.other_game = session.other_game
+        self.tournament = session.tournament
 
 
 @dataclass(init=False)

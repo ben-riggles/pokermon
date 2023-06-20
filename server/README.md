@@ -9,8 +9,9 @@
 - Install python: https://www.python.org/downloads/
   - Note: I'm using Python 3.10.1. Theoretically newer versions should be fine
 - In a command line, navigate to `.../poker_stats/server`
-- Create a virtual environment: `python -m venv .venv`
-- On Mac you might need to specify `python3 -m venv .venv`
+- Create a virtual environment:
+  - (Windows) `python -m venv .venv`
+  - (Mac) you might need to specify `python3 -m venv .venv`
   - Alternatively, if using VSCode:
     - Press F1 to bring up commands
     - Search "Python: Create Environment". Select `Venv`

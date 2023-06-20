@@ -1,9 +1,9 @@
 from __future__ import annotations
 from abc import ABC
-from dataclasses import dataclass, asdict, fields as class_fields
+from dataclasses import dataclass, fields as class_fields
 from datetime import datetime
 from decimal import Decimal
-from typing import Type
+import typing
 from flask_restx import Model, Namespace, fields
 
 
@@ -16,10 +16,10 @@ class ViewModel(ABC):
         return super().__init_subclass__()
 
     @staticmethod
-    def get(name: str) -> ViewModel:
+    def __get(name: str) -> ViewModel:
         return ViewModel.__subclasses[name]
     
-    def __field_to_resttype(field_type: Type, api: Namespace) -> fields.Raw:
+    def __field_to_resttype(field_type: typing.Type, api: Namespace) -> fields.Raw:
         if field_type == int:
             return fields.Integer(required=False)
         elif field_type == float:
@@ -32,12 +32,12 @@ class ViewModel(ABC):
             return fields.Boolean(required=False)
         elif field_type == datetime:
             return fields.Date(required=False)
-        elif 'list' in str(field_type):
+        elif typing.get_origin(field_type) is list:
             nested_type = field_type.__args__[0]
             field = ViewModel.__field_to_resttype(nested_type, api)
             return fields.List(field, required=False)
         elif field_type in ViewModel.__subclasses:
-            return fields.Nested(ViewModel.get(field_type).model(api), required=False)
+            return fields.Nested(ViewModel.__get(field_type).model(api), required=False)
         else:
             raise TypeError(f'Unknown type found in ViewModel: {field_type}')
 
@@ -47,6 +47,3 @@ class ViewModel(ABC):
         for field in class_fields(cls):
             model_dict[field.name] = ViewModel.__field_to_resttype(field.type, api)
         return api.model(cls.__name__, model_dict)
-    
-    def serialize(self) -> str:
-        return asdict(self)

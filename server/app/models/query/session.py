@@ -11,3 +11,4 @@ class SessionQuery(QueryModel):
     player_id: int = None
     start_date: datetime = None
     end_date: datetime = None
+    tournament: bool = None
