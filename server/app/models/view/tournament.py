@@ -16,9 +16,3 @@ class TournamentView(ViewModel):
 
     num_paid: int
     prizes: list[int]
-
-    def __init__(self, query: TournamentQuery):
-        self.id = player.id
-        self.first_name = player.first_name
-        self.last_name = player.last_name
-        self.sprite = player.sprite
