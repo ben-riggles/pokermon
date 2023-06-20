@@ -3,15 +3,15 @@ from flask_restx import Namespace, Resource
 from sqlalchemy.exc import NoResultFound
 
 from app.managers import TournamentManager
-import app.models as models
+from app.models import Tournament
 
 api = Namespace('tournaments', 'Tournaments Description')
-session_view = models.Tournament.View.model(api)
+session_view = Tournament.View.model(api)
 
 
 @api.route('/')
 class TournamentListRoutes(Resource):
-    @api.expect(models.Tournament.Query.parser)
+    @api.expect(Tournament.Query.parser)
     @api.marshal_list_with(session_view)
     def get(self):
-        return TournamentManager.query(models.Tournament.Query.parse(), as_view=models.Tournament.View)
+        return TournamentManager.query(Tournament.Query.parse(), view=Tournament.View)

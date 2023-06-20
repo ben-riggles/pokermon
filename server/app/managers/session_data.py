@@ -13,7 +13,7 @@ class SessionDataManager(DBModelManager):
     }
     
     @classmethod
-    def query(cls, query: models.SessionData.Query = None, as_view: models.ViewModel = None) -> list[models.SessionData]:
+    def query(cls, query: models.SessionData.Query = None, view: models.ViewModel = None) -> list[models.SessionData]:
         q = models.SessionData.query
 
         if query.player_id:
@@ -28,6 +28,6 @@ class SessionDataManager(DBModelManager):
             q = q.filter(models.SessionData.session_id.in_([x.id for x in sessions]))
         data = q.all()
 
-        if as_view is not None:
-            return [cls._convert_view(x, as_view, query) for x in data]
+        if view is not None:
+            return [cls._convert_view(x, view, query) for x in data]
         return data

@@ -10,7 +10,7 @@ class Manager(ABC):
     view_dict = {}
 
     def __init_subclass__(cls) -> None:
-        if cls.__name__ == 'DBModelManager':
+        if cls.__name__ in ['DBModelManager']:
             return
         if cls.model is None:
             raise TypeError(f'Model type must be specified for manager {cls.__name__}')
@@ -34,35 +34,35 @@ class DBModelManager(Manager, ABC):
     model: models.DBModel = None
 
     @classmethod
-    def create(cls, model: models.DBModel, as_view: models.ViewModel = None) -> models.DBModel | models.ViewModel:
+    def create(cls, model: models.DBModel, view: models.ViewModel = None) -> models.DBModel | models.ViewModel:
         if (type(model) != cls.model):
             raise TypeError(f'Model type {type(model)} must match manager model type {cls.model}')
         
         model = model.create()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
 
     @classmethod
-    def read(cls, id: int, as_view: models.ViewModel = None) -> models.DBModel:
+    def read(cls, id: int, view: models.ViewModel = None) -> models.DBModel:
         model = cls.model.query.filter_by(id = id).one()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
     
     @classmethod
-    def update(cls, id: int, model: models.DBModel, as_view: models.ViewModel = None) -> models.DBModel:
+    def update(cls, id: int, model: models.DBModel, view: models.ViewModel = None) -> models.DBModel:
         if (type(model) != cls.model):
             raise TypeError(f'Model type {type(model)} must match manager model type {cls.model}')
         
         model = cls.read(id).update(model)
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
     
     @classmethod
-    def delete(cls, id: int, as_view: models.ViewModel = None) -> models.DBModel:
+    def delete(cls, id: int, view: models.ViewModel = None) -> models.DBModel:
         model = cls.read(id).delete()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model

@@ -27,7 +27,7 @@ class SessionManager(DBModelManager):
     }
 
     @classmethod
-    def query(cls, query: models.Session.Query = None, as_view: models.ViewModel = None) -> list[models.Session]:
+    def query(cls, query: models.Session.Query = None, view: models.ViewModel = None) -> list[models.Session]:
         q = models.Session.query
 
         if query.date:
@@ -43,6 +43,6 @@ class SessionManager(DBModelManager):
             q = q.filter_by(tournament = query.tournament)
         sessions = q.all()
 
-        if as_view is not None:
-            return [cls._convert_view(x, as_view, query) for x in sessions]
+        if view is not None:
+            return [cls._convert_view(x, view, query) for x in sessions]
         return sessions

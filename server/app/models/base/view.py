@@ -47,4 +47,4 @@ class ViewModel(ABC):
         model_dict = {}
         for field in class_fields(cls):
             model_dict[field.name] = ViewModel.__field_to_resttype(field.type, api)
-        return api.model(cls.__name__, model_dict)
+        return api.model(f'{api.name}.{cls.__name__}', model_dict)

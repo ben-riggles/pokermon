@@ -13,7 +13,7 @@ class TournamentManager(Manager):
     }
 
     @classmethod
-    def query(cls, _query: models.Tournament.Query, as_view: models.ViewModel = None) -> list[models.ViewModel]:
+    def query(cls, _query: models.Tournament.Query, view: models.ViewModel = None) -> list[models.ViewModel]:
         q = models.Session.query.filter_by(tournament = True)
 
         if _query.session_id:
@@ -27,6 +27,6 @@ class TournamentManager(Manager):
             q = q.filter(models.Session.date <= _query.end_date)
         tournaments = [models.Tournament(x) for x in q.all()]
 
-        if as_view is not None:
-            return [cls._convert_view(x, as_view, _query) for x in tournaments]
+        if view is not None:
+            return [cls._convert_view(x, view, _query) for x in tournaments]
         return tournaments

@@ -33,7 +33,7 @@ class PlayerManager(DBModelManager):
     }
 
     @classmethod
-    def query(cls, query: models.Player.Query = None, as_view: models.ViewModel = None) -> list[models.Player | models.ViewModel]:
+    def query(cls, query: models.Player.Query = None, view: models.ViewModel = None) -> list[models.Player | models.ViewModel]:
         q = models.Player.query
 
         if query.id:
@@ -53,6 +53,6 @@ class PlayerManager(DBModelManager):
             q = q.filter(models.Player.id.in_({x.player_id for x in session_data}))
         players = q.all()
 
-        if as_view is not None:
-            return [cls._convert_view(x, as_view, query) for x in players]
+        if view is not None:
+            return [cls._convert_view(x, view, query) for x in players]
         return players
