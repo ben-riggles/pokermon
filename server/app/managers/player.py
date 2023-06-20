@@ -1,13 +1,41 @@
-from app.managers import Manager
+from app.managers import Manager, DBModelManager
 from app.models.db import Player, SessionData
 from app.models.query import PlayerQuery, SessionDataQuery
+from app.models.view import ViewModel, PlayerView, PlayerDetailView
 
 
-class PlayerManager(Manager):
+def convert_player_view(player: Player, _) -> PlayerView:
+    return PlayerView(player)
+
+def convert_player_detail_view(player: Player, query: PlayerQuery = None) -> PlayerDetailView:
+    view = PlayerDetailView(player)
+    view.full_name = f'{player.first_name} {player.last_name}'
+
+    data_query = SessionDataQuery(player_id = player.id)
+    if query is not None:
+        data_query.start_date = query.start_date
+        data_query.end_date = query.end_date
+    data: list[SessionData] = Manager.get(SessionData).query(data_query)
+    
+    view.cash_net = sum(x.cash_net for x in data if x.cash_net is not None)
+    view.tournament_net = sum(x.tournament_net for x in data if x.tournament_net is not None)
+    view.other_net = sum(x.other_net for x in data if x.other_net is not None)
+    view.six_nine = sum(x.six_nine for x in data)
+    view.quads = sum(x.quads for x in data)
+    view.straight_flush = sum(x.straight_flush for x in data)
+    view.total_net = sum([view.cash_net, view.tournament_net, view.other_net])
+    return view
+
+
+class PlayerManager(DBModelManager):
     model = Player
+    view_dict = {
+        PlayerView: convert_player_view,
+        PlayerDetailView: convert_player_detail_view,
+    }
 
-    @staticmethod
-    def query(query: PlayerQuery = None) -> list[Player]:
+    @classmethod
+    def query(cls, query: PlayerQuery = None, as_view: ViewModel = None) -> list[Player | ViewModel]:
         q = Player.query
 
         if query.id:
@@ -25,4 +53,8 @@ class PlayerManager(Manager):
         if query.end_date:
             session_data = Manager.get(SessionData).query(SessionDataQuery(end_date = query.end_date))
             q = q.filter(Player.id.in_({x.player_id for x in session_data}))
-        return q.all()
+        players = q.all()
+
+        if as_view is not None:
+            return [cls.__convert_view(x, as_view, query) for x in players]
+        return players

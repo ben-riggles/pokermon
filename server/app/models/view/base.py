@@ -19,7 +19,7 @@ class ViewModel(ABC):
     def get(name: str) -> ViewModel:
         return ViewModel.__subclasses[name]
     
-    def __field_to_resttype(field_type: Type, nested_type: str | Type, api: Namespace) -> fields.Raw:
+    def __field_to_resttype(field_type: Type, api: Namespace) -> fields.Raw:
         if field_type == int:
             return fields.Integer(required=False)
         elif field_type == float:
@@ -32,21 +32,20 @@ class ViewModel(ABC):
             return fields.Boolean(required=False)
         elif field_type == datetime:
             return fields.Date(required=False)
-        elif field_type == list:
-            field = ViewModel.__field_to_resttype(nested_type, '', api)
+        elif 'list' in str(field_type):
+            nested_type = field_type.__args__[0]
+            field = ViewModel.__field_to_resttype(nested_type, api)
             return fields.List(field, required=False)
         elif field_type in ViewModel.__subclasses:
             return fields.Nested(ViewModel.get(field_type).model(api), required=False)
         else:
             raise TypeError(f'Unknown type found in ViewModel: {field_type}')
 
-
     @classmethod
     def model(cls, api: Namespace) -> Model:
         model_dict = {}
         for field in class_fields(cls):
-            nested_type = field.metadata.get('nested_type', '')
-            model_dict[field.name] = ViewModel.__field_to_resttype(field.type, nested_type, api)
+            model_dict[field.name] = ViewModel.__field_to_resttype(field.type, api)
         return api.model(cls.__name__, model_dict)
     
     def serialize(self) -> str:

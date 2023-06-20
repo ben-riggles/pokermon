@@ -17,15 +17,13 @@ class PlayerListRoutes(Resource):
     @api.expect(PlayerQuery.parser)
     @api.marshal_list_with(player_view)
     def get(self):
-        players = PlayerManager.query(PlayerQuery.parse())
-        return [PlayerView(p).serialize() for p in players]
+        return PlayerManager.query(PlayerQuery.parse(), as_view=PlayerView)
     
     @api.expect(player_view)
     @api.marshal_with(player_view)
     def post(self):
         player = Player(**api.payload)
-        player = PlayerManager.create(player)
-        return PlayerView(player).serialize()
+        return PlayerManager.create(player, as_view=PlayerView)
     
 
 @api.route('/<int:id>')
@@ -33,25 +31,25 @@ class PlayerRoutes(Resource):
     @api.marshal_with(player_view)
     def get(self, id):
         try:
-            player = PlayerManager.read(id)
+            return PlayerManager.read(id, as_view=PlayerView)
         except NoResultFound:
             abort(404)
-        return PlayerView(player).serialize()
     
     @api.expect(player_view, validate=True)
     @api.marshal_with(player_view)
     def put(self, id):
         player = Player(**api.payload)
-        player = PlayerManager.update(id, player)
-        return PlayerView(player).serialize()
+        try:
+            return PlayerManager.update(id, player, as_view=PlayerView)
+        except NoResultFound:
+            abort(404)
     
     @api.marshal_with(player_view)
     def delete(self, id):
         try:
-            player = PlayerManager.delete(id)
+            return PlayerManager.delete(id, as_view=PlayerView)
         except NoResultFound:
             abort(404)
-        return PlayerView(player).serialize()
     
 
 @api.route('/details')
@@ -60,8 +58,7 @@ class PlayerDetailListRoutes(Resource):
     @api.marshal_list_with(player_detail_view)
     def get(self):
         query = PlayerQuery.parse()
-        players = PlayerManager.query(query)
-        return [PlayerDetailView(p, query=query).serialize() for p in players]
+        return PlayerManager.query(query, as_view=PlayerDetailView)
 
 
 @api.route('/<int:id>/details')
@@ -69,7 +66,6 @@ class PlayerDetailRoutes(Resource):
     @api.marshal_with(player_detail_view)
     def get(self, id):
         try:
-            player = PlayerManager.read(id)
+            return PlayerManager.read(id, as_view=PlayerDetailView)
         except NoResultFound:
             abort(404)
-        return PlayerDetailView(player).serialize()
