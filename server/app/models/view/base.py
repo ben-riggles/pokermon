@@ -40,7 +40,6 @@ class ViewModel(ABC):
         else:
             raise TypeError(f'Unknown type found in ViewModel: {field_type}')
 
-
     @classmethod
     def model(cls, api: Namespace) -> Model:
         model_dict = {}

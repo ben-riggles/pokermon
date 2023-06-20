@@ -16,15 +16,13 @@ class SessionDataListRoutes(Resource):
     @api.expect(SessionDataQuery.parser)
     @api.marshal_list_with(session_data_view)
     def get(self):
-        data = SessionDataManager.query(SessionDataQuery.parse())
-        return [SessionDataView(x).serialize() for x in data]
+        return SessionDataManager.query(SessionDataQuery.parse(), as_view=SessionDataView)
     
     @api.expect(session_data_view)
     @api.marshal_with(session_data_view)
     def post(self):
         data = SessionData(**api.payload)
-        data = SessionDataManager.create(data)
-        return SessionDataView(data).serialize()
+        return SessionDataManager.create(data, as_view=SessionDataView)
     
 
 @api.route('/<int:id>')
@@ -32,22 +30,22 @@ class SessionDataRoutes(Resource):
     @api.marshal_with(session_data_view)
     def get(self, id):
         try:
-            data = SessionDataManager.read(id)
+            return SessionDataManager.read(id, as_view=SessionDataView)
         except NoResultFound:
             abort(404)
-        return SessionDataView(data).serialize()
     
     @api.expect(session_data_view, validate=True)
     @api.marshal_with(session_data_view)
     def put(self, id):
         data = SessionData(**api.payload)
-        data = SessionDataManager.update(id, data)
-        return SessionDataView(data).serialize()
+        try:
+            return SessionDataManager.update(id, data, as_view=SessionDataView)
+        except NoResultFound:
+            abort(404)
     
     @api.marshal_with(session_data_view)
     def delete(self, id):
         try:
-            data = SessionDataManager.delete(id)
+            return SessionDataManager.delete(id, as_view=SessionDataView)
         except NoResultFound:
             abort(404)
-        return SessionDataView(data).serialize()
