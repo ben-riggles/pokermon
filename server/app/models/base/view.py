@@ -3,8 +3,9 @@ from abc import ABC
 from dataclasses import dataclass, fields as class_fields
 from datetime import datetime
 from decimal import Decimal
-import typing
 from flask_restx import Model, Namespace, fields
+import re
+import typing
 
 
 @dataclass
@@ -20,20 +21,20 @@ class ViewModel(ABC):
         return ViewModel.__subclasses[name]
     
     def __field_to_resttype(field_type: typing.Type, api: Namespace) -> fields.Raw:
-        if field_type == int:
+        if field_type in [int, 'int']:
             return fields.Integer(required=False)
-        elif field_type == float:
+        elif field_type in [float, 'float']:
             return fields.Float(reuiqred=False)
-        elif field_type == Decimal:
+        elif field_type in [Decimal, 'Decimal']:
             return fields.Float(required=False)
-        elif field_type == str:
+        elif field_type in [str, 'str']:
             return fields.String(required=False)
-        elif field_type == bool:
+        elif field_type in [bool, 'bool']:
             return fields.Boolean(required=False)
-        elif field_type == datetime:
+        elif field_type in [datetime, 'datetime']:
             return fields.Date(required=False)
-        elif typing.get_origin(field_type) is list:
-            nested_type = field_type.__args__[0]
+        elif 'list' in field_type:
+            nested_type = re.search(r"\[([A-Za-z_]+)\]", field_type).group(1)
             field = ViewModel.__field_to_resttype(nested_type, api)
             return fields.List(field, required=False)
         elif field_type in ViewModel.__subclasses:

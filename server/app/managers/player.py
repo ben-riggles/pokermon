@@ -2,14 +2,14 @@ from app.managers import Manager, DBModelManager
 import app.models as models
 
 
-def convert_player_view(player: models.Player, _) -> models.PlayerView:
-    return models.PlayerView(player)
+def convert_player_view(player: models.Player, _) -> models.Player.View:
+    return models.Player.View(player)
 
-def convert_player_detail_view(player: models.Player, query: models.PlayerQuery = None) -> models.PlayerDetailView:
-    view = models.PlayerDetailView(player)
+def convert_player_detail_view(player: models.Player, query: models.Player.Query = None) -> models.Player.DetailView:
+    view = models.Player.DetailView(player)
     view.full_name = f'{player.first_name} {player.last_name}'
 
-    data_query = models.SessionDataQuery(player_id = player.id)
+    data_query = models.SessionData.Query(player_id = player.id)
     if query is not None:
         data_query.start_date = query.start_date
         data_query.end_date = query.end_date
@@ -28,12 +28,12 @@ def convert_player_detail_view(player: models.Player, query: models.PlayerQuery 
 class PlayerManager(DBModelManager):
     model = models.Player
     view_dict = {
-        models.PlayerView: convert_player_view,
-        models.PlayerDetailView: convert_player_detail_view,
+        models.Player.View: convert_player_view,
+        models.Player.DetailView: convert_player_detail_view,
     }
 
     @classmethod
-    def query(cls, query: models.PlayerQuery = None, as_view: models.ViewModel = None) -> list[models.Player | models.ViewModel]:
+    def query(cls, query: models.Player.Query = None, as_view: models.ViewModel = None) -> list[models.Player | models.ViewModel]:
         q = models.Player.query
 
         if query.id:
@@ -43,13 +43,13 @@ class PlayerManager(DBModelManager):
         if query.last_name:
             q = q.filter_by(last_name = query.last_name)
         if query.session_id:
-            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(session_id=query.session_id))
+            session_data = Manager.get(models.SessionData).query(models.SessionData.Query(session_id=query.session_id))
             q = q.filter(models.Player.id.in_([x.player_id for x in session_data]))
         if query.start_date:
-            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(start_date = query.start_date))
+            session_data = Manager.get(models.SessionData).query(models.SessionData.Query(start_date = query.start_date))
             q = q.filter(models.Player.id.in_({x.player_id for x in session_data}))
         if query.end_date:
-            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(end_date = query.end_date))
+            session_data = Manager.get(models.SessionData).query(models.SessionData.Query(end_date = query.end_date))
             q = q.filter(models.Player.id.in_({x.player_id for x in session_data}))
         players = q.all()
 

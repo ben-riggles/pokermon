@@ -21,10 +21,6 @@ class Manager(ABC):
     def get(model_type: models.DBModel | models.ViewModel) -> Manager:
         return Manager.__subclasses[model_type]
     
-
-class DBModelManager(Manager, ABC):
-    model: models.DBModel = None
-
     @classmethod
     def _convert_view(cls, model: models.DBModel, view: models.ViewModel, query: models.QueryModel = None) -> models.ViewModel:
         try:
@@ -32,6 +28,10 @@ class DBModelManager(Manager, ABC):
         except KeyError:
             raise TypeError(f'No converter for view type {view}')
         return func(model, query)
+    
+
+class DBModelManager(Manager, ABC):
+    model: models.DBModel = None
 
     @classmethod
     def create(cls, model: models.DBModel, as_view: models.ViewModel = None) -> models.DBModel | models.ViewModel:
