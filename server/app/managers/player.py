@@ -56,5 +56,5 @@ class PlayerManager(DBModelManager):
         players = q.all()
 
         if as_view is not None:
-            return [cls.__convert_view(x, as_view, query) for x in players]
+            return [cls._convert_view(x, as_view, query) for x in players]
         return players

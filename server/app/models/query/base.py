@@ -11,11 +11,12 @@ class QueryModel:
     def parser(cls) -> reqparse.RequestParser:
         req = reqparse.RequestParser()
         for field in fields(cls):
-            match field.type:
-                case datetime.datetime:
-                    req.add_argument(field.name, type=inputs.date_from_iso8601)
-                case _:
-                    req.add_argument(field.name, type=field.type)
+            if field.type == datetime.datetime:
+                req.add_argument(field.name, type=inputs.date_from_iso8601)
+            elif field.type == bool:
+                req.add_argument(field.name, type=inputs.boolean)
+            else:
+                req.add_argument(field.name, type=field.type)
         return req
     
     @classmethod

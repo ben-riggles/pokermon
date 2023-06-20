@@ -17,24 +17,27 @@ class TournamentManager(Manager):
     @staticmethod
     def gather_tournament_data(session: Session) -> TournamentView:
         data = session.session_data.filter(SessionData.tournament_placement != None).all()
-        print(data)
-        ordered_data = sorted(data, key=lambda x: x.tournament_placement)
         if not data:
             return object()
+        
+        ordered_data = sorted(data, key=lambda x: x.tournament_placement)
+        buy_in = abs(min(x.tournament_net for x in ordered_data))
+        prizes = [x.tournament_net + buy_in for x in ordered_data]
+        prizes = [x for x in prizes if x != 0]
         
         return TournamentView(
             session_id = session.id,
             date = session.date,
-            buy_in = 10,
+            buy_in = buy_in,
             num_players = len(data),
             placements = [x.player_id for x in ordered_data],
-            num_paid = 3,
-            prizes = [ordered_data[i].tournament_net + 10 for i in range(3)],
+            num_paid = len(prizes),
+            prizes = prizes,
         )
 
     @classmethod
     def query(cls, _query: TournamentQuery, as_view: ViewModel = None) -> list[ViewModel]:
-        q = Session.query
+        q = Session.query.filter_by(tournament = True)
 
         if _query.session_id:
             q = q.filter_by(id = _query.session_id)
@@ -50,5 +53,5 @@ class TournamentManager(Manager):
         return [cls.gather_tournament_data(x) for x in sessions]
 
         if as_view is not None:
-            return [cls.__convert_view(x, as_view, _query) for x in sessions]
+            return [cls._convert_view(x, as_view, _query) for x in sessions]
         return sessions

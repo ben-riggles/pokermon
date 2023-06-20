@@ -1,11 +1,6 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from functools import lru_cache
-from importlib import import_module
-from pathlib import Path
-from typing import Type
+from abc import ABC
 
-from app.extensions import db
 from app.models.db import DBModel
 from app.models.query import QueryModel
 from app.models.view import ViewModel
@@ -33,7 +28,7 @@ class DBModelManager(Manager, ABC):
     model: DBModel = None
 
     @classmethod
-    def __convert_view(cls, model: DBModel, view: ViewModel, query: QueryModel = None) -> ViewModel:
+    def _convert_view(cls, model: DBModel, view: ViewModel, query: QueryModel = None) -> ViewModel:
         try:
             func = cls.view_dict[view]
         except KeyError:
@@ -46,16 +41,15 @@ class DBModelManager(Manager, ABC):
             raise TypeError(f'Model type {type(model)} must match manager model type {cls.model}')
         
         model = model.create()
-        print(cls)
         if as_view is not None:
-            return cls.__convert_view(model, as_view)
+            return cls._convert_view(model, as_view)
         return model
 
     @classmethod
     def read(cls, id: int, as_view: ViewModel = None) -> DBModel:
         model = cls.model.query.filter_by(id = id).one()
         if as_view is not None:
-            return cls.__convert_view(model, as_view)
+            return cls._convert_view(model, as_view)
         return model
     
     @classmethod
@@ -65,12 +59,12 @@ class DBModelManager(Manager, ABC):
         
         model = cls.read(id).update(model)
         if as_view is not None:
-            return cls.__convert_view(model, as_view)
+            return cls._convert_view(model, as_view)
         return model
     
     @classmethod
     def delete(cls, id: int, as_view: ViewModel = None) -> DBModel:
         model = cls.read(id).delete()
         if as_view is not None:
-            return cls.__convert_view(model, as_view)
+            return cls._convert_view(model, as_view)
         return model

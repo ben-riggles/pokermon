@@ -76,3 +76,8 @@ def import_data(csv: str):
     db.session.add_all(sessions)
     db.session.add_all(data)
     db.session.commit()
+
+    for session in db.session.query(models.Session):
+        data = session.session_data.filter(models.SessionData.tournament_placement != None).all()
+        session.tournament = bool(data)
+    db.session.commit()
