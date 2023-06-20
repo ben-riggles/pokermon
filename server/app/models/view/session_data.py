@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from app.models.db import SessionData
-from app.models.view import ViewModel
+import app.models as models
 
 
 @dataclass
-class SessionDataView(ViewModel):
+class SessionDataView(models.ViewModel):
     id: int
     player_id: int
     session_id: int
@@ -18,7 +17,7 @@ class SessionDataView(ViewModel):
     quads: int
     straight_flush: int
 
-    def __init__(self, session_data: SessionData):
+    def __init__(self, session_data: models.SessionData):
         self.id = session_data.id
         self.player_id = session_data.player_id
         self.session_id = session_data.session_id

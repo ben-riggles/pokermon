@@ -1,8 +1,8 @@
 from app.extensions import db
-from app.models.db import DBModel
+import app.models as models
 
 
-class Session(DBModel):
+class Session(models.DBModel):
     date = db.Column(db.Date)
     other_game = db.Column(db.String(100))
     tournament = db.Column(db.Boolean, nullable=False, default=True)

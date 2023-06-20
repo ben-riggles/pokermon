@@ -1,18 +1,17 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from app.models.db import Session
-from app.models.view import ViewModel
+import app.models as models
 
 
 @dataclass
-class SessionView(ViewModel):
+class SessionView(models.ViewModel):
     id: int
     date: datetime
     other_game: str
     tournament: bool
 
-    def __init__(self, session: Session):
+    def __init__(self, session: models.Session):
         self.id = session.id
         self.date = session.date
         self.other_game = session.other_game

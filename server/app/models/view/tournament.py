@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from app.models.query import TournamentQuery
-from app.models.view import ViewModel
+import app.models as models
 
 
 @dataclass
-class TournamentView(ViewModel):
+class TournamentView(models.ViewModel):
     session_id: int
     date: datetime
     buy_in: int

@@ -2,10 +2,10 @@ from sqlalchemy.orm import validates
 
 from app.common.pokemon import random_pokemon, validate_pokemon
 from app.extensions import db
-from app.models.db import DBModel
+import app.models as models
 
 
-class Player(DBModel):
+class Player(models.DBModel):
     first_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
     sprite = db.Column(db.String(20), default=lambda: random_pokemon(), nullable=False)

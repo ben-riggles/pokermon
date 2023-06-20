@@ -3,7 +3,7 @@ import math
 import pandas as pd
 
 from app.extensions import db
-import app.models.db as models
+import app.models as models
 
 
 def cash_to_float(val: str) -> float | None:

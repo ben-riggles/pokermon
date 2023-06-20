@@ -1,21 +1,19 @@
 from app.managers import Manager, DBModelManager
-from app.models.db import Player, SessionData
-from app.models.query import PlayerQuery, SessionDataQuery
-from app.models.view import ViewModel, PlayerView, PlayerDetailView
+import app.models as models
 
 
-def convert_player_view(player: Player, _) -> PlayerView:
-    return PlayerView(player)
+def convert_player_view(player: models.Player, _) -> models.PlayerView:
+    return models.PlayerView(player)
 
-def convert_player_detail_view(player: Player, query: PlayerQuery = None) -> PlayerDetailView:
-    view = PlayerDetailView(player)
+def convert_player_detail_view(player: models.Player, query: models.PlayerQuery = None) -> models.PlayerDetailView:
+    view = models.PlayerDetailView(player)
     view.full_name = f'{player.first_name} {player.last_name}'
 
-    data_query = SessionDataQuery(player_id = player.id)
+    data_query = models.SessionDataQuery(player_id = player.id)
     if query is not None:
         data_query.start_date = query.start_date
         data_query.end_date = query.end_date
-    data: list[SessionData] = Manager.get(SessionData).query(data_query)
+    data: list[models.SessionData] = Manager.get(models.SessionData).query(data_query)
     
     view.cash_net = sum(x.cash_net for x in data if x.cash_net is not None)
     view.tournament_net = sum(x.tournament_net for x in data if x.tournament_net is not None)
@@ -28,15 +26,15 @@ def convert_player_detail_view(player: Player, query: PlayerQuery = None) -> Pla
 
 
 class PlayerManager(DBModelManager):
-    model = Player
+    model = models.Player
     view_dict = {
-        PlayerView: convert_player_view,
-        PlayerDetailView: convert_player_detail_view,
+        models.PlayerView: convert_player_view,
+        models.PlayerDetailView: convert_player_detail_view,
     }
 
     @classmethod
-    def query(cls, query: PlayerQuery = None, as_view: ViewModel = None) -> list[Player | ViewModel]:
-        q = Player.query
+    def query(cls, query: models.PlayerQuery = None, as_view: models.ViewModel = None) -> list[models.Player | models.ViewModel]:
+        q = models.Player.query
 
         if query.id:
             q = q.filter_by(id = query.id)
@@ -45,14 +43,14 @@ class PlayerManager(DBModelManager):
         if query.last_name:
             q = q.filter_by(last_name = query.last_name)
         if query.session_id:
-            session_data = Manager.get(SessionData).query(SessionDataQuery(session_id=query.session_id))
-            q = q.filter(Player.id.in_([x.player_id for x in session_data]))
+            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(session_id=query.session_id))
+            q = q.filter(models.Player.id.in_([x.player_id for x in session_data]))
         if query.start_date:
-            session_data = Manager.get(SessionData).query(SessionDataQuery(start_date = query.start_date))
-            q = q.filter(Player.id.in_({x.player_id for x in session_data}))
+            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(start_date = query.start_date))
+            q = q.filter(models.Player.id.in_({x.player_id for x in session_data}))
         if query.end_date:
-            session_data = Manager.get(SessionData).query(SessionDataQuery(end_date = query.end_date))
-            q = q.filter(Player.id.in_({x.player_id for x in session_data}))
+            session_data = Manager.get(models.SessionData).query(models.SessionDataQuery(end_date = query.end_date))
+            q = q.filter(models.Player.id.in_({x.player_id for x in session_data}))
         players = q.all()
 
         if as_view is not None:

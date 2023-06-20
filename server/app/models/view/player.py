@@ -1,18 +1,17 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from app.models.db import Player
-from app.models.view import ViewModel
+import app.models as models
 
 
 @dataclass
-class PlayerView(ViewModel):
+class PlayerView(models.ViewModel):
     id: int
     first_name: str
     last_name: str
     sprite: str
 
-    def __init__(self, player: Player):
+    def __init__(self, player: models.Player):
         self.id = player.id
         self.first_name = player.first_name
         self.last_name = player.last_name

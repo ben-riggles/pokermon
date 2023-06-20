@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from app.models.query import QueryModel
+import app.models as models
 
 
 @dataclass(kw_only=True)
-class TournamentQuery(QueryModel):
+class TournamentQuery(models.QueryModel):
     id: int = None
     player_id: int = None
     session_id: int = None

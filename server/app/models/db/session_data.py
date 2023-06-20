@@ -1,8 +1,8 @@
 from app.extensions import db
-from app.models.db import DBModel
+import app.models as models
 
 
-class SessionData(DBModel):
+class SessionData(models.DBModel):
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     player = db.relationship('Player', backref=db.backref('session_data', lazy='dynamic'))
 
