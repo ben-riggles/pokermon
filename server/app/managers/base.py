@@ -1,18 +1,16 @@
 from __future__ import annotations
 from abc import ABC
 
-from app.models.db import DBModel
-from app.models.query import QueryModel
-from app.models.view import ViewModel
+import app.models as models
 
 
 class Manager(ABC):
     __subclasses = {}
-    model: ViewModel = None
+    model: models.ViewModel = None
     view_dict = {}
 
     def __init_subclass__(cls) -> None:
-        if cls.__name__ == 'DBModelManager':
+        if cls.__name__ in ['DBModelManager']:
             return
         if cls.model is None:
             raise TypeError(f'Model type must be specified for manager {cls.__name__}')
@@ -20,51 +18,51 @@ class Manager(ABC):
         return super().__init_subclass__()
 
     @staticmethod
-    def get(model_type: DBModel | ViewModel) -> Manager:
+    def get(model_type: models.DBModel | models.ViewModel) -> Manager:
         return Manager.__subclasses[model_type]
     
-
-class DBModelManager(Manager, ABC):
-    model: DBModel = None
-
     @classmethod
-    def _convert_view(cls, model: DBModel, view: ViewModel, query: QueryModel = None) -> ViewModel:
+    def _convert_view(cls, model: models.DBModel, view: models.ViewModel, query: models.QueryModel = None) -> models.ViewModel:
         try:
             func = cls.view_dict[view]
         except KeyError:
             raise TypeError(f'No converter for view type {view}')
         return func(model, query)
+    
+
+class DBModelManager(Manager, ABC):
+    model: models.DBModel = None
 
     @classmethod
-    def create(cls, model: DBModel, as_view: ViewModel = None) -> DBModel | ViewModel:
+    def create(cls, model: models.DBModel, view: models.ViewModel = None) -> models.DBModel | models.ViewModel:
         if (type(model) != cls.model):
             raise TypeError(f'Model type {type(model)} must match manager model type {cls.model}')
         
         model = model.create()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
 
     @classmethod
-    def read(cls, id: int, as_view: ViewModel = None) -> DBModel:
+    def read(cls, id: int, view: models.ViewModel = None) -> models.DBModel:
         model = cls.model.query.filter_by(id = id).one()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
     
     @classmethod
-    def update(cls, id: int, model: DBModel, as_view: ViewModel = None) -> DBModel:
+    def update(cls, id: int, model: models.DBModel, view: models.ViewModel = None) -> models.DBModel:
         if (type(model) != cls.model):
             raise TypeError(f'Model type {type(model)} must match manager model type {cls.model}')
         
         model = cls.read(id).update(model)
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model
     
     @classmethod
-    def delete(cls, id: int, as_view: ViewModel = None) -> DBModel:
+    def delete(cls, id: int, view: models.ViewModel = None) -> models.DBModel:
         model = cls.read(id).delete()
-        if as_view is not None:
-            return cls._convert_view(model, as_view)
+        if view is not None:
+            return cls._convert_view(model, view)
         return model

@@ -9,7 +9,7 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy import orm
 
-from app.models.db import Session, SessionData
+import app.models as models
 
 
 # revision identifiers, used by Alembic.
@@ -26,8 +26,8 @@ def upgrade():
 
     bind = op.get_bind()
     session = orm.Session(bind=bind)
-    for s in session.query(Session):
-        data: list[SessionData] = s.session_data.all()
+    for s in session.query(models.Session):
+        data: list[models.SessionData] = s.session_data.all()
         s.tournament = any(x for x in data if x.tournament_placement is not None)
     session.commit()
 
