@@ -7,7 +7,7 @@ from sqlalchemy.orm import validates
 
 from app.common.pokemon import random_pokemon, validate_pokemon
 from app.extensions import db
-from app.models import DBModel, QueryModel, ViewModel
+from app.models import DBModel, QueryModel, ViewModel, DirectView
 
 
 class Player(DBModel):
@@ -34,22 +34,28 @@ class Player(DBModel):
         start_date: datetime = None
         end_date: datetime = None
 
-    @dataclass
-    class View(ViewModel):
+    @dataclass(kw_only=True)
+    class StatsQuery(QueryModel):
+        start_date: datetime = None
+        end_date: datetime = None
+
+    @dataclass(init=False)
+    class View(DirectView):
+        view_name = 'Player'
+
         id: int
         first_name: str
         last_name: str
         sprite: str
 
-        def __init__(self, player: Player):
-            self.id = player.id
-            self.first_name = player.first_name
-            self.last_name = player.last_name
-            self.sprite = player.sprite
-
     @dataclass(init=False)
     class DetailView(View):
+        view_name = 'PlayerDetail'
+
         full_name: str
+        attendance: float
+
+        # General Stats
         total_net: Decimal
         cash_net: Decimal
         tournament_net: Decimal
@@ -57,3 +63,6 @@ class Player(DBModel):
         six_nine: int
         quads: int
         straight_flush: int
+
+        # Tournament Stats
+        tournament_placements: ViewModel['TournamentPlacements']
