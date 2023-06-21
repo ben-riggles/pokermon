@@ -16,7 +16,7 @@ export default function GameConsole() {
         */}
         <div
           id='outer-screen'
-          className='flex flex-col rounded justify-center items-center max-w-[1024px] w-[98%] h-[90%] bg-slate-500'
+          className='flex flex-col rounded justify-center items-center max-w-[980px] w-[98%] h-[90%] bg-slate-500'
         >
           <div
             id='screen'

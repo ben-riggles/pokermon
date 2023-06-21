@@ -1,9 +1,10 @@
 import { Screen } from '@/types/gameConsole';
 import pokermonMap from '@/assets/pokermon_outside.png';
 import pokerCenter from '@/assets/poker_center.png';
-import cozyShack from '@/assets/bedroom.png';
+import bedroom from '@/assets/bedroom.png';
 import laboratory from '@/assets/laboratory.png';
 import pokerMart from '@/assets/poker_mart.png';
+import dojo from '@/assets/dojo.png';
 
 export type ScreenInfo = {
   img: string;
@@ -18,13 +19,13 @@ const WelcomeScreenInfo = {
 };
 
 const DojoScreenInfo = {
-  img: '',
-  width: 1024,
-  height: 640,
+  img: dojo,
+  width: 1920,
+  height: 1280,
 };
 
 const BedroomScreenInfo = {
-  img: cozyShack,
+  img: bedroom,
   width: 1024,
   height: 640,
 };
