@@ -2,7 +2,7 @@ from app.managers import Manager
 import app.models as models
 
 
-def convert_tournament_view(tournament: models.Tournament, _) -> models.Tournament.View:
+def convert_tournament_view(tournament: models.Tournament, **kwargs) -> models.Tournament.View:
     return models.Tournament.View(tournament)
 
 
@@ -11,6 +11,15 @@ class TournamentManager(Manager):
     view_dict = {
         models.Tournament.View: convert_tournament_view
     }
+
+    @classmethod
+    def read(cls, session_id: int, view: models.ViewModel = None) -> models.Tournament | models.ViewModel:
+        session = Manager.get(models.Session).read(session_id)
+        tournament = models.Tournament(session)
+
+        if view is not None:
+            return cls._convert_view(tournament, view)
+        return tournament
 
     @classmethod
     def query(cls, _query: models.Tournament.Query, view: models.ViewModel = None) -> list[models.ViewModel]:
@@ -28,5 +37,5 @@ class TournamentManager(Manager):
         tournaments = [models.Tournament(x) for x in q.all()]
 
         if view is not None:
-            return [cls._convert_view(x, view, _query) for x in tournaments]
+            return [cls._convert_view(x, view, query=_query) for x in tournaments]
         return tournaments

@@ -2,16 +2,19 @@ from app.managers import Manager, DBModelManager
 import app.models as models
 
 
-def convert_session_view(session: models.Session, _) -> models.Session.View:
+def convert_session_view(session: models.Session, **kwargs) -> models.Session.View:
     return models.Session.View(session)
 
-def convert_session_detail_view(session: models.Session, query: models.Session.Query = None) -> models.Session.DetailView:
+def convert_session_detail_view(session: models.Session, **kwargs) -> models.Session.DetailView:
     view = models.Session.DetailView(session)
 
     q = models.SessionData.Query(session_id = session.id)
-    if query is not None:
+    try:
+        query = kwargs['query']
         q.start_date = query.start_date
         q.end_date = query.end_date
+    except KeyError:
+        pass
     data: list[models.SessionData] = Manager.get(models.SessionData).query(q)
 
     view.num_players = len(data)
@@ -44,5 +47,5 @@ class SessionManager(DBModelManager):
         sessions = q.all()
 
         if view is not None:
-            return [cls._convert_view(x, view, query) for x in sessions]
+            return [cls._convert_view(x, view, query=query) for x in sessions]
         return sessions

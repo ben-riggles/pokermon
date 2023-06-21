@@ -2,7 +2,7 @@ from app.managers import Manager, DBModelManager
 import app.models as models
 
 
-def convert_session_data_view(SessionData: models.SessionData, _) -> models.SessionData.View:
+def convert_session_data_view(SessionData: models.SessionData, **kwargs) -> models.SessionData.View:
     return models.SessionData.View(SessionData)
 
 
@@ -29,5 +29,5 @@ class SessionDataManager(DBModelManager):
         data = q.all()
 
         if view is not None:
-            return [cls._convert_view(x, view, query) for x in data]
+            return [cls._convert_view(x, view, query=query) for x in data]
         return data

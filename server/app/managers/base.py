@@ -22,12 +22,12 @@ class Manager(ABC):
         return Manager.__subclasses[model_type]
     
     @classmethod
-    def _convert_view(cls, model: models.DBModel, view: models.ViewModel, query: models.QueryModel = None) -> models.ViewModel:
+    def _convert_view(cls, model: models.DBModel, view: models.ViewModel, **kwargs) -> models.ViewModel:
         try:
             func = cls.view_dict[view]
         except KeyError:
             raise TypeError(f'No converter for view type {view}')
-        return func(model, query)
+        return func(model, **kwargs)
     
 
 class DBModelManager(Manager, ABC):

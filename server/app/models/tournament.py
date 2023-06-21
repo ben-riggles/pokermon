@@ -43,7 +43,9 @@ class Tournament:
         end_date: datetime = None
 
     @dataclass
-    class View(models.ViewModel):
+    class View(models.DirectView):
+        view_name = 'Tournament'
+
         session_id: int
         date: datetime
         buy_in: int
@@ -52,11 +54,25 @@ class Tournament:
         num_paid: int
         prizes: list[int]
 
-        def __init__(self, tournament: Tournament):
-            self.session_id = tournament.session_id
-            self.date = tournament.date
-            self.buy_in = tournament.buy_in
-            self.num_players = tournament.num_players
-            self.placements = tournament.placements
-            self.num_paid = tournament.num_paid
-            self.prizes = tournament.prizes
+    @dataclass
+    class Placements(models.ViewModel):
+        view_name = 'TournamentPlacements'
+
+        first: int
+        second: int
+        third: int
+        fourth: int
+        fifth: int
+        sixth: int
+        seventh: int
+        eighth_plus: int
+
+        def __init__(self, placements: dict[int, int]):
+            self.first = placements[1]
+            self.second = placements[2]
+            self.third = placements[3]
+            self.fourth = placements[4]
+            self.fifth = placements[5]
+            self.sixth = placements[6]
+            self.seventh = placements[7]
+            self.eighth_plus = sum(v for k, v in placements.items() if k >= 8)

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from app.extensions import db
-from app.models import DBModel, QueryModel, ViewModel
+from app.models import DBModel, QueryModel, DirectView
 
 
 class Session(DBModel):
@@ -28,20 +28,18 @@ class Session(DBModel):
         tournament: bool = None
 
     @dataclass
-    class View(ViewModel):
+    class View(DirectView):
+        view_name = 'Session'
+
         id: int
         date: datetime
         other_game: str
         tournament: bool
 
-        def __init__(self, session: Session):
-            self.id = session.id
-            self.date = session.date
-            self.other_game = session.other_game
-            self.tournament = session.tournament
-
 
     @dataclass(init=False)
     class DetailView(View):
+        view_name = 'SessionDetail'
+
         num_players: int
         num_tournament_players: int
