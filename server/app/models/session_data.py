@@ -34,7 +34,7 @@ class SessionData(DBModel):
         start_date: datetime = None
         end_date: datetime = None
 
-    @dataclass
+    @dataclass(init=False)
     class View(DirectView):
         view_name = 'SessionData'
 
