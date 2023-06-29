@@ -51,11 +51,11 @@ class Player(DBModel):
     @dataclass(init=False)
     class DetailView(View):
         view_name = 'PlayerDetail'
-
+        
         full_name: str
-        attendance: float
 
         # General Stats
+        attendance: float
         total_net: Decimal
         cash_net: Decimal
         tournament_net: Decimal

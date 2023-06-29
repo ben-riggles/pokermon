@@ -55,7 +55,10 @@ class ViewModel(ABC):
 
 @dataclass
 class DirectView(ViewModel):
-    def __init__(self, model: Type[T]):
+    def __init__(self, model):
         for field in class_fields(self):
-            val = getattr(model, field.name)
-            setattr(self, field.name, val)
+            try:
+                val = getattr(model, field.name)
+                setattr(self, field.name, val)
+            except AttributeError:
+                pass
