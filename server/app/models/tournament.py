@@ -42,7 +42,7 @@ class Tournament:
         start_date: datetime = None
         end_date: datetime = None
 
-    @dataclass
+    @dataclass(init=False)
     class View(models.DirectView):
         view_name = 'Tournament'
 

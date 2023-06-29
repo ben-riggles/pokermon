@@ -27,7 +27,7 @@ class Session(DBModel):
         end_date: datetime = None
         tournament: bool = None
 
-    @dataclass
+    @dataclass(init=False)
     class View(DirectView):
         view_name = 'Session'
 
