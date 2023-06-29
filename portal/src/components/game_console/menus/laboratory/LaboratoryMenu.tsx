@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import useScreenStore from '@/stores/screenStore';
-import { DownKeys, UpKeys } from '@/types/keys';
 import MenuLink from '../../lib/MenuLink';
 import MenuList from '../../lib/MenuList';
 import MenuPage from '../../lib/MenuPage';

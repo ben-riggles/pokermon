@@ -2,6 +2,7 @@ export type PlayersRes = {
   id: number;
   first_name: string;
   last_name: string;
+  sprite: string;
 };
 
 export type PlayerReq = {
@@ -19,9 +20,22 @@ export type DetailsRes = {
   tournament_net: number;
   other_net: number;
   six_nine: number;
+  straight_flush: number;
   quads: number;
   sprite: string;
-  sessions: Sessions[];
+  attendance: number;
+  tournament_placements: TournamentPlacements[];
+};
+
+export type TournamentPlacements = {
+  first: number;
+  second: number;
+  third: number;
+  fourth: number;
+  fifth: number;
+  sixth: number;
+  seventh: number;
+  eighth_plus: number;
 };
 
 export type Sessions = {
@@ -44,4 +58,4 @@ export type Leaderboard =
   | 'other_net'
   | 'six_nine'
   | 'quads'
-  | 'sessions';
+  | 'attendance';

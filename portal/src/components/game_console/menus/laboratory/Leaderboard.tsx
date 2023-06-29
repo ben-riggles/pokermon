@@ -4,11 +4,10 @@ import {
   DetailsRes,
   Leaderboard as LeaderboardType,
 } from '@/types/endpoints/players';
-import { playersApi } from '@/api/allEndpoints';
-import { useEffect, useState } from 'react';
 import MenuList from '../../lib/MenuList';
 import MenuProgressBar from '../../lib/MenuProgressBar';
 import { currency } from './SinglePlayerMenu';
+import useAllPlayerDetails from '@/api/useAllPlayerDetails';
 
 function getTitle(leaderboard: LeaderboardType): string {
   switch (leaderboard) {
@@ -24,8 +23,8 @@ function getTitle(leaderboard: LeaderboardType): string {
       return `Other Net Leaderboard`;
     case 'quads':
       return `Quads Leaderboard`;
-    case 'sessions':
-      return `Sessions Leaderboard`;
+    case 'attendance':
+      return `Attendance Leaderboard`;
   }
 }
 
@@ -33,29 +32,28 @@ function getLeaderboardValue(
   player: DetailsRes,
   type: LeaderboardType
 ): number {
-  if (type === 'sessions') {
-    return player.sessions.length;
-  }
-  return player[type];
+  return +player[type].toFixed(2);
 }
 
 export default function Leaderboard() {
   const { updateMenu, leaderboard } = useScreenStore();
-  const [players, setPlayers] = useState<DetailsRes[]>([]);
+  const { data: allPlayerDetails, isLoading, isError } = useAllPlayerDetails();
 
-  useEffect(() => {
-    async function getPlayerDetails() {
-      const res = await playersApi.getAllPlayerDetails();
-      setPlayers(res.data);
-    }
-    getPlayerDetails();
-  }, [setPlayers]);
-
-  if (players.length === 0) {
+  if (isError) {
+    return <MenuPage title='An Error Occurred' onBack={handleBack}></MenuPage>;
+  }
+  if (isLoading) {
+    return <MenuPage title='...Loading' onBack={handleBack}></MenuPage>;
+  }
+  if (!allPlayerDetails || allPlayerDetails.length === 0) {
     return null;
   }
 
-  const rankedPlayers = [...players].sort(
+  function handleBack() {
+    updateMenu('Leaderboards');
+  }
+
+  const rankedPlayers = [...allPlayerDetails].sort(
     (a, b) =>
       getLeaderboardValue(b, leaderboard) - getLeaderboardValue(a, leaderboard)
   );

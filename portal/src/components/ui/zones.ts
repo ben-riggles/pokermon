@@ -57,7 +57,13 @@ const welcomeZones: ClickableRegion[] = [
   },
 ];
 
-const dojoZones: ClickableRegion[] = [];
+const dojoZones: ClickableRegion[] = [
+  {
+    type: 'INFO',
+    menu: 'Tournaments',
+    box: { x: 440, y: 100, w: 80, h: 80 },
+  },
+];
 
 const bedroomZones: ClickableRegion[] = [
   {

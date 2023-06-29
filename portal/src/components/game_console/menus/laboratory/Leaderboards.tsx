@@ -23,8 +23,8 @@ export default function Leaderboards() {
           Sixty Nines
         </MenuLink>
         <MenuLink onClick={() => handleLeaderboard('quads')}>Quads</MenuLink>
-        <MenuLink onClick={() => handleLeaderboard('sessions')}>
-          Sessions Played
+        <MenuLink onClick={() => handleLeaderboard('attendance')}>
+          Attendance
         </MenuLink>
         <MenuLink onClick={() => handleLeaderboard('cash_net')}>
           Cash net

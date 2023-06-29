@@ -17,4 +17,5 @@ export type Menu =
   | 'Dojo Menu'
   | 'Bedroom Input'
   | 'Leaderboards'
-  | 'Leaderboard';
+  | 'Leaderboard'
+  | 'Tournaments';
