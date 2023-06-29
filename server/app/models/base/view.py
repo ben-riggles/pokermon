@@ -56,7 +56,6 @@ class ViewModel(ABC):
 @dataclass
 class DirectView(ViewModel):
     def __init__(self, model):
-        print('hello')
         for field in class_fields(self):
             try:
                 val = getattr(model, field.name)
