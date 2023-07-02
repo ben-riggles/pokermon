@@ -60,7 +60,7 @@ const welcomeZones: ClickableRegion[] = [
 const dojoZones: ClickableRegion[] = [
   {
     type: 'INFO',
-    menu: 'Tournaments',
+    menu: 'Tournament Placements',
     box: { x: 440, y: 100, w: 80, h: 80 },
   },
 ];
