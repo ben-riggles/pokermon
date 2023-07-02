@@ -1,33 +1,15 @@
-import { playersApi } from '@/api/allEndpoints';
 import useScreenStore from '@/stores/screenStore';
-import { DetailsRes } from '@/types/endpoints/players';
 import { DownKeys, UpKeys } from '@/types/keys';
 import { useEffect, useState } from 'react';
-import MenuLink from '../../lib/MenuLink';
-import MenuList from '../../lib/MenuList';
-import MenuPage from '../../lib/MenuPage';
+import MenuLink from '@/components/game_console/lib/MenuLink';
+import MenuList from '@/components/game_console/lib/MenuList';
+import MenuPage from '@/components/game_console/lib/MenuPage';
+import usePlayers from '@/api/usePlayers';
 
 export default function PlayersMenu() {
   const [cursorLoc, setCursor] = useState(0);
-  const [players, setPlayers] = useState<DetailsRes[]>([]);
-  const { updatePlayer, updateMenu } = useScreenStore();
-
-  useEffect(() => {
-    async function getPlayerDetails() {
-      const res = await playersApi.getAllPlayerDetails();
-      setPlayers(res.data);
-    }
-    getPlayerDetails();
-  }, []);
-
-  function arrowHandler(event: KeyboardEvent) {
-    if (UpKeys.includes(event.key) && cursorLoc > 0) {
-      setCursor((cursorLoc) => cursorLoc - 1);
-    }
-    if (DownKeys.includes(event.key) && cursorLoc < players.length - 1) {
-      setCursor((cursorLoc) => cursorLoc + 1);
-    }
-  }
+  const { updatePlayerId, updateMenu } = useScreenStore();
+  const { data: players, isLoading, isError } = usePlayers();
 
   useEffect(() => {
     window.addEventListener('keydown', arrowHandler);
@@ -40,6 +22,26 @@ export default function PlayersMenu() {
     updateMenu('Laboratory Menu');
   }
 
+  if (isError) {
+    return <MenuPage title='An Error Occurred' onBack={handleBack}></MenuPage>;
+  }
+  if (isLoading) {
+    return <MenuPage title='...Loading' onBack={handleBack}></MenuPage>;
+  }
+
+  function arrowHandler(event: KeyboardEvent) {
+    if (UpKeys.includes(event.key) && cursorLoc > 0) {
+      setCursor((cursorLoc) => cursorLoc - 1);
+    }
+    if (
+      players &&
+      DownKeys.includes(event.key) &&
+      cursorLoc < players.length - 1
+    ) {
+      setCursor((cursorLoc) => cursorLoc + 1);
+    }
+  }
+
   return (
     <MenuPage title='Players' onBack={handleBack}>
       <div className='py-2'>
@@ -47,7 +49,7 @@ export default function PlayersMenu() {
           {players.map((player) => (
             <MenuLink
               onClick={() => {
-                updatePlayer(players[players.indexOf(player)]);
+                updatePlayerId(player.id);
                 updateMenu('Single Player');
               }}
               key={player.id}

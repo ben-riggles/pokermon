@@ -12,6 +12,7 @@ import DojoMenu from './menus/dojo//DojoMenu';
 import BedroomInput from './menus/bedroom/BedroomInput';
 import Leaderboards from './menus/laboratory/Leaderboards';
 import Leaderboard from './menus/laboratory/Leaderboard';
+import Tournaments from './menus/dojo/Tournaments';
 
 function getMenu(menu: Menu): JSX.Element {
   switch (menu) {
@@ -37,6 +38,8 @@ function getMenu(menu: Menu): JSX.Element {
       return <Leaderboards />;
     case 'Leaderboard':
       return <Leaderboard />;
+    case 'Tournaments':
+      return <Tournaments />;
     default:
       return <></>;
   }

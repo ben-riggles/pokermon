@@ -2,6 +2,7 @@ import usePreviousMenu from '@/hooks/usePreviousMenu';
 import useScreenStore from '@/stores/screenStore';
 import MenuPage from '../../lib/MenuPage';
 import MenuList from '../../lib/MenuList';
+import usePlayerDetails from '@/api/usePlayerDetails';
 
 export const currency = (value: number) =>
   value >= 0 ? (
@@ -11,8 +12,20 @@ export const currency = (value: number) =>
   );
 
 export default function SinglePlayerMenu() {
-  const { player, updateMenu } = useScreenStore();
+  const { playerId, updateMenu } = useScreenStore();
+  const { data: player, isLoading, isError } = usePlayerDetails(playerId);
   usePreviousMenu('All Players');
+
+  if (isError) {
+    return <MenuPage title='An Error Occurred' onBack={handleBack}></MenuPage>;
+  }
+  if (isLoading) {
+    return <MenuPage title='...Loading' onBack={handleBack}></MenuPage>;
+  }
+
+  function handleBack() {
+    updateMenu('All Players');
+  }
 
   const sprite = player.sprite || 'snorlax';
 
@@ -45,7 +58,7 @@ export default function SinglePlayerMenu() {
           </div>
 
           <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{player.sessions.length}</div>
+            <div className='text-xl'>{player.id}</div>
             <div>Total Sessions</div>
           </div>
 

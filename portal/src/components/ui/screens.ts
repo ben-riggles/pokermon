@@ -20,8 +20,8 @@ const WelcomeScreenInfo = {
 
 const DojoScreenInfo = {
   img: dojo,
-  width: 1920,
-  height: 1280,
+  width: 960,
+  height: 640,
 };
 
 const BedroomScreenInfo = {
