@@ -1,7 +1,7 @@
 import { DetailsRes, PlayerReq, PlayersRes } from '@/types/endpoints/players';
 import axios from 'axios';
 
-const local = 'http://localhost:5000';
+const local = 'http://localhost:7777';
 
 export const playersApi = {
   getAllPlayers: async () => axios.get<PlayersRes[]>(`${local}/players`),
