@@ -18,4 +18,5 @@ export type Menu =
   | 'Bedroom Input'
   | 'Leaderboards'
   | 'Leaderboard'
-  | 'Tournaments';
+  | 'Tournaments'
+  | 'Tournament Placements';

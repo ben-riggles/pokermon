@@ -13,6 +13,7 @@ import BedroomInput from './menus/bedroom/BedroomInput';
 import Leaderboards from './menus/laboratory/Leaderboards';
 import Leaderboard from './menus/laboratory/Leaderboard';
 import Tournaments from './menus/dojo/Tournaments';
+import TournamentPlacements from './menus/dojo/TournamentPlacements';
 
 function getMenu(menu: Menu): JSX.Element {
   switch (menu) {
@@ -38,6 +39,8 @@ function getMenu(menu: Menu): JSX.Element {
       return <Leaderboards />;
     case 'Leaderboard':
       return <Leaderboard />;
+    case 'Tournament Placements':
+      return <TournamentPlacements />;
     case 'Tournaments':
       return <Tournaments />;
     default:
@@ -45,7 +48,7 @@ function getMenu(menu: Menu): JSX.Element {
   }
 }
 
-export default function GameMenuSwitch() {
+export default function FloatingScreen() {
   const { menu } = useGameStore();
   return <WindowWrapper>{getMenu(menu)}</WindowWrapper>;
 }

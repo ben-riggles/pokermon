@@ -2,4 +2,4 @@
 
 cd portal
 
-pnpm eslint --fix . && pnpm pretty-quick --staged
+pnpm npx lint-staged && pnpm pretty-quick --staged
