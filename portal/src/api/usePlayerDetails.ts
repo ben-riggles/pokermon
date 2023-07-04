@@ -8,7 +8,7 @@ async function getPlayerDetails(playerId: number) {
 
 export default function usePlayerDetails(playerId: number) {
   const players = useQuery({
-    queryKey: ['player'],
+    queryKey: ['player', playerId],
     queryFn: () => getPlayerDetails(playerId),
   });
   return players;

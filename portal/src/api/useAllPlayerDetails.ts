@@ -8,7 +8,7 @@ async function getAllPlayerDetails() {
 
 export default function useAllPlayerDetails() {
   const players = useQuery({
-    queryKey: ['player'],
+    queryKey: ['player', 'allDetails'],
     queryFn: getAllPlayerDetails,
   });
   return players;
