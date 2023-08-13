@@ -1,5 +1,5 @@
-import FloatingScreen from './FloatingScreen';
-import Canvas from '../ui/Canvas';
+import FloatingScreen from '@/components/game_console/FloatingScreen';
+import Canvas from '@/components/ui/Canvas';
 
 export default function GameConsole() {
   return (

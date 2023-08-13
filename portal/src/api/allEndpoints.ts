@@ -10,9 +10,9 @@ export const playersApi = {
     axios.get<PlayersRes>(`${local}/players/${id}`),
   postPlayer: async (req: PlayerReq) =>
     axios.post<PlayersRes>(`${local}/players`, req),
-  putPlayer: async (id: string, req: PlayerReq) =>
+  putPlayer: async (id: number, req: PlayerReq) =>
     axios.put<PlayersRes>(`${local}/players/${id}`, req),
-  deletePlayer: async (id: string) =>
+  deletePlayer: async (id: number) =>
     axios.delete<PlayersRes>(`${local}/players/${id}`),
   getAllPlayerDetails: async () =>
     axios.get<DetailsRes[]>(`${local}/players/details`),
@@ -23,4 +23,6 @@ export const playersApi = {
 export const tournamentsApi = {
   getTournaments: async () =>
     axios.get<TournamentsRes[]>(`${local}/tournaments`),
+  getTournament: async (sessionId: number) =>
+    axios.get<TournamentsRes>(`${local}/tournaments/${sessionId}`),
 };

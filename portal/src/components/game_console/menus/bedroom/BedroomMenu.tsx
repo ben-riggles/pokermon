@@ -1,5 +1,5 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuPage from '../../lib/MenuPage';
+import MenuPage from '@/components/game_console/lib/MenuPage';
 
 export default function BedroomMenu() {
   const { updateScreen, updateMenu } = useScreenStore();

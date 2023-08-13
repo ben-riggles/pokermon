@@ -1,15 +1,14 @@
 import usePreviousMenu from '@/hooks/usePreviousMenu';
 import useScreenStore from '@/stores/screenStore';
-import MenuPage from '../../lib/MenuPage';
-import MenuList from '../../lib/MenuList';
+import MenuPage from '@/components/game_console/lib/MenuPage';
+import MenuList from '@/components/game_console/lib/MenuList';
 import usePlayerDetails from '@/api/usePlayerDetails';
+import InfoCard from '@/components/ui/InfoCard';
 
-export const currency = (value: number) =>
-  value >= 0 ? (
-    <>{`$${value.toFixed(2)}`}</>
-  ) : (
-    <>{`-$${Math.abs(value).toFixed(2)}`}</>
-  );
+export const currency = (value: number, decimals = 2) =>
+  value >= 0
+    ? `$${value.toFixed(decimals)}`
+    : `-$${Math.abs(value).toFixed(decimals)}`;
 
 export default function SinglePlayerMenu() {
   const { playerId, updateMenu } = useScreenStore();
@@ -47,40 +46,19 @@ export default function SinglePlayerMenu() {
     >
       <div className='text-sm'>
         <MenuList withCursor={false} layout='grid'>
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{player.six_nine}</div>
-            <div>Sixty Nines</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{player.quads}</div>
-            <div>Quads</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{player.id}</div>
-            <div>Total Sessions</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{currency(player.cash_net)}</div>
-            <div>Cash Net</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{currency(player.tournament_net)}</div>
-            <div>Tourney Net</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{currency(player.other_net)}</div>
-            <div>Misc Net</div>
-          </div>
-
-          <div className='text-center w-full pixel-border p-4'>
-            <div className='text-xl'>{currency(player.total_net)}</div>
-            <div>Total Net</div>
-          </div>
+          <InfoCard info={player.six_nine} title='Sixty Nines' />
+          <InfoCard info={player.quads} title='Quads' />
+          <InfoCard
+            info={player.attendance.toFixed(2) + ' %'}
+            title='Attendance'
+          />
+          <InfoCard info={currency(player.cash_net)} title='Cash Net' />
+          <InfoCard
+            info={currency(player.tournament_net)}
+            title='Tourney Net'
+          />
+          <InfoCard info={currency(player.other_net)} title='Misc Net' />
+          <InfoCard info={currency(player.total_net)} title='Total Net' />
         </MenuList>
       </div>
     </MenuPage>

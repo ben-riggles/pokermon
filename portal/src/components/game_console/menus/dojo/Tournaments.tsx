@@ -21,7 +21,7 @@ export default function Tournaments() {
   }
 
   return (
-    <MenuPage title='Tournaments' onBack={handleBack}>
+    <MenuPage title='Past Tournaments' onBack={handleBack}>
       <MenuList>
         {tournaments.map((tournament) => {
           return (

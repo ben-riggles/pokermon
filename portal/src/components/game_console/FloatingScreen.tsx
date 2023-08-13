@@ -1,19 +1,21 @@
 import useGameStore from '@/stores/screenStore';
-import WelcomeMenu from './menus/WelcomeMenu';
-import PlayersMenu from './menus/laboratory/PlayersMenu';
+import WelcomeMenu from '@/components/game_console/menus/WelcomeMenu';
+import PlayersMenu from '@/components/game_console/menus/laboratory/PlayersMenu';
 import WindowWrapper from '@/components/ui/WindowWrapper';
 import { Menu } from '@/types/gameConsole';
-import SinglePlayerMenu from './menus/laboratory/SinglePlayerMenu';
-import BedroomMenu from './menus/bedroom/BedroomMenu';
-import LaboratoryMenu from './menus/laboratory/LaboratoryMenu';
-import PokerCenterMenu from './menus/poker_center/PokerCenterMenu';
-import PokerMartMenu from './menus/poker_mart/PokerMartMenu';
-import DojoMenu from './menus/dojo//DojoMenu';
-import BedroomInput from './menus/bedroom/BedroomInput';
-import Leaderboards from './menus/laboratory/Leaderboards';
-import Leaderboard from './menus/laboratory/Leaderboard';
-import Tournaments from './menus/dojo/Tournaments';
-import TournamentPlacements from './menus/dojo/TournamentPlacements';
+import SinglePlayerMenu from '@/components/game_console/menus/laboratory/SinglePlayerMenu';
+import BedroomMenu from '@/components/game_console/menus/bedroom/BedroomMenu';
+import LaboratoryMenu from '@/components/game_console/menus/laboratory/LaboratoryMenu';
+import PokerCenterMenu from '@/components/game_console/menus/poker_center/PokerCenterMenu';
+import PokerMartMenu from '@/components/game_console/menus/poker_mart/PokerMartMenu';
+import DojoMenu from '@/components/game_console/menus/dojo//DojoMenu';
+import BedroomInput from '@/components/game_console/menus/bedroom/BedroomInput';
+import Leaderboards from '@/components/game_console/menus/laboratory/Leaderboards';
+import Leaderboard from '@/components/game_console/menus/laboratory/Leaderboard';
+import Tournaments from '@/components/game_console/menus/dojo/Tournaments';
+import SingleTournament from '@/components/game_console/menus/dojo/SingleTournament';
+import SubmitPlacements from '@/components/game_console/menus/dojo/SubmitPlacements';
+import SingleTournamentPlacements from '@/components/game_console/menus/dojo/SingleTournamentPlacements';
 
 function getMenu(menu: Menu): JSX.Element {
   switch (menu) {
@@ -39,10 +41,14 @@ function getMenu(menu: Menu): JSX.Element {
       return <Leaderboards />;
     case 'Leaderboard':
       return <Leaderboard />;
-    case 'Tournament Placements':
-      return <TournamentPlacements />;
+    case 'Submit Placements':
+      return <SubmitPlacements />;
     case 'Tournaments':
       return <Tournaments />;
+    case 'Single Tournament':
+      return <SingleTournament />;
+    case 'Tournament Placements':
+      return <SingleTournamentPlacements />;
     default:
       return <></>;
   }

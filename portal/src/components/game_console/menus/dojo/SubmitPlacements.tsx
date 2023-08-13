@@ -3,6 +3,7 @@ import { useState } from 'react';
 import MenuPage from '../../lib/MenuPage';
 import ComboboxHUI from '@/components/game_console/lib/ComboboxHUI';
 import usePlayers from '@/api/usePlayers';
+import { Placement } from '@/types/dojo';
 
 const place = [
   {
@@ -11,12 +12,7 @@ const place = [
   },
 ];
 
-export type Placement = {
-  id: number;
-  place: number;
-};
-
-export default function TournamentPlacements() {
+export default function SubmitPlacements() {
   const { updateMenu } = useScreenStore();
   const [placements, setPlacements] = useState<Placement[]>(place);
   const { data: players, isLoading, isError } = usePlayers();

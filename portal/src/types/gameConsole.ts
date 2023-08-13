@@ -20,4 +20,5 @@ export type Menu =
   | 'Leaderboard'
   | 'Tournaments'
   | 'Single Tournament'
-  | 'Tournament Placements';
+  | 'Tournament Placements'
+  | 'Submit Placements';

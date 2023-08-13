@@ -1,7 +1,7 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuPage from '../../lib/MenuPage';
-import MenuList from '../../lib/MenuList';
-import MenuLink from '../../lib/MenuLink';
+import MenuPage from '@/components/game_console/lib/MenuPage';
+import MenuList from '@/components/game_console/lib/MenuList';
+import MenuLink from '@/components/game_console/lib/MenuLink';
 import { Leaderboard } from '@/types/endpoints/players';
 
 export default function Leaderboards() {

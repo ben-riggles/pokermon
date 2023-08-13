@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Combobox } from '@headlessui/react';
-import { Placement } from '@/components/game_console/menus/dojo/TournamentPlacements';
 import { PlayersRes } from '@/types/endpoints/players';
+import { Placement } from '@/types/dojo';
 
 type Props = {
   index: number;

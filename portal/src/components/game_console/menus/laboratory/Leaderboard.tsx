@@ -1,12 +1,12 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuPage from '../../lib/MenuPage';
+import MenuPage from '@/components/game_console/lib/MenuPage';
 import {
   DetailsRes,
   Leaderboard as LeaderboardType,
 } from '@/types/endpoints/players';
-import MenuList from '../../lib/MenuList';
-import MenuProgressBar from '../../lib/MenuProgressBar';
-import { currency } from './SinglePlayerMenu';
+import MenuList from '@/components/game_console/lib/MenuList';
+import MenuProgressBar from '@/components/game_console/lib/MenuProgressBar';
+import { currency } from '@/components/game_console/menus/laboratory/SinglePlayerMenu';
 import useAllPlayerDetails from '@/api/useAllPlayerDetails';
 
 function getTitle(leaderboard: LeaderboardType): string {
