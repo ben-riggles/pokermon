@@ -50,7 +50,7 @@ export default function TournamentPlacements() {
   }
 
   return (
-    <MenuPage title='Tournament Placements' onBack={handleBack}>
+    <MenuPage title='Submit Placements' onBack={handleBack}>
       <div className='cursor-pointer pb-2 text-sm flex' onClick={handleAdd}>
         Add Entrant +
       </div>

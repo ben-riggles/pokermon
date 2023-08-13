@@ -1,4 +1,5 @@
 import { DetailsRes, PlayerReq, PlayersRes } from '@/types/endpoints/players';
+import { TournamentsRes } from '@/types/endpoints/tournaments';
 import axios from 'axios';
 
 const local = 'http://localhost:7777';
@@ -17,16 +18,6 @@ export const playersApi = {
     axios.get<DetailsRes[]>(`${local}/players/details`),
   getPlayerDetails: async (id: number) =>
     axios.get<DetailsRes>(`${local}/players/${id}/details`),
-};
-
-export type TournamentsRes = {
-  session_id: number;
-  date: string;
-  buy_in: number;
-  num_players: number;
-  placements: number[];
-  num_paid: number;
-  prizes: number[];
 };
 
 export const tournamentsApi = {

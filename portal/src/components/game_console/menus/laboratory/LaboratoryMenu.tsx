@@ -15,9 +15,6 @@ export default function LaboratoryMenu() {
     <MenuPage title='Laboratory' onBack={handleBack}>
       <MenuList>
         <MenuLink onClick={() => updateMenu('All Players')}>Players</MenuLink>
-        <MenuLink onClick={() => updateMenu('Leaderboards')}>
-          Leaderboards
-        </MenuLink>
       </MenuList>
     </MenuPage>
   );

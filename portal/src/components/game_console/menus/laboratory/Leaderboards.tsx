@@ -8,7 +8,7 @@ export default function Leaderboards() {
   const { updateMenu, updateLeaderboard } = useScreenStore();
 
   function handleBack() {
-    updateMenu('Laboratory Menu');
+    updateMenu('Poker Center Menu');
   }
 
   function handleLeaderboard(type: Leaderboard) {

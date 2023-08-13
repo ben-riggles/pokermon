@@ -81,46 +81,6 @@ export default function SinglePlayerMenu() {
             <div className='text-xl'>{currency(player.total_net)}</div>
             <div>Total Net</div>
           </div>
-
-          {/* <MenuProgressBar
-            title='Sixty Nines'
-            current={player.six_nine}
-            max={100}
-          />
-          <MenuProgressBar title='Quads' current={player.quads} max={100} />
-          <MenuProgressBar
-            title='Total Sessions'
-            current={player.sessions.length}
-            max={100}
-          />
-          <MenuProgressBar
-            title='Cash Net'
-            current={player.cash_net}
-            min={-250}
-            max={250}
-            valueRenderer={Currency}
-          />
-          <MenuProgressBar
-            title='Tourney Net'
-            current={player.tournament_net}
-            min={-250}
-            max={250}
-            valueRenderer={Currency}
-          />
-          <MenuProgressBar
-            title='Misc Net'
-            current={player.other_net}
-            min={-250}
-            max={250}
-            valueRenderer={Currency}
-          />
-          <MenuProgressBar
-            title='Total Net'
-            current={player.total_net}
-            min={-250}
-            max={250}
-            valueRenderer={Currency}
-          /> */}
         </MenuList>
       </div>
     </MenuPage>

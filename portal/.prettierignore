@@ -1,0 +1,7 @@
+**/assets/
+src/assets/
+pnpm-lock.yaml
+package.json
+node_modules
+.husky
+public/

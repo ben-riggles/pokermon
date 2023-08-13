@@ -14,11 +14,11 @@ export default function DojoMenu() {
   return (
     <MenuPage title='Dojo' onBack={handleBack}>
       <MenuList>
-        <MenuLink onClick={() => updateMenu('Tournament Placements')}>
-          Players
-        </MenuLink>
         <MenuLink onClick={() => updateMenu('Tournaments')}>
-          Tournaments
+          All Tournaments
+        </MenuLink>
+        <MenuLink onClick={() => updateMenu('Tournament Placements')}>
+          Submit Placements
         </MenuLink>
       </MenuList>
     </MenuPage>
