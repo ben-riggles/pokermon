@@ -20,8 +20,8 @@ class TournamentListRoutes(Resource):
 @api.route('/<int:session_id>')
 class TournamentRoutes(Resource):
     @api.marshal_with(tournament_view)
-    def get(self, id):
+    def get(self, session_id):
         try:
-            return TournamentManager.read(id, view=Tournament.View)
+            return TournamentManager.read(session_id, view=Tournament.View)
         except NoResultFound:
             abort(404)
