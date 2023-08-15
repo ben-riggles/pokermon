@@ -5,7 +5,7 @@ type Props = {
   label: string;
   err?: string;
 };
-export default function BedroomFormInput({
+export default function FormInput({
   value,
   handleFn,
   placeholder,

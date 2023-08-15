@@ -1,27 +1,25 @@
 import useScreenStore from '@/stores/screenStore';
-import MenuPage from '@/components/game_console/lib/MenuPage';
-import usePlayers from '@/api/usePlayers';
-import { FormEvent, useState } from 'react';
+import MenuPage from '../../lib/MenuPage';
 import { PlayersRes } from '@/types/endpoints/players';
-import { pokemonNames } from '@/misc_data/pokemonNames';
-import { usePutPlayer } from '@/api/usePlayerDetails';
-import PlayerSelect from '@/components/ui/menus_common/PlayerSelect';
+import { FormEvent, useState } from 'react';
+import usePlayers from '@/api/usePlayers';
 import FormInput from '@/components/ui/menus_common/FormInput';
+import PlayerSelect from '@/components/ui/menus_common/PlayerSelect';
 
-export default function BedroomInput() {
+export default function Payouts() {
   const { updateMenu } = useScreenStore();
   const { data: players, isError, isLoading } = usePlayers();
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [sprite, setSprite] = useState('');
-  const [err, setErr] = useState('');
+  const [payout, setPayout] = useState('0');
   const [selectedPerson, setSelectedPerson] = useState<PlayersRes>({
     id: 0,
     first_name: '',
     last_name: '',
     sprite: 'snorlax',
   });
-  const { mutate: putPlayer } = usePutPlayer(selectedPerson);
+
+  function handleBack() {
+    updateMenu('Poker Mart Menu');
+  }
 
   if (isError) {
     return <MenuPage title='An Error Occurred' onBack={handleBack}></MenuPage>;
@@ -30,32 +28,15 @@ export default function BedroomInput() {
     return <MenuPage title='...Loading' onBack={handleBack}></MenuPage>;
   }
 
-  function handleBack() {
-    updateMenu('Bedroom Menu');
-  }
-
-  function handleSprite(value: string) {
-    setSprite(value.toLowerCase());
-  }
+  const shownPlayer = players.find((player) => selectedPerson.id === player.id);
 
   function submitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (pokemonNames.includes(sprite)) {
-      putPlayer({
-        first_name: first,
-        last_name: last,
-        sprite: sprite,
-      });
-      setErr('');
-    } else {
-      setErr('Sprite not included in DB!');
-    }
+    // Handle Cash Game logic
   }
 
-  const shownPlayer = players.find((player) => selectedPerson.id === player.id);
-
   return (
-    <MenuPage title='Input Your Info' onBack={handleBack}>
+    <MenuPage title='Payouts' onBack={handleBack}>
       <div className='flex flex-col items-center w-full pixel-border p-4'>
         <PlayerSelect
           players={players}
@@ -77,27 +58,13 @@ export default function BedroomInput() {
             </div>
             <form onSubmit={submitForm} className='flex flex-col w-52 gap-4'>
               <FormInput
-                label='First Name'
-                value={first}
-                handleFn={setFirst}
-                placeholder={shownPlayer.first_name}
+                label='Cash Game'
+                value={payout}
+                handleFn={setPayout}
+                placeholder={payout}
               />
-              <FormInput
-                label='Last Name'
-                value={last}
-                handleFn={setLast}
-                placeholder={shownPlayer.last_name}
-              />
-              <FormInput
-                label='Sprite'
-                value={sprite}
-                handleFn={handleSprite}
-                placeholder={shownPlayer.sprite}
-                err={err}
-              />
-              {err && <span>{err}</span>}
               <button className='pixel-border hover:bg-sky-100' type='submit'>
-                Update
+                Confirm
               </button>
             </form>
           </div>

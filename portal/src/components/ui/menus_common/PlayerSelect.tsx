@@ -8,7 +8,7 @@ type Props = {
   setSelectedPerson: (e: PlayersRes) => void;
 };
 
-export default function BedroomPlayerSelect({
+export default function PlayerSelect({
   players,
   setSelectedPerson,
   selectedPerson,

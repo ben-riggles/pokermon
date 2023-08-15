@@ -1,11 +1,11 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 interface MenuProgressBarProps {
   title: string;
   current: number;
   min?: number;
   max: number;
-  valueRenderer?: (value: number) => JSX.Element;
+  valueRenderer?: (value: number) => ReactNode;
 }
 
 function getMeterColor(percentage: number): string {

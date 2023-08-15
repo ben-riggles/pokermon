@@ -1,4 +1,4 @@
-import { DetailsRes, PlayerReq, PlayersRes } from '@/types/endpoints/players';
+import { DetailsRes, PlayersReq, PlayersRes } from '@/types/endpoints/players';
 import { TournamentsRes } from '@/types/endpoints/tournaments';
 import axios from 'axios';
 
@@ -8,9 +8,9 @@ export const playersApi = {
   getAllPlayers: async () => axios.get<PlayersRes[]>(`${local}/players`),
   getPlayer: async (id: number) =>
     axios.get<PlayersRes>(`${local}/players/${id}`),
-  postPlayer: async (req: PlayerReq) =>
+  postPlayer: async (req: PlayersReq) =>
     axios.post<PlayersRes>(`${local}/players`, req),
-  putPlayer: async (id: number, req: PlayerReq) =>
+  putPlayer: async (id: number, req: PlayersReq) =>
     axios.put<PlayersRes>(`${local}/players/${id}`, req),
   deletePlayer: async (id: number) =>
     axios.delete<PlayersRes>(`${local}/players/${id}`),
