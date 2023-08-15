@@ -10,8 +10,8 @@ import PokerCenterMenu from '@/components/game_console/menus/poker_center/PokerC
 import PokerMartMenu from '@/components/game_console/menus/poker_mart/PokerMartMenu';
 import DojoMenu from '@/components/game_console/menus/dojo//DojoMenu';
 import BedroomInput from '@/components/game_console/menus/bedroom/BedroomInput';
-import Leaderboards from '@/components/game_console/menus/laboratory/Leaderboards';
-import Leaderboard from '@/components/game_console/menus/laboratory/Leaderboard';
+import Leaderboards from '@/components/game_console/menus/poker_center/Leaderboards';
+import Leaderboard from '@/components/game_console/menus/poker_center/Leaderboard';
 import Tournaments from '@/components/game_console/menus/dojo/Tournaments';
 import SingleTournament from '@/components/game_console/menus/dojo/SingleTournament';
 import SubmitPlacements from '@/components/game_console/menus/dojo/SubmitPlacements';

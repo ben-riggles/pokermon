@@ -39,7 +39,7 @@ export default function SingleTournamentPlacements() {
     >
       {placements.map((player, i) => {
         return (
-          <div className='flex h-8 items-center'>
+          <div key={player.id} className='flex h-8 items-center'>
             <span className='text-xs text-left'>{i + 1}.</span>
             <img
               className='h-12 min-w-[48px]'

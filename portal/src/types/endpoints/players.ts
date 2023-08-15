@@ -1,13 +1,14 @@
-export type PlayersRes = {
-  id: number;
+export type PlayersReq = {
   first_name: string;
   last_name: string;
   sprite: string;
 };
 
-export type PlayerReq = {
-  first_name?: string;
-  last_name?: string;
+export type PlayersRes = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  sprite: string;
 };
 
 export type DetailsRes = {
