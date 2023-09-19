@@ -2,27 +2,28 @@ import { DetailsRes, PlayersReq, PlayersRes } from '@/types/endpoints/players';
 import { TournamentsRes } from '@/types/endpoints/tournaments';
 import axios from 'axios';
 
-const local = 'http://localhost:7777';
+// const local = 'http://localhost:7777';
+const server = 'http://pokermon.club:7777';
 
 export const playersApi = {
-  getAllPlayers: async () => axios.get<PlayersRes[]>(`${local}/players`),
+  getAllPlayers: async () => axios.get<PlayersRes[]>(`${server}/players`),
   getPlayer: async (id: number) =>
-    axios.get<PlayersRes>(`${local}/players/${id}`),
+    axios.get<PlayersRes>(`${server}/players/${id}`),
   postPlayer: async (req: PlayersReq) =>
-    axios.post<PlayersRes>(`${local}/players`, req),
+    axios.post<PlayersRes>(`${server}/players`, req),
   putPlayer: async (id: number, req: PlayersReq) =>
-    axios.put<PlayersRes>(`${local}/players/${id}`, req),
+    axios.put<PlayersRes>(`${server}/players/${id}`, req),
   deletePlayer: async (id: number) =>
-    axios.delete<PlayersRes>(`${local}/players/${id}`),
+    axios.delete<PlayersRes>(`${server}/players/${id}`),
   getAllPlayerDetails: async () =>
-    axios.get<DetailsRes[]>(`${local}/players/details`),
+    axios.get<DetailsRes[]>(`${server}/players/details`),
   getPlayerDetails: async (id: number) =>
-    axios.get<DetailsRes>(`${local}/players/${id}/details`),
+    axios.get<DetailsRes>(`${server}/players/${id}/details`),
 };
 
 export const tournamentsApi = {
   getTournaments: async () =>
-    axios.get<TournamentsRes[]>(`${local}/tournaments`),
+    axios.get<TournamentsRes[]>(`${server}/tournaments`),
   getTournament: async (sessionId: number) =>
-    axios.get<TournamentsRes>(`${local}/tournaments/${sessionId}`),
+    axios.get<TournamentsRes>(`${server}/tournaments/${sessionId}`),
 };
