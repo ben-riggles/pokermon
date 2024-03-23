@@ -57,7 +57,7 @@ export default function PlayersMenu() {
               <div className='flex h-8 w-32 items-center'>
                 <img
                   className='h-12 min-w-[48px]'
-                  src={`http://img.pokemondb.net/sprites/black-white/normal/${
+                  src={`https://img.pokemondb.net/sprites/black-white/normal/${
                     player.sprite || 'snorlax'
                   }.png`}
                 />

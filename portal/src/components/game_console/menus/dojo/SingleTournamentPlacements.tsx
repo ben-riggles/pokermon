@@ -43,7 +43,7 @@ export default function SingleTournamentPlacements() {
             <span className='text-xs text-left'>{i + 1}.</span>
             <img
               className='h-12 min-w-[48px]'
-              src={`http://img.pokemondb.net/sprites/black-white/normal/${
+              src={`https://img.pokemondb.net/sprites/black-white/normal/${
                 player.sprite || 'snorlax'
               }.png`}
             />

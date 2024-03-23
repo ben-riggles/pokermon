@@ -43,3 +43,12 @@
 
 - Once the api is up and running, it can be viewed at `localhost:5000`
 - You can use swagger to manually call endpoints, or to view the expected inputs/outputs
+
+### On the Server `jsonbateman.com`
+
+`gunicorn -w 4 -b 0.0.0.0:7777 app:app --log-file /root/logs/pokermon/pokermon-logs.log --access-logfile /root/logs/pokermon/pokermon-access.log --error-logfile /root/logs/pokermon/pokermon-error.log --log-level debug`
+
+Flask recommends you use a WSGI (Web Server Gateway Interface) to proxy info between a webserver and a
+python application, one popular one is guinicorn. I installed gunicorn on the server and ran it using this command.
+This command spawns four workers for some load balancing, runs it on the server on port :7777 and writes logs
+to the root user directory in a /log folder.

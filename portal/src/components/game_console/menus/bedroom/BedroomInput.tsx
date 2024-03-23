@@ -67,7 +67,7 @@ export default function BedroomInput() {
             <div className='flex h-20 w-52 items-center'>
               <img
                 className='h-20 min-w-[48px]'
-                src={`http://img.pokemondb.net/sprites/black-white/normal/${
+                src={`https://img.pokemondb.net/sprites/black-white/normal/${
                   shownPlayer.sprite || 'snorlax'
                 }.png`}
               />
