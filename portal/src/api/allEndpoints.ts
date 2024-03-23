@@ -3,7 +3,7 @@ import { TournamentsRes } from '@/types/endpoints/tournaments';
 import axios from 'axios';
 
 // const local = 'http://localhost:7777';
-const server = 'http://api.pokermon.club';
+const server = 'https://api.pokermon.club';
 
 export const playersApi = {
   getAllPlayers: async () => axios.get<PlayersRes[]>(`${server}/players`),
