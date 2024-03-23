@@ -17,7 +17,7 @@ export default function Spade({
         height={height * 1.2}
         width={width * 1.2}
         className='absolute'
-        xmlns='https://www.w3.org/2000/svg'
+        xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 512 512'
       >
         <g transform='translate(0,0)'>
@@ -33,7 +33,7 @@ export default function Spade({
         className='absolute'
         height={height}
         width={width}
-        xmlns='https://www.w3.org/2000/svg'
+        xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 512 512'
       >
         <g transform='translate(0,0)'>

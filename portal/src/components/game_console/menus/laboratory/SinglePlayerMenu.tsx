@@ -34,7 +34,7 @@ export default function SinglePlayerMenu() {
         <div className='flex items-center'>
           <div className='flex h-12'>
             <img
-              src={`https://img.pokemondb.net/sprites/black-white/normal/${sprite}.png`}
+              src={`http://img.pokemondb.net/sprites/black-white/normal/${sprite}.png`}
             />
           </div>
           <span>

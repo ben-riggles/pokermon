@@ -16,8 +16,8 @@ export default function PokerChip({
       width={width}
       version='1.1'
       id='Capa_1'
-      xmlns='https://www.w3.org/2000/svg'
-      xmlnsXlink='https://www.w3.org/1999/xlink'
+      xmlns='http://www.w3.org/2000/svg'
+      xmlnsXlink='http://www.w3.org/1999/xlink'
       viewBox='0 0 296.477 296.477'
       xmlSpace='preserve'
     >

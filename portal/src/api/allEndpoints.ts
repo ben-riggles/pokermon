@@ -6,11 +6,11 @@ import axios from 'axios';
 const server = 'https://api.pokermon.club';
 
 export const playersApi = {
-  getAllPlayers: async () => axios.get<PlayersRes[]>(`${server}/players`),
+  getAllPlayers: async () => axios.get<PlayersRes[]>(`${server}/players/`),
   getPlayer: async (id: number) =>
     axios.get<PlayersRes>(`${server}/players/${id}`),
   postPlayer: async (req: PlayersReq) =>
-    axios.post<PlayersRes>(`${server}/players`, req),
+    axios.post<PlayersRes>(`${server}/players/`, req),
   putPlayer: async (id: number, req: PlayersReq) =>
     axios.put<PlayersRes>(`${server}/players/${id}`, req),
   deletePlayer: async (id: number) =>
@@ -23,7 +23,7 @@ export const playersApi = {
 
 export const tournamentsApi = {
   getTournaments: async () =>
-    axios.get<TournamentsRes[]>(`${server}/tournaments`),
+    axios.get<TournamentsRes[]>(`${server}/tournaments/`),
   getTournament: async (sessionId: number) =>
     axios.get<TournamentsRes>(`${server}/tournaments/${sessionId}`),
 };
