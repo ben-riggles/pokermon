@@ -14,7 +14,6 @@ import Leaderboards from '@/components/game_console/menus/poker_center/Leaderboa
 import Leaderboard from '@/components/game_console/menus/poker_center/Leaderboard';
 import Tournaments from '@/components/game_console/menus/dojo/Tournaments';
 import SingleTournament from '@/components/game_console/menus/dojo/SingleTournament';
-import SubmitPlacements from '@/components/game_console/menus/dojo/SubmitPlacements';
 import SingleTournamentPlacements from '@/components/game_console/menus/dojo/SingleTournamentPlacements';
 import Payouts from './menus/poker_mart/Payouts';
 
@@ -44,8 +43,6 @@ function getMenu(menu: Menu): JSX.Element {
       return <Leaderboard />;
     case 'Payouts':
       return <Payouts />;
-    case 'Submit Placements':
-      return <SubmitPlacements />;
     case 'Tournaments':
       return <Tournaments />;
     case 'Single Tournament':

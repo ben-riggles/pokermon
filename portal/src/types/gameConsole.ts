@@ -21,5 +21,4 @@ export type Menu =
   | 'Tournaments'
   | 'Single Tournament'
   | 'Tournament Placements'
-  | 'Submit Placements'
   | 'Payouts';

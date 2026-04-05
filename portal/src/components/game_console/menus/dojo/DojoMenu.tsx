@@ -17,9 +17,6 @@ export default function DojoMenu() {
         <MenuLink onClick={() => updateMenu('Tournaments')}>
           All Tournaments
         </MenuLink>
-        <MenuLink onClick={() => updateMenu('Submit Placements')}>
-          Submit Placements
-        </MenuLink>
       </MenuList>
     </MenuPage>
   );
