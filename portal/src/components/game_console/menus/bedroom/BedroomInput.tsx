@@ -40,6 +40,10 @@ export default function BedroomInput() {
 
   function submitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!first || !last || !sprite) {
+      setErr('All fields must be filled');
+      return;
+    }
     if (pokemonNames.includes(sprite)) {
       putPlayer({
         first_name: first,
@@ -93,9 +97,8 @@ export default function BedroomInput() {
                 value={sprite}
                 handleFn={handleSprite}
                 placeholder={shownPlayer.sprite}
-                err={err}
               />
-              {err && <span>{err}</span>}
+              {err && <span className='text-red-700'>{err}</span>}
               <button className='pixel-border hover:bg-sky-100' type='submit'>
                 Update
               </button>

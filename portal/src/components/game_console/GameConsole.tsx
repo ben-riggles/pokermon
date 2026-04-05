@@ -5,7 +5,7 @@ export default function GameConsole() {
   return (
     <>
       <div className='flex h-screen justify-center items-center w-full bg-purple-800'>
-        {/* 
+        {/*
         <div
           id='power-display'
           className='min-[280px]:invisible   md:visible min-[900px]: top-1/4 left-1'
@@ -16,11 +16,11 @@ export default function GameConsole() {
         */}
         <div
           id='outer-screen'
-          className='flex flex-col rounded justify-center items-center max-w-[980px] w-[98%] h-[90%] bg-slate-500'
+          className='relative flex flex-col rounded justify-center items-center max-w-[980px] w-[98%] h-[90%] bg-slate-500'
         >
           <div
             id='screen'
-            className='relative hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
+            className='hide-scrollbar justify-center overflow overflow-scroll items-center h-[90%] w-[90%]'
           >
             <FloatingScreen />
             <Canvas />
