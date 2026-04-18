@@ -25,7 +25,7 @@ function draw(
   ctx.canvas.width = screenInfo.width;
   ctx.canvas.height = screenInfo.height;
   ctx.drawImage(image, 0, 0);
-  ctx.fillStyle = `rgba(255, 0,0,0.4)`;
+  ctx.fillStyle = `rgba(255, 0,0,0.0)`;
   regions.forEach((region) => {
     const { x, y, w, h } = region.box;
     ctx.fillRect(x, y, w, h);
