@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd portal
+
+pnpm npx lint-staged && pnpm pretty-quick --staged
